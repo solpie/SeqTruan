@@ -1,11 +1,10 @@
 __author__ = 'toramisu'
 from PyQt5.QtGui import QWindow, QPixmap, QIcon, QPainter, QBrush, QColor, QFont
 from Module.App import App
-from Module.Events import Event
+from Module.Events import *
 from PyQt5.QtWidgets import QMainWindow, QLabel, QWidget
 from Panel.Viewport import Viewport
 from PyQt5.QtOpenGL import QGLWidget
-
 # class SeqTruanWindow(QGLWidget):
 #     def __init__(self, parent=None):
 #         super(SeqTruanWindow, self).__init__( parent)
@@ -49,6 +48,7 @@ class SeqTruanWindow(QMainWindow):
 
     def test(self):
         App().sequencePlayback.load('test')
+        Event().dispatch(PlaybackEvent.STATE,PlayStateType.PLAY)
         # App().audioPlayback.load("test/test1.mp3")
         # App().audioPlayback.setVolume(0)
         pass

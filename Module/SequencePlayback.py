@@ -10,12 +10,23 @@ class SequencePlayback():
         self.imageSequence = []
         self.framerate = 0
         self.currentFrame = -1
+        self.state = ''
+
 
         self.timer = QTimer()
         self.timer.timerEvent = self.onTick
         Event().add(AudioPlaybackEvent.TICK, self.onTick)
-
+        Event().add(PlaybackEvent.STATE, self.onState)
         self.setFramerate(24)
+        pass
+
+    def onState(self, state):
+        self.state = state
+        if state == PlayStateType.PLAY:
+            self.play()
+        elif state == PlayStateType.PAUSE:
+            self.pause()
+            pass
         pass
 
     def onTick(self, time):
@@ -33,6 +44,15 @@ class SequencePlayback():
             pass
 
     def play(self):
+        if not self.timer.isActive():
+            self.timer.start()
+            pass
+        pass
+
+    def pause(self):
+        if self.timer.isActive():
+            self.timer.stop()
+            pass
         pass
 
     def render(self):
@@ -44,5 +64,5 @@ class SequencePlayback():
 
     def setFramerate(self, framerate):
         self.framerate = framerate
-        self.timer.start(1000 / self.framerate)
+        self.timer.setInterval(1000 / self.framerate)
         pass

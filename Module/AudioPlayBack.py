@@ -9,6 +9,7 @@ class AudioPlayBack():
         self.__audioPlayback = QMediaPlayer()
         self.__audioPlayback.setVolume(50)
         self.__audioPlayback.positionChanged.connect(self.onTick)
+
         pass
 
     def onTick(self, e=None):

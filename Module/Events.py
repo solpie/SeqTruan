@@ -18,6 +18,24 @@ class Event(Singleton):
             for func in fs:
                 func(*args)
 
+    @staticmethod
+    def dis(event, *args):
+        self = Event()
+        if event in self.handles:
+            fs = self.handles[event]
+            for func in fs:
+                func(*args)
+
+
+class PlaybackEvent():
+    STATE = 'state'
+
+
+class PlayStateType():
+    PLAY = 'play'
+    PAUSE = 'pause'
+    STOP = 'stop'
+
 
 class SequencePlaybackEvent():
     RENDER = 'render'
