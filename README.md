@@ -1,2 +1,2 @@
 # SeqTruan
-SeqTruan
+SeqTruan 
