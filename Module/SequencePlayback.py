@@ -1,15 +1,21 @@
 __author__ = 'toramisu'
 import os
 from PyQt5.QtGui import QImage
+from PyQt5.Qt import QTimer
 from Module.Events import *
 
 
 class SequencePlayback():
     def __init__(self):
         self.imageSequence = []
-        self.framerate = 24
+        self.framerate = 0
         self.currentFrame = -1
-        Event().add_event_handle(AudioPlaybackEvent.TICK, self.onTick)
+
+        self.timer = QTimer()
+        self.timer.timerEvent = self.onTick
+        Event().add(AudioPlaybackEvent.TICK, self.onTick)
+
+        self.setFramerate(24)
         pass
 
     def onTick(self, time):
@@ -30,12 +36,13 @@ class SequencePlayback():
         pass
 
     def render(self):
-        print(self, 'render')
-        self.currentFrame = (self.currentFrame + 1) % len(self.imageSequence)
-        img = self.imageSequence[self.currentFrame]
-        Event().dispatch_event(SequencePlaybackEvent.RENDER, img)
+        if len(self.imageSequence):
+            self.currentFrame = (self.currentFrame + 1) % len(self.imageSequence)
+            img = self.imageSequence[self.currentFrame]
+            Event().dispatch(SequencePlaybackEvent.RENDER, img)
         pass
 
     def setFramerate(self, framerate):
         self.framerate = framerate
+        self.timer.start(1000 / self.framerate)
         pass

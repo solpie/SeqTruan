@@ -19,9 +19,10 @@ class SeqTruanWindow(QMainWindow):
         self.mainWidget = QWidget()
         self.__viewport = Viewport(self.mainWidget)
         self.setCentralWidget(self.mainWidget)
-        self.test()
         self.mouseDoubleClickEvent = self.onDoubleClk
         self.wheelEvent = self.onWheel
+
+        self.test()
         pass
 
     def initModule(self):
@@ -48,6 +49,6 @@ class SeqTruanWindow(QMainWindow):
 
     def test(self):
         App().sequencePlayback.load('test')
-        App().audioPlayback.load("test/test1.mp3")
-        App().audioPlayback.setVolume(0)
+        # App().audioPlayback.load("test/test1.mp3")
+        # App().audioPlayback.setVolume(0)
         pass

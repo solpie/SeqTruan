@@ -13,7 +13,7 @@ class AudioPlayBack():
 
     def onTick(self, e=None):
         print(self.__audioPlayback.position(), self.__audioPlayback.state())
-        Event().dispatch_event(AudioPlaybackEvent.TICK, self.__audioPlayback.position())
+        Event().dispatch(AudioPlaybackEvent.TICK, self.__audioPlayback.position())
         pass
 
     def load(self, path):

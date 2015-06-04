@@ -7,12 +7,12 @@ class Event(Singleton):
         self.handles = {}
         pass
 
-    def add_event_handle(self, event, func):
+    def add(self, event, func):
         if event not in self.handles:
             self.handles[event] = []
         self.handles[event].append(func)
 
-    def dispatch_event(self, event, *args):
+    def dispatch(self, event, *args):
         if event in self.handles:
             fs = self.handles[event]
             for func in fs:
@@ -26,6 +26,6 @@ class SequencePlaybackEvent():
 class AudioPlaybackEvent():
     TICK = 'tick'
 
+
 class MainWindowEvent():
     INITED = 'inited'
-

@@ -3,6 +3,7 @@ from Module import Singleton
 from Module.AudioPlayBack import AudioPlayBack
 from Module.SequencePlayback import SequencePlayback
 
+
 class App(Singleton):
     def init(self):
         self.audioPlayback = AudioPlayBack()
@@ -15,3 +16,7 @@ class App(Singleton):
 
         self.sequencePlayback.load('test')
         pass
+
+
+def connect(signal, func):
+    signal.connect(func)

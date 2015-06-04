@@ -7,7 +7,7 @@ from PyQt5.QtWidgets import (QAction, QApplication, QFileDialog, QLabel,
 from PyQt5.QtPrintSupport import QPrintDialog, QPrinter
 
 from Panel.Canvas import Canvas
-
+from Panel.Transport import Transport
 from Module.C import *
 from Module.Events import *
 import os
@@ -24,9 +24,15 @@ class Viewport(QScrollArea):
         self.scaleFactor = 0.0
         self.canvas = Canvas(self)
         self.setWidget(self.imageLabel)
-
         self.imageSequence = []
-        Event().add_event_handle(SequencePlaybackEvent.RENDER, self.onRender)
+        Event().add(SequencePlaybackEvent.RENDER, self.onRender)
+
+        self.transport = Transport(self)
+        self.onResize(1280, 720)
+        pass
+
+    def onResize(self, w, h):
+        self.transport.move(10, h - 40)
         pass
 
     def onRender(self, img):
