@@ -6,6 +6,8 @@ from module.External import External
 from module.Events import *
 
 from ui.SeqTruanWindow import SeqTruanWindow
+
+
 class App(Singleton):
     def init(self):
         self.audioPlayback = AudioPlayBack()
@@ -26,8 +28,8 @@ class App(Singleton):
         pass
 
     def test(self):
-        # self.sequencePlayback.load('test')
-        # Event.dis(PlaybackEvent.STATE,PlayStateType.PLAY)
+        self.sequencePlayback.load('test')
+        Event.dis(PlaybackEvent.STATE, PlayStateType.PLAY)
 
         # App().audioPlayback.load("test/test1.mp3")
         # App().audioPlayback.setVolume(0)
@@ -35,5 +37,6 @@ class App(Singleton):
         # self.__audioPlayback.load("test/test.mp3")
         # self.__audioPlayback.setVolume(0)
         # self.sequencePlayback.load('test')
-        self.ext.load('test/')
+
+        # self.ext.load('test/')
         pass

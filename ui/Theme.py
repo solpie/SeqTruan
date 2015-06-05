@@ -1,0 +1,3 @@
+__author__ = 'toramisu'
+TIMELINE_COL_BG = 0x484848
+TIMELINE_TRACK_FRAME_BG = 0x4b4b4b

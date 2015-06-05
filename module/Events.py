@@ -33,6 +33,9 @@ def connect(signal, func):
     signal.connect(func)
 
 
+class ActionEvent():
+    LOAD_SEQ = 'load seq'
+
 
 class PlaybackEvent():
     STATE = 'state'

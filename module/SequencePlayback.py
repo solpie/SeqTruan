@@ -12,7 +12,6 @@ class SequencePlayback():
         self.currentFrame = -1
         self.state = ''
 
-
         self.timer = QTimer()
         self.timer.timerEvent = self.onTick
         Event.add(AudioPlaybackEvent.TICK, self.onTick)
@@ -38,9 +37,13 @@ class SequencePlayback():
             for root, dirs, files in os.walk(imagesPath):
                 for filespath in files:
                     filename = os.path.join(root, filespath).replace('\\', '/')
+                    #todo support image ext
+                    if filename.find('.png') < 0:
+                        continue
                     img = QImage(filename)
                     self.imageSequence.append(img)
                     print('[load img]: ', filename)
+            Event.dis(ActionEvent.LOAD_SEQ, self.imageSequence)
             pass
 
     def play(self):
