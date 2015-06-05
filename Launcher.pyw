@@ -3,7 +3,7 @@ from PyQt5.QtCore import QTextCodec
 from PyQt5.QtWidgets import QApplication
 from PyQt5.QtGui import QSurfaceFormat
 # from Panel.SeqTruanWindow import SeqTruanWindow
-from Module.App import App
+from module.App import App
 import sys
 
 

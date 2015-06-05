@@ -1,22 +1,14 @@
 __author__ = 'toramisu'
-from PyQt5.QtGui import QWindow, QPixmap, QIcon, QPainter, QBrush, QColor, QFont
-# from Module.App import App
-from module.Events import *
-from PyQt5.QtWidgets import QMainWindow, QLabel, QWidget
-from ui.Viewport import Viewport
-from PyQt5.QtOpenGL import QGLWidget
-# class SeqTruanWindow(QGLWidget):
-#     def __init__(self, parent=None):
-#         super(SeqTruanWindow, self).__init__( parent)
+from ui import *
+from ui.composite import Timeline
 class SeqTruanWindow(QMainWindow):
     def __init__(self):
         super(SeqTruanWindow, self).__init__()
-        # self.initModule()
-        # app = App()
         self.resize(1440, 900)
-        # self.paintEvent = self.onPaint
         self.mainWidget = QWidget()
         self.__viewport = Viewport(self.mainWidget)
+        self.__timeline = Timeline(self.mainWidget)
+        self.__timeline.move(0, 720)
         self.setCentralWidget(self.mainWidget)
         self.mouseDoubleClickEvent = self.onDoubleClk
         self.wheelEvent = self.onWheel

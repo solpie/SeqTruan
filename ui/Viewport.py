@@ -1,16 +1,12 @@
 __author__ = 'toramisu'
-from PyQt5.QtPrintSupport import QPrintDialog, QPrinter
-from PyQt5.QtCore import QDir, Qt
-from PyQt5.QtGui import QImage, QPainter, QPalette, QPixmap
-from PyQt5.QtWidgets import (QAction, QApplication, QFileDialog, QLabel,
-                             QMainWindow, QMenu, QMessageBox, QScrollArea, QSizePolicy)
-from PyQt5.QtPrintSupport import QPrintDialog, QPrinter
+import os
 
+
+from ui import *
 from ui.Canvas import Canvas
-from ui.Transport import Transport
+
 from module.C import *
 from module.Events import *
-import os
 
 
 class Viewport(QScrollArea):
@@ -22,7 +18,7 @@ class Viewport(QScrollArea):
         self.imageLabel.setSizePolicy(QSizePolicy.Ignored, QSizePolicy.Ignored)
         self.imageLabel.setScaledContents(True)
         self.scaleFactor = 0.0
-        self.canvas = Canvas(self)
+        # self.canvas = Canvas(self)
         self.setWidget(self.imageLabel)
         self.imageSequence = []
         Event.add(SequencePlaybackEvent.RENDER, self.onRender)

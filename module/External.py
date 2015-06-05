@@ -1,6 +1,5 @@
 __author__ = 'toramisu'
 from PyQt5.Qt import QTimer
-from PyQt5.QtCore import QFileSystemWatcher, QObject, pyqtSignal
 import os
 from utils import Watcher
 import queue

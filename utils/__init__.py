@@ -20,3 +20,4 @@ class Singleton(object):
 
 
 from .Watcher import Watcher
+from .B import B
