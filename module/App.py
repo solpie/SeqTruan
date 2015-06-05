@@ -28,8 +28,8 @@ class App(Singleton):
         pass
 
     def test(self):
-        self.sequencePlayback.load('test')
-        Event.dis(PlaybackEvent.STATE, PlayStateType.PLAY)
+        # self.sequencePlayback.load('test')
+        # Event.dis(PlaybackEvent.STATE, PlayStateType.PLAY)
 
         # App().audioPlayback.load("test/test1.mp3")
         # App().audioPlayback.setVolume(0)

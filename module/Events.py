@@ -29,8 +29,7 @@ class Event(Singleton):
                 func(*args)
 
 
-def connect(signal, func):
-    signal.connect(func)
+
 
 
 class ActionEvent():

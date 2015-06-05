@@ -1,6 +1,8 @@
 __author__ = 'toramisu'
 
-from PyQt5.QtWidgets import QOpenGLWidget, QWidget, QPushButton, QHBoxLayout, QComboBox
+# from PyQt5.QtWidgets import QOpenGLWidget, QWidget, QPushButton, QHBoxLayout, QComboBox
+from ui import *
+
 from module.App import *
 from module.Events import *
 

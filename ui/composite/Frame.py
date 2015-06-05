@@ -12,11 +12,11 @@ class Frame(QWidget):
         pass
 
     def setPixmap(self, img):
-        self.thumb = img
-        self.thumbWidth  = img.width()
-        self.thumbHeight = self.thumb.height() / self.width() * self.width()
+        self.thumbWidth = img.width()
+        self.thumbHeight = img.height() / img.width() * self.width()
+        self.thumb = img.scaled(self.width(), self.thumbHeight)
         pass
 
     def paintEvent(self, QPaintEvent):
-        B.drawPixmap(self, self.thumb.scaled(self.width(), self.thumbHeight), 5, 5)
+        B.drawPixmap(self, self.thumb, 5, 5)
         pass
