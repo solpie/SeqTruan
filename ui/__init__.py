@@ -7,6 +7,8 @@ from PyQt5 import Qt
 from PyQt5.QtCore import QDir, QRectF
 from PyQt5.QtGui import QImage, QPalette, QPixmap, QPainter, QBrush, QColor, QPen, QPainterPath, QLinearGradient
 
+from utils.Qss import Qss
+
 def connect(signal, func):
     signal.connect(func)
 

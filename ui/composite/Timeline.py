@@ -12,6 +12,7 @@ class Timeline(QWidget):
         vSlider = QSlider(self)
         vSlider.move(285, 0)
         vSlider.resize(15, height)
+        Qss.setStyle(vSlider, ':qss_slider')
 
         self.tracks = [Track(self)]
         self.resize(1280, height)
