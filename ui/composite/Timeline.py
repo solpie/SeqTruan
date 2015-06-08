@@ -3,49 +3,46 @@ from ui import *
 from utils import B
 from module.Events import *
 from .Track import Track
-from .Cursor import Cursor
+from .TrackPanel import TrackPanel
+from .TrackArea import TrackArea
+from .TrackToolBar import TrackToolBar
 
 
 class Timeline(QWidget):
     def __init__(self, parent):
         super(Timeline, self).__init__(parent)
         height = 280
+        self.trackToolBar = TrackToolBar(self)
+
+        self.vScroll = QScrollArea(self)
+        self.vScroll.move(0, self.trackToolBar.height())
+        self.vScroll.resize(1280, height)
+
         vSlider = QSlider(self)
-        vSlider.move(285, 0)
+        vSlider.move(285, self.trackToolBar.height())
         vSlider.resize(15, height)
         Qss.setStyle(vSlider, ':qss_slider')
 
-        self.tracks = [Track(self)]
+        self.trackArea = TrackArea(self)
+        self.trackArea.move(300, self.trackToolBar.height())
+        self.trackArea.resize(1280, height)
+        Event.add(TracksModelEvent.NEW_TRACK, self.onNewTrack)
+
+        self.tracks = [Track(), Track()]
+        self.trackArea.addTrack(self.tracks[0])
+        self.trackArea.addTrack(self.tracks[1])
+
+        self.trackPanels = [TrackPanel(self.vScroll)]
         self.resize(1280, height)
         # self.setStyleSheet('QWidget { background: red; }')
         B.fillColor(self, TIMELINE_COL_BG)
         Event.add(ActionEvent.LOAD_SEQ, self.onLoadImg)
 
-        self.frameCursor = Cursor(self)
-        self.frameCursor.move(305, 0)
-
-        self.mouseMoveEvent = self.onMove
-        self.mousePressEvent = self.onPress
-        self.mouseReleaseEvent = self.onRelease
-
-        self.isPress = False
-        self.lastX = 0
-        self.setMouseTracking(True)
-
-    def onPress(self, e):
-        self.isPress = True
-        self.lastX = e.x()
-        pass
-
-    def onRelease(self, e):
-        self.isPress = False
-        self.lastX = 0
-        pass
-
-    def onMove(self, e):
-        px = int(e.localPos().x() / 40) * 40
-        if self.isPress:
-            self.frameCursor.move(px, self.frameCursor.y())
+    def onNewTrack(self, trackInfo):
+        track = Track()
+        track.trackInfo = trackInfo
+        self.tracks.append(track)
+        self.trackArea.addTrack(track)
         pass
 
     def onLoadImg(self, images):

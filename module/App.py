@@ -4,12 +4,13 @@ from module.AudioPlayBack import AudioPlayBack
 from module.SequencePlayback import SequencePlayback
 from module.External import External
 from module.Events import *
-
+from model import *
 from ui.SeqTruanWindow import SeqTruanWindow
 
 
 class App(Singleton):
     def init(self):
+        self.trackModel = TrackModel()
         self.audioPlayback = AudioPlayBack()
         self.sequencePlayback = SequencePlayback()
         self.ext = External()

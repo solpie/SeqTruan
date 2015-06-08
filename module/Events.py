@@ -29,11 +29,13 @@ class Event(Singleton):
                 func(*args)
 
 
-
+class TracksModelEvent():
+    NEW_TRACK = 'new track'
 
 
 class ActionEvent():
     LOAD_SEQ = 'load seq'
+    NEW_TRACK = '[action]:new track'
 
 
 class PlaybackEvent():

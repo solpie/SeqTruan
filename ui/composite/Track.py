@@ -4,29 +4,26 @@ from .Frame import Frame
 
 
 class Track(QWidget):
-    def __init__(self, parent):
+    def __init__(self, parent=None):
+        self.trackInfo = None
         super(Track, self).__init__(parent)
-        self.opacitySlider = QSlider(0x1, self)
-        self.opacitySlider.move(200, 37)
-        self.opacitySlider.resize(80, 15)
-        self.opacitySlider.setRange(0, 100)
-        self.opacitySlider.setValue(100)
-        connect(self.opacitySlider.valueChanged, self.onOpacityChanged)
-
+        self.frameBar = QWidget(self)
+        self.frameBar.setStyleSheet('QWidget{background-color:yellow}')
+        self.mousePressEvent = ignoreEvent
         self.thumbs = QWidget(self)
+        self.thumbs.mousePressEvent = ignoreEvent
+        self.thumbs.move(0, 25)
+
         self.thumbHbox = QHBoxLayout(self.thumbs)
-        self.thumbs.move(335, 5)
+        # self.thumbs.move(335, 5)
         self.thumbs.resize(1280, 50)
         self.resize(1280, 80)
+        self.frameBar.resize(self.width(), 25)
         self.setStyleSheet(
             'QWidget{background-color:red;'
             'border-style: outset;'
             'border-width: 1px;'
             'border-color: beige;}')
-
-    def onOpacityChanged(self, value):
-        # value 0~100
-        pass
 
     def load(self, imgs):
         for i in range(0, len(imgs)):

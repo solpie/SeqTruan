@@ -7,9 +7,16 @@ from module.App import App
 import sys
 
 
+def ev(obj, e):
+    print(obj)
+    pass
+
+
 app = QApplication(sys.argv)
 app.setApplicationName("SeqTruan")
 app.setQuitOnLastWindowClosed(True)
+app.installEventFilter(app)
+app.ev = ev
 codec = QTextCodec.codecForName('UTF-8')
 # QTextCodec.setCodecForTr(codec)
 QTextCodec.setCodecForLocale(codec)
