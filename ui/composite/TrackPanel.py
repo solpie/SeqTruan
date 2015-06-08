@@ -15,6 +15,9 @@ class TrackPanel(QWidget):
         self.trackNameLabel = QLabel(self)
         self.trackNameLabel.move(5, 5)
 
+        self.visibleButton = QCheckBox(self)
+        self.visibleButton.move(200, 5)
+
         self.resize(TIMELINE_TRACK_PANEL_DEF_WIDTH, TIMELINE_TRACK_DEF_HEIGHT)
         pass
 

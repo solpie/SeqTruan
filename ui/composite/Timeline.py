@@ -10,8 +10,8 @@ from .TrackPanelArea import TrackPanelArea
 class Timeline(QWidget):
     def __init__(self, parent):
         super(Timeline, self).__init__(parent)
-        height = 280
         self.trackToolBar = TrackToolBar(self)
+        height = 280
 
         self.trackPanelArea = TrackPanelArea(self)
         self.trackPanelArea.move(0, self.trackToolBar.height())
@@ -24,7 +24,7 @@ class Timeline(QWidget):
         Qss.setStyle(vSlider, ':qss_slider')
 
         self.trackArea = TrackArea(self)
-        self.trackArea.move(300, self.trackToolBar.height())
+        self.trackArea.move(300, 0)
         self.trackArea.resize(1280, height)
         Event.add(TracksModelEvent.NEW_TRACK, self.onNewTrack)
 
