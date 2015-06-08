@@ -3,10 +3,9 @@ from ui import *
 from utils import B
 from module.Events import *
 from .Track import Track
-from .TrackPanel import TrackPanel
 from .TrackArea import TrackArea
 from .TrackToolBar import TrackToolBar
-
+from .TrackPanelArea import TrackPanelArea
 
 class Timeline(QWidget):
     def __init__(self, parent):
@@ -14,9 +13,10 @@ class Timeline(QWidget):
         height = 280
         self.trackToolBar = TrackToolBar(self)
 
-        self.vScroll = QScrollArea(self)
-        self.vScroll.move(0, self.trackToolBar.height())
-        self.vScroll.resize(1280, height)
+        self.trackPanelArea = TrackPanelArea(self)
+        self.trackPanelArea.move(0, self.trackToolBar.height())
+        self.trackPanelArea.resize(1280, height)
+        # self.trackPanels = [TrackPanel(self.vScroll)]
 
         vSlider = QSlider(self)
         vSlider.move(285, self.trackToolBar.height())
@@ -28,11 +28,10 @@ class Timeline(QWidget):
         self.trackArea.resize(1280, height)
         Event.add(TracksModelEvent.NEW_TRACK, self.onNewTrack)
 
-        self.tracks = [Track(), Track()]
+        self.tracks = [Track()]
         self.trackArea.addTrack(self.tracks[0])
-        self.trackArea.addTrack(self.tracks[1])
+        # self.trackArea.addTrack(self.tracks[1])
 
-        self.trackPanels = [TrackPanel(self.vScroll)]
         self.resize(1280, height)
         # self.setStyleSheet('QWidget { background: red; }')
         B.fillColor(self, TIMELINE_COL_BG)
@@ -43,6 +42,8 @@ class Timeline(QWidget):
         track.trackInfo = trackInfo
         self.tracks.append(track)
         self.trackArea.addTrack(track)
+
+        self.trackPanelArea.addTrackPanel(trackInfo)
         pass
 
     def onLoadImg(self, images):

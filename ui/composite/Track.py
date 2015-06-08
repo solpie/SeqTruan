@@ -17,7 +17,7 @@ class Track(QWidget):
         self.thumbHbox = QHBoxLayout(self.thumbs)
         # self.thumbs.move(335, 5)
         self.thumbs.resize(1280, 50)
-        self.resize(1280, 80)
+        self.resize(1280, TIMELINE_TRACK_DEF_HEIGHT)
         self.frameBar.resize(self.width(), 25)
         self.setStyleSheet(
             'QWidget{background-color:red;'
