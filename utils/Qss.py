@@ -1,4 +1,3 @@
-__author__ = 'toramisu'
 from qss.qrc import *
 from PyQt5.QtCore import QFile, QTextStream,QByteArray
 

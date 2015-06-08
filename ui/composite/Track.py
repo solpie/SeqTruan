@@ -18,6 +18,11 @@ class Track(QWidget):
         self.thumbs.move(335, 5)
         self.thumbs.resize(1280, 50)
         self.resize(1280, 80)
+        self.setStyleSheet(
+            'QWidget{background-color:red;'
+            'border-style: outset;'
+            'border-width: 1px;'
+            'border-color: beige;}')
 
     def onOpacityChanged(self, value):
         # value 0~100

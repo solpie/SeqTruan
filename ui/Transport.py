@@ -24,6 +24,7 @@ class Transport(QWidget):
         self.pauseButton = QPushButton()
         self.pauseButton.setText('stop')
         self.hbox.addWidget(self.pauseButton)
+        # self.setStyleSheet('QWidget { background: red; }')
         pass
 
     def onFrameRateChanged(self, e):
