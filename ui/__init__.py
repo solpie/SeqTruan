@@ -3,6 +3,7 @@ from PyQt5.QtWidgets import (QOpenGLWidget, QWidget, QPushButton,
                              QLabel, QFileDialog, QMessageBox, QScrollArea, QSizePolicy,
                              QSlider,
                              QVBoxLayout,
+QScrollBar,
                              QCheckBox,
                              QHBoxLayout, QComboBox, QMainWindow)
 from PyQt5 import Qt

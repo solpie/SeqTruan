@@ -40,4 +40,8 @@ class App(Singleton):
         # self.sequencePlayback.load('test')
 
         # self.ext.load('test/')
+        Event.dis(ActionEvent.NEW_TRACK, 'test track0')
+        Event.dis(ActionEvent.NEW_TRACK, 'test track1')
+        Event.dis(ActionEvent.NEW_TRACK, 'test track2')
+        Event.dis(ActionEvent.NEW_TRACK, 'test track3')
         pass

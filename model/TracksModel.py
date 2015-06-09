@@ -34,7 +34,7 @@ class TrackModel():
                         continue
                     img = QImage(filename)
                     trackInfo.frames.append(img)
-                    print('[load img]: ', filename)
+                    print('[load img]:', filename)
             pass
 
         trackInfo.name = name

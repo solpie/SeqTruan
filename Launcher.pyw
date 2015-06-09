@@ -5,7 +5,7 @@ from PyQt5.QtGui import QSurfaceFormat
 # from Panel.SeqTruanWindow import SeqTruanWindow
 from module.App import App
 import sys
-
+from PyQt5.Qt import QStyleFactory
 
 def ev(obj, e):
     print(obj)
@@ -14,6 +14,7 @@ def ev(obj, e):
 
 app = QApplication(sys.argv)
 app.setApplicationName("SeqTruan")
+app.setStyle(QStyleFactory.create('Fusion'))
 app.setQuitOnLastWindowClosed(True)
 app.installEventFilter(app)
 app.ev = ev

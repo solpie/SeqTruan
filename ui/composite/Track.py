@@ -8,7 +8,8 @@ class Track(QWidget):
         self.trackInfo = None
         super(Track, self).__init__(parent)
         self.frameBar = QWidget(self)
-        self.frameBar.setStyleSheet('QWidget{background-color:yellow}')
+        # self.frameBar.setStyleSheet('QWidget{background-color:yellow}')
+
         self.mousePressEvent = ignoreEvent
         self.thumbs = QWidget(self)
         self.thumbs.mousePressEvent = ignoreEvent
@@ -20,7 +21,8 @@ class Track(QWidget):
         self.resize(1280, TIMELINE_TRACK_DEF_HEIGHT)
         self.frameBar.resize(self.width(), 25)
         self.setStyleSheet(
-            'QWidget{background-color:red;'
+            'QWidget{'
+            # 'background-color:red;'
             'border-style: outset;'
             'border-width: 1px;'
             'border-color: beige;}')

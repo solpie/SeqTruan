@@ -7,6 +7,7 @@ from .TrackArea import TrackArea
 from .TrackToolBar import TrackToolBar
 from .TrackPanelArea import TrackPanelArea
 
+
 class Timeline(QWidget):
     def __init__(self, parent):
         super(Timeline, self).__init__(parent)
@@ -16,38 +17,54 @@ class Timeline(QWidget):
         self.trackPanelArea = TrackPanelArea(self)
         self.trackPanelArea.move(0, self.trackToolBar.height())
         self.trackPanelArea.resize(1280, height)
-        # self.trackPanels = [TrackPanel(self.vScroll)]
-
-        vSlider = QSlider(self)
-        vSlider.move(285, self.trackToolBar.height())
-        vSlider.resize(15, height)
-        Qss.setStyle(vSlider, ':qss_slider')
-
         self.trackArea = TrackArea(self)
         self.trackArea.move(300, 0)
         self.trackArea.resize(1280, height)
         Event.add(TracksModelEvent.NEW_TRACK, self.onNewTrack)
 
-        self.tracks = [Track()]
-        self.trackArea.addTrack(self.tracks[0])
-        # self.trackArea.addTrack(self.tracks[1])
+        vScrollBar = QScrollBar(self)
+        self.lastVScrollValue = 0
+        vScrollBar.setPageStep(100)
+        vScrollBar.move(TIMELINE_TRACK_PANEL_DEF_WIDTH - 15, self.trackToolBar.height())
+        vScrollBar.resize(15, 235)
+        connect(vScrollBar.valueChanged, self.onVScrollBar)
+        self.vScrollBar = vScrollBar
+
+        hScrollBar = QScrollBar(1, self)
+        self.lastHScrollValue = 0
+        hScrollBar.move(vScrollBar.x() + vScrollBar.width() + 1, vScrollBar.y() + vScrollBar.height() + 1)
+        hScrollBar.resize(1280, 15)
+        hScrollBar.setPageStep(200)
+        self.hScrollBar = hScrollBar
+        connect(hScrollBar.valueChanged, self.onHScrollBar)
 
         self.resize(1280, height)
         # self.setStyleSheet('QWidget { background: red; }')
         B.fillColor(self, TIMELINE_COL_BG)
         Event.add(ActionEvent.LOAD_SEQ, self.onLoadImg)
 
-    def onNewTrack(self, trackInfo):
-        track = Track()
-        track.trackInfo = trackInfo
-        self.tracks.append(track)
-        self.trackArea.addTrack(track)
+    def onHScrollBar(self, e):
+        dx = self.lastHScrollValue - self.hScrollBar.value()
+        self.lastHScrollValue = self.hScrollBar.value()
+        self.trackArea.scroll(dx, 0)
+        pass
 
+    def onVScrollBar(self, e):
+        dy = self.lastVScrollValue - self.vScrollBar.value()
+        self.lastVScrollValue = self.vScrollBar.value()
+        self.trackPanelArea.scroll(0, dy)
+        self.trackArea.trackStack.scroll(0, dy)
+        pass
+
+    def onNewTrack(self, trackInfo):
+        self.trackArea.addTrack(trackInfo)
         self.trackPanelArea.addTrackPanel(trackInfo)
+        self.vScrollBar.setRange(0, self.trackArea.trackStack.height() - self.vScrollBar.height())
+        print('vSlider range', self.vScrollBar.minimum(), self.vScrollBar.maximum())
         pass
 
     def onLoadImg(self, images):
-        self.tracks[0].load(images)
+        # self.tracks[0].load(images)
         pass
 
     def paintEvent(self, QPaintEvent):

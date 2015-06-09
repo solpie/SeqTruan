@@ -6,7 +6,7 @@ from ui.composite import Timeline
 class SeqTruanWindow(QMainWindow):
     def __init__(self):
         super(SeqTruanWindow, self).__init__()
-        self.resize(1440, 900)
+        self.resize(1440, 1056)
         self.mainWidget = QWidget()
         self.__viewport = Viewport(self.mainWidget)
         self.__timeline = Timeline(self.mainWidget)
@@ -18,7 +18,6 @@ class SeqTruanWindow(QMainWindow):
         pass
 
     def test(self):
-        self.__timeline.tracks
         pass
 
     # def initModule(self):
