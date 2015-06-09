@@ -2,7 +2,6 @@ __author__ = 'toramisu'
 from ui import *
 from utils import B
 from module.Events import *
-from .Track import Track
 from .TrackArea import TrackArea
 from .TrackToolBar import TrackToolBar
 from .TrackPanelArea import TrackPanelArea
@@ -35,8 +34,9 @@ class Timeline(QWidget):
         hScrollBar.move(vScrollBar.x() + vScrollBar.width() + 1, vScrollBar.y() + vScrollBar.height() + 1)
         hScrollBar.resize(1280, 15)
         hScrollBar.setPageStep(200)
-        self.hScrollBar = hScrollBar
         connect(hScrollBar.valueChanged, self.onHScrollBar)
+        # hScrollBar.setStyleSheet('QScrollBar:left-arrow:horizontal, QScrollBar::right-arrow:horizontal {    border: 2px solid grey;    width: 3px;    height: 3px;    background: white;}')
+        self.hScrollBar = hScrollBar
 
         self.resize(1280, height)
         # self.setStyleSheet('QWidget { background: red; }')
@@ -64,7 +64,7 @@ class Timeline(QWidget):
         pass
 
     def onLoadImg(self, images):
-        # self.tracks[0].load(images)
+        self.trackArea.tracks[0].load(images)
         pass
 
     def paintEvent(self, QPaintEvent):

@@ -29,7 +29,11 @@ class App(Singleton):
         pass
 
     def test(self):
-        # self.sequencePlayback.load('test')
+        Event.dis(ActionEvent.NEW_TRACK, 'test track0')
+        Event.dis(ActionEvent.NEW_TRACK, 'test track1')
+        Event.dis(ActionEvent.NEW_TRACK, 'test track2')
+        Event.dis(ActionEvent.NEW_TRACK, 'test track3')
+        self.sequencePlayback.load('test')
         # Event.dis(PlaybackEvent.STATE, PlayStateType.PLAY)
 
         # App().audioPlayback.load("test/test1.mp3")
@@ -40,8 +44,5 @@ class App(Singleton):
         # self.sequencePlayback.load('test')
 
         # self.ext.load('test/')
-        Event.dis(ActionEvent.NEW_TRACK, 'test track0')
-        Event.dis(ActionEvent.NEW_TRACK, 'test track1')
-        Event.dis(ActionEvent.NEW_TRACK, 'test track2')
-        Event.dis(ActionEvent.NEW_TRACK, 'test track3')
+
         pass
