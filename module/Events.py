@@ -28,6 +28,18 @@ class Event(Singleton):
             for func in fs:
                 func(*args)
 
+    @staticmethod
+    def delete(event, func):
+        self = Event()
+        if event in self.handles:
+            newFuncs = []
+            for f in self.handles[event]:
+                if f != func:
+                    newFuncs.append(f)
+                else:
+                    print('delete func', func)
+            self.handles[event] = newFuncs
+
 
 class TracksModelEvent():
     NEW_TRACK = 'new track'
@@ -36,6 +48,7 @@ class TracksModelEvent():
 class ActionEvent():
     LOAD_SEQ = 'load seq'
     NEW_TRACK = '[action]:new track'
+    RELEASE_TRACK_FRAME_LEFT_BUTTON = 'RELEASE_TRACK_FRAME_LEFT_BUTTON'
 
 
 class PlaybackEvent():

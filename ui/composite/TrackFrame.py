@@ -1,7 +1,7 @@
 __author__ = 'toramisu'
 from ui import *
 from utils import B
-
+from module.Events import *
 
 class TrackFrame(QWidget):
     def __init__(self, parent):
@@ -48,7 +48,9 @@ class TrackFrame(QWidget):
     def onRels(self, e):
         self.isPress = False
         self.isPressRightButton = False
-        self.isPressLeftButton = False
+        if self.isPressLeftButton:
+            Event.dis(ActionEvent.RELEASE_TRACK_FRAME_LEFT_BUTTON)
+            self.isPressLeftButton = False
         pass
 
     def onMove(self, e):
@@ -75,19 +77,15 @@ class TrackFrame(QWidget):
         pass
 
     def onPress(self, e):
-        self.lastX = e.globalX()
         self.isPress = True
-        pass
 
     def onPressRightButton(self, e):
         self.isPress = True
         self.isPressRightButton = True
-        pass
 
     def onPressLeftButton(self, e):
         self.isPress = True
         self.isPressLeftButton = True
-        pass
 
     def getIdx(self):
         return int(self.frameIdx.text())

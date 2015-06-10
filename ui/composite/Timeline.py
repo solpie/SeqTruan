@@ -36,11 +36,9 @@ class Timeline(QWidget):
         hScrollBar.resize(1280, 15)
         hScrollBar.setPageStep(200)
         connect(hScrollBar.valueChanged, self.onHScrollBar)
-        # hScrollBar.setStyleSheet('QScrollBar:left-arrow:horizontal, QScrollBar::right-arrow:horizontal {    border: 2px solid grey;    width: 3px;    height: 3px;    background: white;}')
         self.hScrollBar = hScrollBar
-
         self.resize(1280, height)
-        # self.setStyleSheet('QWidget { background: red; }')
+
         B.fillColor(self, TIMELINE_COL_BG)
         Event.add(ActionEvent.LOAD_SEQ, self.onLoadImg)
 
