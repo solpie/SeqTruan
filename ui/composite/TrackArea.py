@@ -2,6 +2,7 @@ __author__ = 'toramisu'
 from ui import *
 from .Cursor import Cursor
 from .Track import Track
+from utils import B
 
 
 class TrackArea(QWidget):
@@ -10,10 +11,15 @@ class TrackArea(QWidget):
 
         self.timestampBar = QWidget()
         self.timestampBar.resize(1280, 25)
+        self.testlabel = QLabel(self.timestampBar)
+        self.testlabel.resize(25, 25)
+        self.testlabel.setText('11')
+        B.fillColor(self.timestampBar, 0xff0000)
 
         self.trackStack = QWidget(self)
         self.trackStack.mousePressEvent = ignoreEvent
         self.vbox = QVBoxLayout(self.trackStack)
+        self.vbox.setSpacing(0)
         self.trackStack.move(20, self.timestampBar.height())
         self.trackStack.resize(1280, 10)
 
@@ -21,16 +27,16 @@ class TrackArea(QWidget):
         self.timestampBar.setMouseTracking(True)
 
         self.frameCursor = Cursor(self)
-        self.frameCursor.attach(self)
+        self.frameCursor.attach(self.timestampBar)
         self.tracks = []
         # self.frameCursor.installEventFilter(self)
 
-    def onEventFilter(self, obj, e):
-        if isinstance(obj, Cursor):
-            if isinstance(e, QMouseEvent):
-                e.ignore()
-            pass
-        pass
+    # def onEventFilter(self, obj, e):
+    #     if isinstance(obj, Cursor):
+    #         if isinstance(e, QMouseEvent):
+    #             e.ignore()
+    #         pass
+    #     pass
 
     def addTrack(self, trackInfo):
         track = Track()

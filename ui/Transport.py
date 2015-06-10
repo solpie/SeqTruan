@@ -11,6 +11,7 @@ class Transport(QWidget):
     def __init__(self, parent):
         super(Transport, self).__init__(parent)
         self.hbox = QHBoxLayout(self)
+        self.hbox.setSpacing(0)
         self.frameRate = QComboBox()
         self.frameRate.addItems(['24', '30', '60'])
         connect(self.frameRate.currentTextChanged, self.onFrameRateChanged)

@@ -16,6 +16,7 @@ class Timeline(QWidget):
         self.trackPanelArea = TrackPanelArea(self)
         self.trackPanelArea.move(0, self.trackToolBar.height())
         self.trackPanelArea.resize(1280, height)
+
         self.trackArea = TrackArea(self)
         self.trackArea.move(300, 0)
         self.trackArea.resize(1280, height)
