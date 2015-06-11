@@ -13,25 +13,17 @@ class TrackFrame(QWidget):
         self.resize(40, 60)
 
         self.thumb = QWidget(self)
-        self.thumb.resize(40, 38)
-        self.thumb.move(0, 1)
+        self.thumb.resize(40, 50)
+        self.thumb.move(0, 0)
         self.thumb.setStyleSheet(
-            'border-left-color:#343434;'
-            # 'border-right-color:#343434;'
-            'border-top-color:#c8c8c8;'
-            'border-bottom-color:#c8c8c8;'
-            'border-style: solid;'
+            'border:none'
         )
         self.thumb.paintEvent = self.thumbPaintEvent
-        # self.setStyleSheet(
-
-        #     'border-style: solid;'
-        # )
         self.holdFrameCount = 1
         self.holdFrameCountLabel = None
         self.frameIdx = QLabel(self)
         self.frameIdx.setStyleSheet('color:#b6b6b6;border:none;')
-        self.frameIdx.move(2, 40)
+        self.frameIdx.move(4, 45)
         self.frameIdx.setText('0')
         btnStyle = ('background-color:#5c5c5c;'
                     'border-style: solid;'
@@ -100,7 +92,10 @@ class TrackFrame(QWidget):
         self.isPressLeftButton = True
 
     def getIdx(self):
-        return int(self.frameIdx.text())
+        return int(self.frameIdx.text().replace('.', ''))
+
+    def setIdx(self, idx):
+        self.frameIdx.setText(str(idx) + '.')
 
     def setPixmap(self, img):
         self.thumbWidth = img.width()
@@ -108,12 +103,31 @@ class TrackFrame(QWidget):
         self.thumbPixmap = img.scaled(self.width(), self.thumbHeight)
         pass
 
-    def setIdx(self, idx):
-        self.frameIdx.setText(str(idx))
-
     def thumbPaintEvent(self, QPaintEvent):
-        # B.drawRoundRect(self, 0xffffff, 0, 9, 38, 22)
-        B.drawPixmap(self.thumb, self.thumbPixmap, 1, 9)
+        pg = QPainter(self.thumb)
+        linearGradient = QLinearGradient(0, 0, 0, 38)
+        linearGradient.setColorAt(0.0, QColor(0x343434))
+        linearGradient.setColorAt(0.5, QColor(0x606060))
+        linearGradient.setColorAt(1.0, QColor(0x343434))
+        pg.setBrush(QBrush(linearGradient))
+        pg.drawRect(0, 2, self.thumb.width(), 36)
+
+        p = QPainter(self.thumb)
+        pen = QPen()
+        col = QColor(0xc8c8c8)
+        pen.setColor(col)
+        p.setPen(pen)
+        p.drawLine(0, 1, self.thumb.width(), 1)
+        p.drawLine(0, self.thumb.height() - 2 - 10, self.thumb.width(), self.thumb.height() - 2 - 10)
+        p.fillRect(0, 9, TIMELINE_TRACK_FRAME_MAX_WIDTH, 22, QColor(0xffffff))
+        pen.setColor(QColor(0x343434))
+        p.setPen(pen)
+        p.drawLine(0, self.thumb.height() - 1 - 10, self.thumb.width(), self.thumb.height() - 1 - 10)
+        p.drawLine(0, 0, 0, self.thumb.height())
+        p.drawLine(0, 0, self.thumb.width(), 0)
+
+        if self.thumbPixmap:
+            B.drawPixmap(self.thumb, self.thumbPixmap, 1, (22 - self.thumbPixmap.height()) * .5 + 9)
         if self.getIdx() == 1:
             print('paintEvent')
         pass
@@ -122,7 +136,7 @@ class TrackFrame(QWidget):
         self.changeWidth = (count - self.holdFrameCount) * TIMELINE_TRACK_FRAME_MAX_WIDTH * dx
         self.resize(count * TIMELINE_TRACK_FRAME_MAX_WIDTH, self.height())
         self.thumb.resize(self.width(), self.thumb.height())
-        self.rightButton.move(self.width() - self.rightButton.width()+1, self.rightButton.y())
+        self.rightButton.move(self.width() - self.rightButton.width() + 1, self.rightButton.y())
         self.holdFrameCount = count
         if count > 1:
             if not self.holdFrameCountLabel:

@@ -2,25 +2,23 @@ __author__ = 'toramisu'
 from ui import *
 from .Cursor import Cursor
 from .Track import Track
-from utils import B
 
 
 class TrackArea(QWidget):
     def __init__(self, parent):
         super(TrackArea, self).__init__(parent)
 
-        self.timestampBar = QWidget()
+        self.timestampBar = QWidget(self)
         self.timestampBar.resize(1280, 25)
-        self.testlabel = QLabel(self.timestampBar)
-        self.testlabel.resize(25, 25)
-        self.testlabel.setText('11')
-        B.fillColor(self.timestampBar, 0xff0000)
+        self.timestampBar.setStyleSheet(
+            'background-color:rgb(62,62,62)'
+            )
 
         self.trackStack = QWidget(self)
         self.trackStack.mousePressEvent = ignoreEvent
         self.vbox = QVBoxLayout(self.trackStack)
         self.vbox.setSpacing(0)
-        self.trackStack.move(20, self.timestampBar.height())
+        self.trackStack.move(0, self.timestampBar.height())
         self.trackStack.resize(1280, 10)
 
         self.setMouseTracking(True)

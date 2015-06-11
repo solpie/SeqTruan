@@ -42,5 +42,5 @@ class Cursor(QWidget):
         pen.setColor(QColor(TIMELINE_CURSOR_EDGE_COL))
         p.setPen(pen)
         p.drawLine(0, 0, 0, self.height())
-        p.drawLine(self.width() - 1, 0, self.width() - 1, self.height())
+        p.drawLine(TIMELINE_TRACK_FRAME_MAX_WIDTH , 0, TIMELINE_TRACK_FRAME_MAX_WIDTH , self.height())
         pass

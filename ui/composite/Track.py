@@ -2,7 +2,6 @@ __author__ = 'toramisu'
 from ui import *
 from .TrackFrame import TrackFrame
 from module.Events import *
-from utils.B import B
 
 
 class Track(QWidget):
@@ -19,7 +18,7 @@ class Track(QWidget):
         self.thumbs = QWidget(self)
         self.thumbArr = []
         self.thumbs.mousePressEvent = ignoreEvent
-        self.thumbs.move(TIMELINE_TRACK_FRAME_MAX_WIDTH, 0)
+        self.thumbs.move(TIMELINE_TRACK_FRAME_MAX_WIDTH-9, 0)
 
         self.thumbs.resize(80, 75)
         self.resize(1280, TIMELINE_TRACK_DEF_HEIGHT)
@@ -31,10 +30,16 @@ class Track(QWidget):
             'border-bottom-color: #343434;'
         )
         self.headButton = QWidget(self)
-        self.headButton.move(30, 0)
+        self.headButton.move(31, 0)
         self.headButton.setStyleSheet('boder:none')
         self.headButton.resize(10, 40)
         self.headButton.paintEvent = self.headButtonPaintEvent
+
+        self.tailButton = QWidget(self)
+        self.tailButton.resize(10, 40)
+        self.tailButton.paintEvent = self.tailButtonPaintEvent
+        self.tailButton.move(80, 0)
+
     def onMove(self, e):
         if e.dragObject.dx > 30:
             self.move(self.x() + self.currentFrameWidth, self.y())
@@ -56,7 +61,7 @@ class Track(QWidget):
             for idx in range(trackFrame.getIdx(), len(self.thumbArr)):
                 tf = self.thumbArr[idx]
                 tf.move(tf.x() + changeWidth, tf.y())
-                self.thumbs.resize(self.thumbs.width() + changeWidth, self.thumbs.height())
+
                 self.resize(self.thumbs.x() + self.thumbs.width(), self.height())
         elif trackFrame.isPressLeftButton:
             trackFrame.isPressLeftButton = False
@@ -77,6 +82,14 @@ class Track(QWidget):
                         print('to delete preTrackFrame')
                         Event.add(ActionEvent.RELEASE_TRACK_FRAME_LEFT_BUTTON, self.deletePreTrackFrame)
                         self.deleteTrackFrame = preTrackFrame
+        pass
+        lastTrackFrame = self.thumbArr[len(self.thumbArr) - 1]
+        lastTrackFrameEndPos = lastTrackFrame.x() + lastTrackFrame.width()
+        self.thumbs.resize(lastTrackFrameEndPos + TIMELINE_TRACK_FRAME_MAX_WIDTH,
+                           self.thumbs.height())
+        self.resize(self.thumbs.width() + TIMELINE_TRACK_FRAME_MAX_WIDTH, self.height())
+        self.tailButton.move(
+            self.thumbs.x() + lastTrackFrameEndPos, 0)
 
     def load(self, imgs):
         for i in range(0, len(imgs)):
@@ -88,24 +101,44 @@ class Track(QWidget):
             tf.move(i * tf.width(), 0)
             # tf.startDrag = self.enableTracking
             self.thumbArr.append(tf)
-            self.thumbs.resize(self.thumbs.width() + 40, self.thumbs.height())
+            self.thumbs.resize((len(self.thumbArr) + 1) * TIMELINE_TRACK_FRAME_MAX_WIDTH, self.thumbs.height())
+            self.tailButton.move(self.thumbs.x() + self.thumbs.width() - TIMELINE_TRACK_FRAME_MAX_WIDTH, 0)
             # self.thumbHbox.addWidget(tf)
         pass
 
     def headButtonPaintEvent(self, e):
         path = QPainterPath()
         y = 17
-        path.moveTo(10, 0 + y)
-        path.lineTo(0, 10 + y)
+        path.moveTo(9, 0 + y)
+        path.lineTo(0, 9 + y)
         path.lineTo(0, 22 + y)
-        path.lineTo(10, 22 + y)
-        path.lineTo(10, 0 + y)
+        path.lineTo(9, 22 + y)
+        path.lineTo(9, 0 + y)
         path.moveTo(4, 11 + y)
         path.lineTo(4, 11 + y + 6)
         path.moveTo(6, 11 + y)
         path.lineTo(6, 11 + y + 6)
         p = QPainter(self.headButton)
-        # p.setRenderHint(QPainter.Antialiasing)
+        qColor = QColor(0x343434)
+        pen = QPen(qColor)
+        p.setPen(pen)
+        p.drawPath(path)
+
+        pass
+
+    def tailButtonPaintEvent(self, e):
+        path = QPainterPath()
+        path.moveTo(0, 22)
+        path.lineTo(9, 22 - 9)
+        path.lineTo(9, 0)
+        path.lineTo(0, 0)
+        path.lineTo(0, 22)
+
+        path.moveTo(4, 4)
+        path.lineTo(4, 4 + 6)
+        path.moveTo(6, 4)
+        path.lineTo(6, 4 + 6)
+        p = QPainter(self.tailButton)
         qColor = QColor(0x343434)
         pen = QPen(qColor)
         p.setPen(pen)

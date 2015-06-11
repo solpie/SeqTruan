@@ -1,6 +1,5 @@
 from qss.qrc import *
-from PyQt5.QtCore import QFile, QTextStream,QByteArray
-
+from PyQt5.QtCore import QFile
 
 class Qss():
     @staticmethod
@@ -8,6 +7,6 @@ class Qss():
         file_qss = QFile(aliasPath)
         file_qss.open(QFile.ReadOnly)
         ba = file_qss.readAll()
-        s = str(ba)
+        s = bytes(ba.data()).decode()
         widget.setStyleSheet(s)
         file_qss.close()

@@ -1,0 +1,15 @@
+QScrollBar {
+    border: 1px solid #3e3e3e;
+    background: #3e3e3e;
+}
+QScrollBar:horizontal {
+    width: 1px;
+}
+
+QScrollBar::handle {
+    background: #5c5c5c;
+}
+
+QScrollBar:vertical {
+    height: 1px;
+}

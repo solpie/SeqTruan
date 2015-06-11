@@ -18,11 +18,11 @@ class Timeline(QWidget):
         self.trackPanelArea.resize(1280, height)
 
         self.trackArea = TrackArea(self)
-        self.trackArea.move(300, 0)
+        self.trackArea.move(TIMELINE_TRACK_PANEL_DEF_WIDTH, 0)
         self.trackArea.resize(1280, height)
         Event.add(TracksModelEvent.NEW_TRACK, self.onNewTrack)
 
-        vScrollBar = QScrollBar(self)
+        vScrollBar = QScrollBar(2, self)
         self.lastVScrollValue = 0
         vScrollBar.setPageStep(100)
         vScrollBar.move(TIMELINE_TRACK_PANEL_DEF_WIDTH - 15, self.trackToolBar.height())
@@ -33,13 +33,17 @@ class Timeline(QWidget):
         hScrollBar = QScrollBar(1, self)
         self.lastHScrollValue = 0
         hScrollBar.move(vScrollBar.x() + vScrollBar.width() + 1, vScrollBar.y() + vScrollBar.height() + 1)
-        hScrollBar.resize(1280, 15)
+        hScrollBar.resize(500, 15)
         hScrollBar.setPageStep(200)
+        Qss.setStyle(hScrollBar, ':qss_scrollBar')
+        Qss.setStyle(vScrollBar, ':qss_scrollBar')
         connect(hScrollBar.valueChanged, self.onHScrollBar)
         self.hScrollBar = hScrollBar
         self.resize(1280, height)
 
         B.fillColor(self, TIMELINE_COL_BG)
+        # self.setObjectName('timeline')
+        # self.setStyleSheet('QWidget{background:#484848;}')
         Event.add(ActionEvent.LOAD_SEQ, self.onLoadImg)
 
     def onHScrollBar(self, e):
