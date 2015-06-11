@@ -74,11 +74,15 @@ class TrackFrame(QWidget):
                     self.setHoldFrameCount(self.holdFrameCount - 1, -1)
                     self.relayout(self)
                     pass
+            else:
+                self.parent().mouseMoveEvent(e)
+
             pass
         pass
 
     def onPress(self, e):
         self.isPress = True
+        self.parent().mousePressEvent(e)
 
     def onPressRightButton(self, e):
         self.isPress = True

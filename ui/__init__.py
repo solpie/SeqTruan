@@ -14,10 +14,11 @@ from PyQt5.QtWidgets import (QOpenGLWidget,
                              QLayout,
                              QHBoxLayout,
                              QComboBox,
+
                              QMainWindow)
 # from PyQt5 import Qt
 from PyQt5.QtCore import QDir, QRectF, Qt, QSize
-from PyQt5.QtGui import (QImage, QPalette, QPixmap, QPainter, QBrush,
+from PyQt5.QtGui import (QImage, QPalette, QPixmap, QPainter, QBrush, QCursor,
                          QMouseEvent,
                          QColor, QPen, QPainterPath, QLinearGradient)
 
@@ -63,8 +64,9 @@ class DragObject():
 
     def onPress(self, e):
         self.isPress = True
-        self.__lastX = e.pos().x()
-        self.__lastY = e.pos().y()
+        self.__lastX = self.widget.mapFromGlobal(QCursor.pos()).x()
+        self.__lastY = self.widget.mapFromGlobal(QCursor.pos()).y()
+        # print(self.widget.mapFromGlobal(QCursor.pos()).x(), QCursor.pos().x(), e.pos().x())
         if self.exPressFunc:
             e.dragObject = self
             self.exPressFunc(e)
@@ -92,6 +94,7 @@ class DragObject():
 
 def setupDrag(obj, pressFunc=None, releaseFunc=None, moveFunc=None):
     do = DragObject(pressFunc, releaseFunc, moveFunc)
+    do.widget = obj
     obj.mousePressEvent = do.onPress
     obj.mouseMoveEvent = do.onMove
     obj.mouseReleaseEvent = do.onRels
