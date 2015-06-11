@@ -18,7 +18,7 @@ class Track(QWidget):
         self.thumbs = QWidget(self)
         self.thumbArr = []
         self.thumbs.mousePressEvent = ignoreEvent
-        self.thumbs.move(TIMELINE_TRACK_FRAME_MAX_WIDTH-9, 0)
+        self.thumbs.move(TIMELINE_TRACK_FRAME_MAX_WIDTH - 9, 0)
 
         self.thumbs.resize(80, 75)
         self.resize(1280, TIMELINE_TRACK_DEF_HEIGHT)
@@ -30,7 +30,7 @@ class Track(QWidget):
             'border-bottom-color: #343434;'
         )
         self.headButton = QWidget(self)
-        self.headButton.move(31, 0)
+        self.headButton.move(31 - 9, 0)
         self.headButton.setStyleSheet('boder:none')
         self.headButton.resize(10, 40)
         self.headButton.paintEvent = self.headButtonPaintEvent
@@ -44,8 +44,10 @@ class Track(QWidget):
         if e.dragObject.dx > 30:
             self.move(self.x() + self.currentFrameWidth, self.y())
         elif e.dragObject.dx < -30:
-            self.move(self.x() - self.currentFrameWidth, self.y())
-        pass
+            moveX = self.x() - self.currentFrameWidth
+            if moveX > 0:
+                self.move(moveX, self.y())
+        print(self, self.x())
 
     def deletePreTrackFrame(self):
         if self.deleteTrackFrame:

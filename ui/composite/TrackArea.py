@@ -12,7 +12,7 @@ class TrackArea(QWidget):
         self.timestampBar.resize(1280, 25)
         self.timestampBar.setStyleSheet(
             'background-color:rgb(62,62,62)'
-            )
+        )
 
         self.trackStack = QWidget(self)
         self.trackStack.mousePressEvent = ignoreEvent
@@ -26,6 +26,7 @@ class TrackArea(QWidget):
 
         self.frameCursor = Cursor(self)
         self.frameCursor.attach(self.timestampBar)
+        self.frameCursor.move(40, 0)
         self.tracks = []
         # self.frameCursor.installEventFilter(self)
 
