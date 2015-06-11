@@ -14,7 +14,7 @@ class Cursor(QWidget):
         self.timeLabel = QLabel(self)
         self.timeLabel.move(2, 10)
         self.timeLabel.setText('00:00:24')
-        self.setAttribute(Qt.WA_TransparentForMouseEvents,True)
+        setMouseTransparent(self)
 
     def attach(self, obj):
         obj.mouseMoveEvent = self.onMove

@@ -15,7 +15,7 @@ class TrackArea(QWidget):
         )
 
         self.trackStack = QWidget(self)
-        self.trackStack.mousePressEvent = ignoreEvent
+        # self.trackStack.mousePressEvent = ignoreEvent
         self.vbox = QVBoxLayout(self.trackStack)
         self.vbox.setSpacing(0)
         self.trackStack.move(0, self.timestampBar.height())

@@ -17,7 +17,7 @@ class Track(QWidget):
 
         self.thumbs = QWidget(self)
         self.thumbArr = []
-        self.thumbs.mousePressEvent = ignoreEvent
+        # self.thumbs.mousePressEvent = ignoreEvent
         self.thumbs.move(TIMELINE_TRACK_FRAME_MAX_WIDTH - 9, 0)
 
         self.thumbs.resize(80, 75)

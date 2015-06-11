@@ -1,0 +1,6 @@
+QPushButton#frameButton {
+    background-color: #5c5c5c;
+    border-style: solid;
+    border-width: 1px;
+    border-color: #343434;
+}

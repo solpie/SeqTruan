@@ -7,7 +7,6 @@ from module.Events import *
 from model import *
 from ui.SeqTruanWindow import SeqTruanWindow
 
-
 class App(Singleton):
     def init(self):
         self.trackModel = TrackModel()
@@ -17,6 +16,7 @@ class App(Singleton):
         pass
 
     def initUI(self):
+
         self.mainWin = SeqTruanWindow()
         self.mainWin.show()
         pass

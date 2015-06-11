@@ -15,6 +15,7 @@ class TrackFrame(QWidget):
         self.thumb = QWidget(self)
         self.thumb.resize(40, 50)
         self.thumb.move(0, 0)
+        setMouseTransparent(self.thumb)
         self.thumb.setStyleSheet(
             'border:none'
         )
@@ -23,27 +24,23 @@ class TrackFrame(QWidget):
         self.holdFrameCountLabel = None
         self.frameIdx = QLabel(self)
         self.frameIdx.setStyleSheet('color:#b6b6b6;border:none;')
+        setMouseTransparent(self.frameIdx)
         self.frameIdx.move(4, 45)
         self.frameIdx.setText('0')
-        btnStyle = ('background-color:#5c5c5c;'
-                    'border-style: solid;'
-                    'border-width: 1px;'
-                    'border-color: #343434;')
         self.leftButton = QPushButton(self)
         self.isPressLeftButton = False
         self.leftButton.resize(8, 8)
-        self.leftButton.setStyleSheet(btnStyle)
+        setStyle(self.leftButton, ':qss_button', 'frameButton')
         self.leftButton.mousePressEvent = self.onPressLeftButton
         self.leftButton.mouseReleaseEvent = self.onRels
 
         self.rightButton = QPushButton(self)
         self.isPressRightButton = False
+        setStyle(self.rightButton, ':qss_button', 'frameButton')
         self.rightButton.resize(8, 8)
         self.rightButton.move(33, 32)
         self.rightButton.mousePressEvent = self.onPressRightButton
         self.rightButton.mouseReleaseEvent = self.onRels
-        self.rightButton.setStyleSheet(btnStyle)
-        self.rightButton.setStyle(self.leftButton.style())
         self.mousePressEvent = self.onPress
         self.mouseMoveEvent = self.onMove
         self.mouseReleaseEvent = self.onRels

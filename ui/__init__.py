@@ -21,8 +21,6 @@ from PyQt5.QtGui import (QImage, QPalette, QPixmap, QPainter, QBrush,
                          QMouseEvent,
                          QColor, QPen, QPainterPath, QLinearGradient)
 
-from utils.Qss import Qss
-
 
 def connect(signal, func):
     signal.connect(func)
@@ -30,6 +28,25 @@ def connect(signal, func):
 
 def ignoreEvent(e):
     e.ignore()
+
+
+def setMouseTransparent(obj):
+    obj.setAttribute(Qt.WA_TransparentForMouseEvents, True)
+
+
+from qss.qrc import *
+from PyQt5.QtCore import QFile
+
+
+def setStyle(widget, aliasPath, objName=None):
+    file_qss = QFile(aliasPath)
+    file_qss.open(QFile.ReadOnly)
+    ba = file_qss.readAll()
+    s = bytes(ba.data()).decode()
+    if objName:
+        widget.setObjectName(objName)
+    widget.setStyleSheet(s)
+    file_qss.close()
 
 
 class DragObject():

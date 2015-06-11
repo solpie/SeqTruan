@@ -35,8 +35,8 @@ class Timeline(QWidget):
         hScrollBar.move(vScrollBar.x() + vScrollBar.width() + 1, vScrollBar.y() + vScrollBar.height() + 1)
         hScrollBar.resize(500, 15)
         hScrollBar.setPageStep(200)
-        Qss.setStyle(hScrollBar, ':qss_scrollBar')
-        Qss.setStyle(vScrollBar, ':qss_scrollBar')
+        setStyle(hScrollBar, ':qss_scrollBar')
+        setStyle(vScrollBar, ':qss_scrollBar')
         connect(hScrollBar.valueChanged, self.onHScrollBar)
         self.hScrollBar = hScrollBar
         self.resize(1280, height)
