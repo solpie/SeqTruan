@@ -5,7 +5,7 @@ from ui import *
 
 class B():
     @staticmethod
-    def drawRoundRect(obj, col, x, y, width, height, r):
+    def drawRoundRect(obj, col, x, y, width, height, r=0):
         rp = QPainterPath()
         rp.addRoundedRect(x, y, width, height, r, r)
         rp.closeSubpath()

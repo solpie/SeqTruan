@@ -2,6 +2,7 @@ __author__ = 'toramisu'
 from ui import *
 from .TrackFrame import TrackFrame
 from module.Events import *
+from utils.B import B
 
 
 class Track(QWidget):
@@ -12,23 +13,28 @@ class Track(QWidget):
         # self.frameBar = QWidget(self)
         # self.frameBar.setStyleSheet('QWidget{background-color:yellow}')
         self.currentFrameWidth = TIMELINE_TRACK_FRAME_MAX_WIDTH
+
         setupDrag(self, moveFunc=self.onMove)
 
         self.thumbs = QWidget(self)
         self.thumbArr = []
         self.thumbs.mousePressEvent = ignoreEvent
-        # self.thumbs.move(0, 25)
+        self.thumbs.move(TIMELINE_TRACK_FRAME_MAX_WIDTH, 0)
 
         self.thumbs.resize(80, 75)
         self.resize(1280, TIMELINE_TRACK_DEF_HEIGHT)
         # self.frameBar.resize(self.width(), 25)
         self.setStyleSheet(
-            'QWidget{'
-            # 'background-color:red;'
-            'border-style: outset;'
+            'border-style: solid;'
             'border-width: 1px;'
-            'border-color: beige;}')
-
+            'border-top-color: #343434;'
+            'border-bottom-color: #343434;'
+        )
+        self.headButton = QWidget(self)
+        self.headButton.move(30, 0)
+        self.headButton.setStyleSheet('boder:none')
+        self.headButton.resize(10, 40)
+        self.headButton.paintEvent = self.headButtonPaintEvent
     def onMove(self, e):
         if e.dragObject.dx > 30:
             self.move(self.x() + self.currentFrameWidth, self.y())
@@ -84,6 +90,27 @@ class Track(QWidget):
             self.thumbArr.append(tf)
             self.thumbs.resize(self.thumbs.width() + 40, self.thumbs.height())
             # self.thumbHbox.addWidget(tf)
+        pass
+
+    def headButtonPaintEvent(self, e):
+        path = QPainterPath()
+        y = 17
+        path.moveTo(10, 0 + y)
+        path.lineTo(0, 10 + y)
+        path.lineTo(0, 22 + y)
+        path.lineTo(10, 22 + y)
+        path.lineTo(10, 0 + y)
+        path.moveTo(4, 11 + y)
+        path.lineTo(4, 11 + y + 6)
+        path.moveTo(6, 11 + y)
+        path.lineTo(6, 11 + y + 6)
+        p = QPainter(self.headButton)
+        # p.setRenderHint(QPainter.Antialiasing)
+        qColor = QColor(0x343434)
+        pen = QPen(qColor)
+        p.setPen(pen)
+        p.drawPath(path)
+
         pass
 
     def collapse(self):
