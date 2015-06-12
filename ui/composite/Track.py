@@ -6,7 +6,6 @@ from module.Events import *
 
 class Track(QWidget):
     def __init__(self, parent=None):
-        self.trackInfo = None
         super(Track, self).__init__(parent)
         self.deleteTrackFrame = None
         self.currentFrameWidth = TIMELINE_TRACK_FRAME_MAX_WIDTH
@@ -37,14 +36,15 @@ class Track(QWidget):
         self.tailButton.move(80, 0)
 
     def onMove(self, e):
+        trackInfo = self.trackInfo
         if e.dragObject.dx > 30:
-            self.trackInfo.startFrameIdx += 1
+            trackInfo.startFrameIdx += 1
             setX(self, self.x() + self.currentFrameWidth)
             print(self, 'update startFrameIdx', self.trackInfo.startFrameIdx)
         elif e.dragObject.dx < -30:
             moveX = self.x() - self.currentFrameWidth
             if moveX > 0:
-                self.trackInfo.startFrameIdx -= 1
+                trackInfo.startFrameIdx -= 1
                 setX(self, moveX)
                 print(self, 'update startFrameIdx', self.trackInfo.startFrameIdx)
 
@@ -94,14 +94,14 @@ class Track(QWidget):
 
     def load(self, imgs):
         for i in range(0, len(imgs)):
-            img = imgs[i]
-            tf = TrackFrame(self.trackFrameArea)
-            tf.setPixmap(img.getPixmap())
-            tf.setIdx(i + 1)
-            tf.relayout = self.relayout
-            tf.move(i * tf.width(), 0)
-            # tf.startDrag = self.enableTracking
-            self.thumbArr.append(tf)
+            sImage = imgs[i]
+            trackFrame = TrackFrame(self.trackFrameArea)
+            trackFrame.setPixmap(sImage.getPixmap())
+            trackFrame.setIdx(i + 1)
+            trackFrame.relayout = self.relayout
+            trackFrame.move(i * trackFrame.width(), 0)
+            trackFrame.refSImage = sImage
+            self.thumbArr.append(trackFrame)
             self.trackFrameArea.resize((len(self.thumbArr) + 1) * TIMELINE_TRACK_FRAME_MAX_WIDTH,
                                        self.trackFrameArea.height())
             self.tailButton.move(self.trackFrameArea.x() + self.trackFrameArea.width() - TIMELINE_TRACK_FRAME_MAX_WIDTH,

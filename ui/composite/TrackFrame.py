@@ -45,6 +45,15 @@ class TrackFrame(QWidget):
         self.mouseMoveEvent = self.onMove
         self.mouseReleaseEvent = self.onRels
         self.isPress = False
+        self.__refSImage = None
+
+    @property
+    def refSImage(self):
+        return self.__refSImage
+
+    @refSImage.setter
+    def refSImage(self, value):
+        self.__refSImage = value
 
     def onRels(self, e):
         self.isPress = False
@@ -137,6 +146,7 @@ class TrackFrame(QWidget):
         self.thumb.resize(self.width(), self.thumb.height())
         self.rightButton.move(self.width() - self.rightButton.width() + 1, self.rightButton.y())
         self.holdFrameCount = count
+        self.refSImage.holdFrameCount = count
         if count > 1:
             if not self.holdFrameCountLabel:
                 self.holdFrameCountLabel = QLabel(self)

@@ -41,7 +41,6 @@ class TrackArea(QWidget):
     def addTrack(self, trackInfo):
         track = Track()
         track.trackInfo = trackInfo
-        # if len(trackInfo.frames):
         track.load(trackInfo.frames)
         self.trackStack.resize(self.trackStack.width(), self.trackStack.height() + track.height())
         self.vbox.addWidget(track)
