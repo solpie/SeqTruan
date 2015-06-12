@@ -2,7 +2,6 @@ __author__ = 'toramisu'
 
 from PyQt5.QtGui import QImage, QPixmap
 
-
 class SImage():
     def __init__(self, path):
         self.frameIdx = 0

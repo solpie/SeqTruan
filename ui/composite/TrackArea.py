@@ -3,11 +3,13 @@ from ui import *
 from .Cursor import Cursor
 from .Track import Track
 
+from module.Events import *
+
 
 class TrackArea(QWidget):
     def __init__(self, parent):
         super(TrackArea, self).__init__(parent)
-
+        self.startFrameIdx = 1
         self.timestampBar = QWidget(self)
         self.timestampBar.resize(1280, 25)
         self.timestampBar.setStyleSheet(
@@ -28,37 +30,20 @@ class TrackArea(QWidget):
         self.frameCursor.attach(self.timestampBar)
         self.frameCursor.move(40, 0)
         self.tracks = []
-        # self.frameCursor.installEventFilter(self)
+        Event.add(SequencePlaybackEvent.RENDER_FRAME, self.onRenderFrame)
 
-    # def onEventFilter(self, obj, e):
-    #     if isinstance(obj, Cursor):
-    #         if isinstance(e, QMouseEvent):
-    #             e.ignore()
-    #         pass
-    #     pass
+    def onRenderFrame(self, SequencePlaybackEvent):
+        setX(self.frameCursor, SequencePlaybackEvent.frameIdx * 40)
+
     def resizeEvent(self, QResizeEvent):
         setHeight(self.frameCursor, self.height())
 
     def addTrack(self, trackInfo):
         track = Track()
         track.trackInfo = trackInfo
+        # if len(trackInfo.frames):
+        track.load(trackInfo.frames)
         self.trackStack.resize(self.trackStack.width(), self.trackStack.height() + track.height())
         self.vbox.addWidget(track)
         self.tracks.append(track)
         pass
-
-        # def onPress(self, e):
-        #     self.frameCursor.isPress = True
-        #     pass
-        #
-        # def onRelease(self, e):
-        #     self.frameCursor.isPress = False
-        #     pass
-        #
-        # def onMove(self, e):
-        #     print(self.frameCursor.isPress)
-        #     if self.frameCursor.isPress:
-        #         px = int(e.localPos().x() / 40) * 40
-        #         if px >= 0:
-        #             self.frameCursor.move(px, self.frameCursor.y())
-        #     pass

@@ -41,8 +41,14 @@ class Event(Singleton):
             self.handles[event] = newFuncs
 
 
+class E():
+    def __init__(self):
+        self.type = None
+
+
 class TracksModelEvent():
     NEW_TRACK = 'new track'
+    LOADED_IMAGE = 'loaded images'
 
 
 class ActionEvent():
@@ -62,8 +68,13 @@ class PlayStateType():
     STOP = 'stop'
 
 
-class SequencePlaybackEvent():
+class SequencePlaybackEvent(E):
     RENDER = 'render'
+    RENDER_FRAME = 'render frame'
+
+    def __init__(self):
+        super(SequencePlaybackEvent, self).__init__()
+        self.frameIdx = -1
 
 
 class AudioPlaybackEvent():

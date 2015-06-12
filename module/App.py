@@ -32,14 +32,15 @@ class App(Singleton):
         pass
 
     def test(self):
+        self.trackModel.newTrack(name='curry', imagesPath='test/test10')
         Event.dis(ActionEvent.NEW_TRACK, 'test track0')
         Event.dis(ActionEvent.NEW_TRACK, 'test track1')
         Event.dis(ActionEvent.NEW_TRACK, 'test track2')
         Event.dis(ActionEvent.NEW_TRACK, 'test track3')
-        self.sequencePlayback.load('test/test10')
+        # self.sequencePlayback.load('test/test10')
         # self.sequencePlayback.load('test')
+        self.sequencePlayback.endFrameIdx = 30
         Event.dis(PlaybackEvent.STATE, PlayStateType.PLAY)
-
         # App().audioPlayback.load("test/test1.mp3")
         # App().audioPlayback.setVolume(0)
 

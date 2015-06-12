@@ -28,10 +28,6 @@ class Viewport(QScrollArea):
         self.transport.move(self.transport.x(), self.height() - self.transport.height())
         pass
 
-    # def onResize(self, w, h):
-    #     self.transport.move(10, h - 40)
-    #     pass
-
     def onRender(self, img):
         # self.canvas.load(img)
         self.imageLabel.setPixmap(img.getPixmap())

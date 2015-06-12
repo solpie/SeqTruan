@@ -48,7 +48,7 @@ class Timeline(QWidget):
         # self.setObjectName('timeline')
         # self.setStyleSheet('{border-style: solid;border-width: 10px;'
         #                    'border-color:#ff0000;}')
-        Event.add(ActionEvent.LOAD_SEQ, self.onLoadImg)
+        # Event.add(ActionEvent.LOAD_SEQ, self.onLoadImg)
 
     def onHScrollBar(self, e):
         dx = self.lastHScrollValue - self.hScrollBar.value()
@@ -67,12 +67,13 @@ class Timeline(QWidget):
         self.trackArea.addTrack(trackInfo)
         self.trackPanelArea.addTrackPanel(trackInfo)
         self.vScrollBar.setRange(0, self.trackArea.trackStack.height() - self.vScrollBar.height())
+
         print('vSlider range', self.vScrollBar.minimum(), self.vScrollBar.maximum())
         pass
 
-    def onLoadImg(self, images):
-        self.trackArea.tracks[0].load(images)
-        pass
+    # def onLoadImg(self, images):
+    #     # self.trackArea.tracks[0].load(images)
+    #     pass
 
     def paintEvent(self, QPaintEvent):
         # B.drawRoundRect(self,TIMELINE_COL_BG,0,0, self.width(),self.height(),5)

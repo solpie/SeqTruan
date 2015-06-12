@@ -10,7 +10,7 @@ class Track(QWidget):
         super(Track, self).__init__(parent)
         self.deleteTrackFrame = None
         self.currentFrameWidth = TIMELINE_TRACK_FRAME_MAX_WIDTH
-
+        self.trackInfo = None
         setupDrag(self, moveFunc=self.onMove)
 
         self.trackFrameArea = QWidget(self)
@@ -38,12 +38,15 @@ class Track(QWidget):
 
     def onMove(self, e):
         if e.dragObject.dx > 30:
-            self.move(self.x() + self.currentFrameWidth, self.y())
+            self.trackInfo.startFrameIdx += 1
+            setX(self, self.x() + self.currentFrameWidth)
+            print(self, 'update startFrameIdx', self.trackInfo.startFrameIdx)
         elif e.dragObject.dx < -30:
             moveX = self.x() - self.currentFrameWidth
             if moveX > 0:
-                self.move(moveX, self.y())
-        print(self, self.x())
+                self.trackInfo.startFrameIdx -= 1
+                setX(self, moveX)
+                print(self, 'update startFrameIdx', self.trackInfo.startFrameIdx)
 
     def deletePreTrackFrame(self):
         if self.deleteTrackFrame:

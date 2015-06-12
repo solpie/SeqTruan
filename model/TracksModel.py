@@ -1,8 +1,9 @@
 __author__ = 'toramisu'
 
 import os
+
 from module.Events import *
-from PyQt5.QtGui import QImage
+from model.SImage import *
 
 
 class TrackInfo():
@@ -10,14 +11,26 @@ class TrackInfo():
         self.id = 0  # from 1
         self.name = ''
         self.frames = []
+        self.startFrameIdx = 1
+        self.track = None
 
 
 class TrackModel():
     def __init__(self):
         self.tracks = []
-
         Event.add(ActionEvent.NEW_TRACK, self.onActNewTrack)
+        Event.add(SequencePlaybackEvent.RENDER_FRAME, self.onRenderFrame)
         pass
+
+    def onRenderFrame(self, SequencePlaybackEvent):
+        renderFrameIdx = SequencePlaybackEvent.frameIdx
+        for trackInfo in self.tracks:
+            if renderFrameIdx >= trackInfo.startFrameIdx:
+                i = renderFrameIdx - trackInfo.startFrameIdx
+                print('render frame', trackInfo.name, i)
+                if i < len(trackInfo.frames):
+                    simage = trackInfo.frames[i]
+                    Event.dis(SequencePlaybackEvent.RENDER, simage)
 
     def onActNewTrack(self, name):
         self.newTrack(name=name)
@@ -32,8 +45,9 @@ class TrackModel():
                     # todo support image ext
                     if filename.find('.png') < 0:
                         continue
-                    img = QImage(filename)
+                    img = SImage(filename)
                     trackInfo.frames.append(img)
+                    img.frameIdx = len(trackInfo.frames)
                     print('[load img]:', filename)
             pass
 
