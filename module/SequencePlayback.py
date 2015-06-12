@@ -1,9 +1,8 @@
 __author__ = 'toramisu'
 import os
-from PyQt5.QtGui import QImage
 from PyQt5.Qt import QTimer
 from module.Events import *
-
+from .SImage import SImage
 
 class SequencePlayback():
     def __init__(self):
@@ -40,7 +39,7 @@ class SequencePlayback():
                     #todo support image ext
                     if filename.find('.png') < 0:
                         continue
-                    img = QImage(filename)
+                    img = SImage(filename)
                     self.imageSequence.append(img)
                     print('[load img]: ', filename)
             Event.dis(ActionEvent.LOAD_SEQ, self.imageSequence)

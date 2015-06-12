@@ -16,6 +16,8 @@ from PyQt5.QtWidgets import (QOpenGLWidget,
                              QComboBox,
                              QShortcut,
                              QSplitter,
+                             QLineEdit,
+
                              QMainWindow)
 # from PyQt5 import Qt
 from PyQt5.QtCore import QDir, QRectF, Qt, QSize
@@ -102,6 +104,41 @@ def setupDrag(obj, pressFunc=None, releaseFunc=None, moveFunc=None):
     pass
 
 
-# from .Transport import Transport
+def setX(widget, x):
+    widget.move(x, widget.y())
+    pass
+
+
+def setY(widget, y):
+    widget.move(widget.x(), y)
+    pass
+
+
+def setWidth(widget, width):
+    widget.resize(width, widget.height())
+    pass
+
+
+def setHeight(widget, height):
+    widget.resize(widget.width(), height)
+    pass
+
+
+def resize(widget, width=0, height=0):
+    if not height:
+        height = widget.height()
+    if not width:
+        width = widget.width()
+    widget.resize(width, height)
+    pass
+
+
+def fillColor(qwidget, color):
+    qwidget.setAutoFillBackground(True)
+    p = qwidget.palette()
+    p.setColor(qwidget.backgroundRole(), QColor(color))
+    qwidget.setPalette(p)
+
+
 from .Viewport import Viewport
 from .Theme import *

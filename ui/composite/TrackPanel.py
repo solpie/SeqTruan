@@ -10,6 +10,7 @@ class TrackPanel(QWidget):
         self.opacitySlider.resize(80, 15)
         self.opacitySlider.setRange(0, 100)
         self.opacitySlider.setValue(100)
+        setStyle(self.opacitySlider, ':qss_slider')
         connect(self.opacitySlider.valueChanged, self.onOpacityChanged)
 
         self.trackNameLabel = QLabel(self)

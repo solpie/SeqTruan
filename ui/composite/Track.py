@@ -35,6 +35,7 @@ class Track(QWidget):
         self.tailButton.resize(10, 40)
         self.tailButton.paintEvent = self.tailButtonPaintEvent
         self.tailButton.move(80, 0)
+
     def onMove(self, e):
         if e.dragObject.dx > 30:
             self.move(self.x() + self.currentFrameWidth, self.y())
@@ -83,7 +84,7 @@ class Track(QWidget):
         lastTrackFrame = self.thumbArr[len(self.thumbArr) - 1]
         lastTrackFrameEndPos = lastTrackFrame.x() + lastTrackFrame.width()
         self.trackFrameArea.resize(lastTrackFrameEndPos + TIMELINE_TRACK_FRAME_MAX_WIDTH,
-                           self.trackFrameArea.height())
+                                   self.trackFrameArea.height())
         self.resize(self.trackFrameArea.width() + TIMELINE_TRACK_FRAME_MAX_WIDTH, self.height())
         self.tailButton.move(
             self.trackFrameArea.x() + lastTrackFrameEndPos, 0)
@@ -92,14 +93,16 @@ class Track(QWidget):
         for i in range(0, len(imgs)):
             img = imgs[i]
             tf = TrackFrame(self.trackFrameArea)
-            tf.setPixmap(QPixmap.fromImage(img))
+            tf.setPixmap(img.getPixmap())
             tf.setIdx(i + 1)
             tf.relayout = self.relayout
             tf.move(i * tf.width(), 0)
             # tf.startDrag = self.enableTracking
             self.thumbArr.append(tf)
-            self.trackFrameArea.resize((len(self.thumbArr) + 1) * TIMELINE_TRACK_FRAME_MAX_WIDTH, self.trackFrameArea.height())
-            self.tailButton.move(self.trackFrameArea.x() + self.trackFrameArea.width() - TIMELINE_TRACK_FRAME_MAX_WIDTH, 0)
+            self.trackFrameArea.resize((len(self.thumbArr) + 1) * TIMELINE_TRACK_FRAME_MAX_WIDTH,
+                                       self.trackFrameArea.height())
+            self.tailButton.move(self.trackFrameArea.x() + self.trackFrameArea.width() - TIMELINE_TRACK_FRAME_MAX_WIDTH,
+                                 0)
             # self.thumbHbox.addWidget(tf)
         pass
 

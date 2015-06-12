@@ -36,6 +36,8 @@ class TrackArea(QWidget):
     #             e.ignore()
     #         pass
     #     pass
+    def resizeEvent(self, QResizeEvent):
+        setHeight(self.frameCursor, self.height())
 
     def addTrack(self, trackInfo):
         track = Track()

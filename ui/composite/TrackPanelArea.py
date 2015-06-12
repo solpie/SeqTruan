@@ -10,6 +10,7 @@ class TrackPanelArea(QWidget):
         self.trackPanelStack.resize(TIMELINE_TRACK_PANEL_DEF_WIDTH, 10)
         self.vbox = QVBoxLayout(self.trackPanelStack)
         self.vbox.setSpacing(0)
+        self.vbox.setContentsMargins(0, 0, 0, 0)
         self.trackPanels = []
         # self.setWidget(self.trackPanelStack)
         # self.show()

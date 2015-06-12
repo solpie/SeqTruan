@@ -5,6 +5,7 @@ from module.Events import *
 from .TrackArea import TrackArea
 from .TrackToolBar import TrackToolBar
 from .TrackPanelArea import TrackPanelArea
+from .TimelineToolBar import TimelineToolBar
 
 
 class Timeline(QWidget):
@@ -15,7 +16,7 @@ class Timeline(QWidget):
 
         self.trackPanelArea = TrackPanelArea(self)
         self.trackPanelArea.move(0, self.trackToolBar.height())
-        self.trackPanelArea.resize(1280, height)
+        self.trackPanelArea.resize(TIMELINE_TRACK_PANEL_DEF_WIDTH, height)
 
         self.trackArea = TrackArea(self)
         self.trackArea.move(TIMELINE_TRACK_PANEL_DEF_WIDTH, 0)
@@ -39,11 +40,14 @@ class Timeline(QWidget):
         setStyle(vScrollBar, ':qss_scrollBar')
         connect(hScrollBar.valueChanged, self.onHScrollBar)
         self.hScrollBar = hScrollBar
-        self.resize(1280, height)
+        # self.resize(1280, height)
+        setHeight(self,height)
+        self.timelineToolBar = TimelineToolBar(self)
 
         B.fillColor(self, TIMELINE_COL_BG)
         # self.setObjectName('timeline')
-        # self.setStyleSheet('QWidget{background:#484848;}')
+        # self.setStyleSheet('{border-style: solid;border-width: 10px;'
+        #                    'border-color:#ff0000;}')
         Event.add(ActionEvent.LOAD_SEQ, self.onLoadImg)
 
     def onHScrollBar(self, e):
@@ -77,12 +81,12 @@ class Timeline(QWidget):
         pass
 
     def resizeEvent(self, QResizeEvent):
-        self.resize(QResizeEvent.size())
-        self.trackPanelArea.resize(self.trackPanelArea.width(), self.height())
-        self.trackArea.resize(self.trackArea.width(), self.height() - 80)
-        self.vScrollBar.resize(self.vScrollBar.width(), self.height() - 80)
-        self.hScrollBar.move(self.vScrollBar.x() + self.vScrollBar.width() + 1, self.vScrollBar.y() + self.vScrollBar.height() + 1)
-        # self.hScrollBar.move(self.hScrollBar.x(), self.height()-30)
+        setHeight(self.trackPanelArea, self.height())
+        setHeight(self.trackArea, self.height() - 15)
+        setHeight(self.vScrollBar, self.height() - 85)
+        self.hScrollBar.move(self.vScrollBar.x() + self.vScrollBar.width(),
+                             self.vScrollBar.y() + self.vScrollBar.height())
+        setY(self.timelineToolBar, self.hScrollBar.y())
 
     def newTrack(self):
         pass

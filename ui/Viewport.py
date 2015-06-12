@@ -2,7 +2,6 @@ __author__ = 'toramisu'
 import os
 
 from ui import *
-from ui.Canvas import Canvas
 
 from module.C import *
 from module.Events import *
@@ -35,8 +34,7 @@ class Viewport(QScrollArea):
 
     def onRender(self, img):
         # self.canvas.load(img)
-
-        self.imageLabel.setPixmap(QPixmap.fromImage(img))
+        self.imageLabel.setPixmap(img.getPixmap())
         self.imageLabel.adjustSize()
         pass
 
