@@ -49,6 +49,7 @@ class ActionEvent():
     LOAD_SEQ = 'load seq'
     NEW_TRACK = '[action]:new track'
     RELEASE_TRACK_FRAME_LEFT_BUTTON = 'RELEASE_TRACK_FRAME_LEFT_BUTTON'
+    TOGGLE_PLAY = 'press space and play'
 
 
 class PlaybackEvent():

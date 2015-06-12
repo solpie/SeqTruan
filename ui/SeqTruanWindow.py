@@ -2,7 +2,6 @@ __author__ = 'toramisu'
 from ui import *
 from ui.composite import Timeline
 
-
 class SeqTruanWindow(QMainWindow):
     def __init__(self):
         super(SeqTruanWindow, self).__init__()
@@ -18,7 +17,11 @@ class SeqTruanWindow(QMainWindow):
         self.setCentralWidget(self.mainWidget)
         self.mouseDoubleClickEvent = self.onDoubleClk
         self.wheelEvent = self.onWheel
+
+
         pass
+
+
 
     def resizeEvent(self, e):
         print(e)

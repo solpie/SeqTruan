@@ -1,9 +1,6 @@
 __author__ = 'toramisu'
 
-# from PyQt5.QtWidgets import QOpenGLWidget, QWidget, QPushButton, QHBoxLayout, QComboBox
 from ui import *
-
-from module.App import *
 from module.Events import *
 
 
@@ -19,6 +16,7 @@ class Transport(QWidget):
 
         self.playButton = QPushButton()
         self.playButton.setText('play')
+        Event.add(ActionEvent.TOGGLE_PLAY, self.togglePlay)
         connect(self.playButton.clicked, self.togglePlay)
         self.hbox.addWidget(self.playButton)
 
@@ -29,11 +27,14 @@ class Transport(QWidget):
         pass
 
     def onFrameRateChanged(self, e):
+        from module import App
+
         fr = int(self.frameRate.currentText())
         App().sequencePlayback.setFramerate(fr)
         pass
 
     def togglePlay(self):
+        from module import App
         state = App().sequencePlayback.state
         if state == PlayStateType.PLAY:
             self.playButton.setText('play')

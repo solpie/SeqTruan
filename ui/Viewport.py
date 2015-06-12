@@ -6,7 +6,7 @@ from ui.Canvas import Canvas
 
 from module.C import *
 from module.Events import *
-
+from .Transport import Transport
 
 class Viewport(QScrollArea):
     def __init__(self, parent):

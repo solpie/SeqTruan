@@ -14,7 +14,8 @@ from PyQt5.QtWidgets import (QOpenGLWidget,
                              QLayout,
                              QHBoxLayout,
                              QComboBox,
-                                QSplitter,
+                             QShortcut,
+                             QSplitter,
                              QMainWindow)
 # from PyQt5 import Qt
 from PyQt5.QtCore import QDir, QRectF, Qt, QSize
@@ -101,6 +102,6 @@ def setupDrag(obj, pressFunc=None, releaseFunc=None, moveFunc=None):
     pass
 
 
-from .Transport import Transport
+# from .Transport import Transport
 from .Viewport import Viewport
 from .Theme import *

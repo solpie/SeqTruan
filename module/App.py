@@ -6,6 +6,8 @@ from module.External import External
 from module.Events import *
 from model import *
 from ui.SeqTruanWindow import SeqTruanWindow
+from module.Shortcut import Shortcut
+
 
 class App(Singleton):
     def init(self):
@@ -16,8 +18,9 @@ class App(Singleton):
         pass
 
     def initUI(self):
-
         self.mainWin = SeqTruanWindow()
+        # self.shortcut = \
+        Shortcut(self.mainWin)
         self.mainWin.show()
         pass
 
