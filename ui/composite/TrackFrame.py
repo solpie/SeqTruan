@@ -131,7 +131,6 @@ class TrackFrame(QWidget):
             B.drawPixmap(self.thumb, self.thumbPixmap, 1, (22 - self.thumbPixmap.height()) * .5 + 9)
         if self.getIdx() == 1:
             print('paintEvent')
-        pass
 
     def setHoldFrameCount(self, count, dx=1):
         self.changeWidth = (count - self.holdFrameCount) * TIMELINE_TRACK_FRAME_MAX_WIDTH * dx

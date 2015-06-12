@@ -1,7 +1,6 @@
 __author__ = 'toramisu'
 import os
 
-
 from ui import *
 from ui.Canvas import Canvas
 
@@ -12,7 +11,6 @@ from module.Events import *
 class Viewport(QScrollArea):
     def __init__(self, parent):
         super(Viewport, self).__init__(parent)
-        self.resize(1280, 720)
         self.imageLabel = QLabel()
         self.imageLabel.setBackgroundRole(QPalette.Base)
         self.imageLabel.setSizePolicy(QSizePolicy.Ignored, QSizePolicy.Ignored)
@@ -22,14 +20,18 @@ class Viewport(QScrollArea):
         self.setWidget(self.imageLabel)
         self.imageSequence = []
         Event.add(SequencePlaybackEvent.RENDER, self.onRender)
-
         self.transport = Transport(self)
-        self.onResize(1280, 720)
+        # self.resizeEvent(None)
+        self.resize(1280, 720)
         pass
 
-    def onResize(self, w, h):
-        self.transport.move(10, h - 40)
+    def resizeEvent(self, QResizeEvent):
+        self.transport.move(self.transport.x(), self.height() - self.transport.height())
         pass
+
+    # def onResize(self, w, h):
+    #     self.transport.move(10, h - 40)
+    #     pass
 
     def onRender(self, img):
         # self.canvas.load(img)

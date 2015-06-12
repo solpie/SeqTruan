@@ -14,7 +14,7 @@ from PyQt5.QtWidgets import (QOpenGLWidget,
                              QLayout,
                              QHBoxLayout,
                              QComboBox,
-
+                                QSplitter,
                              QMainWindow)
 # from PyQt5 import Qt
 from PyQt5.QtCore import QDir, QRectF, Qt, QSize

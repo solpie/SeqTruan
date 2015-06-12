@@ -8,22 +8,24 @@ class SeqTruanWindow(QMainWindow):
         super(SeqTruanWindow, self).__init__()
         self.resize(1440, 1056)
         self.mainWidget = QWidget()
-        self.__viewport = Viewport(self.mainWidget)
-        self.__timeline = Timeline(self.mainWidget)
+        self.vSplitter = QSplitter(Qt.Vertical, self.mainWidget)
+        self.vSplitter.resize(self.width(), self.height())
+        self.vSplitter.setOpaqueResize(False)
+
+        self.__viewport = Viewport(self.vSplitter)
+        self.__timeline = Timeline(self.vSplitter)
         self.__timeline.move(0, 720)
         self.setCentralWidget(self.mainWidget)
         self.mouseDoubleClickEvent = self.onDoubleClk
         self.wheelEvent = self.onWheel
+        pass
 
+    def resizeEvent(self, e):
+        print(e)
         pass
 
     def test(self):
         pass
-
-    # def initModule(self):
-    #     # Event().init()
-    #     # App().init()
-    #     pass
 
     def onDoubleClk(self, e):
         self.__viewport.load()

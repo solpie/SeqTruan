@@ -32,7 +32,7 @@ class Timeline(QWidget):
 
         hScrollBar = QScrollBar(1, self)
         self.lastHScrollValue = 0
-        hScrollBar.move(vScrollBar.x() + vScrollBar.width() + 1, vScrollBar.y() + vScrollBar.height() + 1)
+
         hScrollBar.resize(500, 15)
         hScrollBar.setPageStep(200)
         setStyle(hScrollBar, ':qss_scrollBar')
@@ -75,6 +75,14 @@ class Timeline(QWidget):
         # B.drawRect(self, TIMELINE_COL_BG, 0, 0, self.width(), self.height())
         # B.drawRect(self, TIMELINE_COL_BG, 0, 0, self.width(), self.height())
         pass
+
+    def resizeEvent(self, QResizeEvent):
+        self.resize(QResizeEvent.size())
+        self.trackPanelArea.resize(self.trackPanelArea.width(), self.height())
+        self.trackArea.resize(self.trackArea.width(), self.height() - 80)
+        self.vScrollBar.resize(self.vScrollBar.width(), self.height() - 80)
+        self.hScrollBar.move(self.vScrollBar.x() + self.vScrollBar.width() + 1, self.vScrollBar.y() + self.vScrollBar.height() + 1)
+        # self.hScrollBar.move(self.hScrollBar.x(), self.height()-30)
 
     def newTrack(self):
         pass
