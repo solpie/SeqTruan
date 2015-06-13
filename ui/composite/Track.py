@@ -3,7 +3,6 @@ from ui import *
 from .TrackFrame import TrackFrame
 from module.Events import *
 
-
 class Track(QWidget):
     def __init__(self, parent=None):
         super(Track, self).__init__(parent)
@@ -40,13 +39,13 @@ class Track(QWidget):
         if e.dragObject.dx > 30:
             trackInfo.startFrameIdx += 1
             setX(self, self.x() + self.currentFrameWidth)
-            print(self, 'update startFrameIdx', self.trackInfo.startFrameIdx)
+            print(self, 'update startFrameIdx', trackInfo.startFrameIdx)
         elif e.dragObject.dx < -30:
             moveX = self.x() - self.currentFrameWidth
             if moveX > 0:
                 trackInfo.startFrameIdx -= 1
                 setX(self, moveX)
-                print(self, 'update startFrameIdx', self.trackInfo.startFrameIdx)
+                print(self, 'update startFrameIdx', trackInfo.startFrameIdx)
 
     def deletePreTrackFrame(self):
         if self.deleteTrackFrame:

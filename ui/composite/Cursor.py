@@ -1,5 +1,6 @@
 __author__ = 'toramisu'
 from ui import *
+from module.Events import *
 
 
 class Cursor(QWidget):
@@ -33,9 +34,11 @@ class Cursor(QWidget):
         pass
 
     def moveByFrame(self, e):
-        px = int(e.localPos().x() / 40) * 40
-        if px >= 0:
-            self.move(px, self.y())
+        frameIdx = int(e.localPos().x() / 40)
+        px = frameIdx * 40
+        if 0 <= px != self.x():
+            setX(self,px)
+            Event.dis(ActionEvent.MOVE_CURSOR, frameIdx)
         pass
 
     def onMove(self, e):

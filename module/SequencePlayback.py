@@ -36,21 +36,21 @@ class SequencePlayback():
         self.render()
         pass
 
-    def load(self, imagesPath=None):
-        if imagesPath:
-            for root, dirs, files in os.walk(imagesPath):
-                for filespath in files:
-                    filename = os.path.join(root, filespath).replace('\\', '/')
-                    # todo support image ext
-                    if filename.find('.png') < 0:
-                        continue
-                    simage = SImage(filename)
-                    self.imageSequence.append(simage)
-                    simage.frameIdx = len(self.imageSequence)
-                    self.endFrameIdx = simage.frameIdx
-                    print('[load img]: ', filename)
-            Event.dis(ActionEvent.LOAD_SEQ, self.imageSequence)
-            pass
+    # def load(self, imagesPath=None):
+    #     if imagesPath:
+    #         for root, dirs, files in os.walk(imagesPath):
+    #             for filespath in files:
+    #                 filename = os.path.join(root, filespath).replace('\\', '/')
+    #                 # todo support image ext
+    #                 if filename.find('.png') < 0:
+    #                     continue
+    #                 simage = SImage(filename)
+    #                 self.imageSequence.append(simage)
+    #                 simage.frameIdx = len(self.imageSequence)
+    #                 self.endFrameIdx = simage.frameIdx
+    #                 print('[load img]: ', filename)
+    #         Event.dis(ActionEvent.LOAD_SEQ, self.imageSequence)
+    #         pass
 
     def play(self):
         if not self.timer.isActive():
@@ -70,7 +70,6 @@ class SequencePlayback():
         event.type = SequencePlaybackEvent.RENDER_FRAME
         event.frameIdx = self.currentFrameIdx
         Event.dis(SequencePlaybackEvent.RENDER_FRAME, event)
-
 
     def setFramerate(self, framerate):
         self.framerate = framerate

@@ -56,6 +56,7 @@ class ActionEvent():
     NEW_TRACK = '[action]:new track'
     RELEASE_TRACK_FRAME_LEFT_BUTTON = 'RELEASE_TRACK_FRAME_LEFT_BUTTON'
     TOGGLE_PLAY = 'press space and play'
+    MOVE_CURSOR = 'move cursor'
 
 
 class PlaybackEvent():
