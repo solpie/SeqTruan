@@ -142,3 +142,4 @@ def fillColor(qwidget, color):
 
 from .Viewport import Viewport
 from .Theme import *
+from module.C import *

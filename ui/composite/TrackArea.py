@@ -2,7 +2,7 @@ __author__ = 'toramisu'
 from ui import *
 from .Cursor import Cursor
 from .Track import Track
-
+from .TimestampBar import TimestampBar
 from module.Events import *
 
 
@@ -10,11 +10,8 @@ class TrackArea(QWidget):
     def __init__(self, parent):
         super(TrackArea, self).__init__(parent)
         self.startFrameIdx = 1
-        self.timestampBar = QWidget(self)
+        self.timestampBar = TimestampBar(self)
         self.timestampBar.resize(1280, 25)
-        self.timestampBar.setStyleSheet(
-            'background-color:rgb(62,62,62)'
-        )
 
         self.trackStack = QWidget(self)
         # self.trackStack.mousePressEvent = ignoreEvent
