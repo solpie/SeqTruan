@@ -1,5 +1,4 @@
 # -*- coding: utf-8 -*-
-
 # A simple setup script to create an executable using PyQt4. This also
 # demonstrates the method for creating a Windows executable that does not have
 # an associated console.
@@ -17,10 +16,10 @@ from cx_Freeze import setup, Executable
 base = None
 if sys.platform == 'win32':
     base = 'Win32GUI'
-
+includes = ["atexit", "PyQt5.QtCore", "PyQt5.QtGui", "PyQt5.QtWidgets"]
 options = {
     'build_exe': {
-        'includes': 'atexit'
+        "includes": includes
     }
 }
 
@@ -30,7 +29,7 @@ executables = [
 
 setup(name='simple_PyQt4',
       version='0.1',
-      description='Sample cx_Freeze PyQt4 script',
+      description='SeqTruan. image sequence view',
       options=options,
       executables=executables
       )

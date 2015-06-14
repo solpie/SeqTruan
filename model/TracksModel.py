@@ -72,7 +72,7 @@ class TrackModel():
     def renderFrameByFrameIdx(self,renderFrameIdx):
         for trackInfo in self.tracks:
             if renderFrameIdx < trackInfo.currentFrameIdx:
-                # Ñ­»·ÖØÖÃ
+                # å¾ªçŽ¯é‡ç½®
                 trackInfo.sImageIdx = 0
             trackInfo.currentFrameIdx = renderFrameIdx
             if trackInfo.sImageIdx > 0:
@@ -90,7 +90,7 @@ class TrackModel():
         self.renderFrameByFrameIdx(renderFrameIdx)
         # for trackInfo in self.tracks:
         #     if renderFrameIdx < trackInfo.currentFrameIdx:
-        #         # Ñ­»·ÖØÖÃ
+        #         # å¾ªçŽ¯é‡ç½®
         #         trackInfo.sImageIdx = 0
         #     trackInfo.currentFrameIdx = renderFrameIdx
         #     if trackInfo.sImageIdx > 0:

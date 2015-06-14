@@ -49,7 +49,7 @@ class Track(QWidget):
 
     def deletePreTrackFrame(self):
         if self.deleteTrackFrame:
-            # todo É¾³ıÇ°Ò»Ö¡
+            # todo åˆ é™¤å‰ä¸€å¸§
             self.deleteTrackFrame.hide()
             print('deletePreTrackFrame frame idx:', self.deleteTrackFrame.getIdx())
         pass
@@ -57,7 +57,7 @@ class Track(QWidget):
     def relayout(self, trackFrame):
         changeWidth = trackFrame.changeWidth
         trackFrame.changeWidth = 0
-        if trackFrame.isPressRightButton:  # ²Ù×÷Ö¡ºóÃæµÄÖ¡ÍùºóÒÆ¶¯
+        if trackFrame.isPressRightButton:  # æ“ä½œå¸§åé¢çš„å¸§å¾€åç§»åŠ¨
             for idx in range(trackFrame.getIdx(), len(self.thumbArr)):
                 tf = self.thumbArr[idx]
                 tf.move(tf.x() + changeWidth, tf.y())
@@ -76,9 +76,9 @@ class Track(QWidget):
                     print(self, 'preTrackFrame', preTrackFrame.getIdx())
                     preTrackFrame.setHoldFrameCount(preTrackFrame.holdFrameCount + 1)
                 else:
-                    if preTrackFrame.holdFrameCount > 1:  # Ëõ¶ÌÇ°Ò»Ö¡ Ôö¼Óµ±Ç°Ö¡
+                    if preTrackFrame.holdFrameCount > 1:  # ç¼©çŸ­å‰ä¸€å¸§ å¢åŠ å½“å‰å¸§
                         preTrackFrame.setHoldFrameCount(preTrackFrame.holdFrameCount - 1)
-                    else:  # ¸²¸ÇÇ°Ò»Ö¡
+                    else:  # è¦†ç›–å‰ä¸€å¸§
                         print('to delete preTrackFrame')
                         Event.add(ActionEvent.RELEASE_TRACK_FRAME_LEFT_BUTTON, self.deletePreTrackFrame)
                         self.deleteTrackFrame = preTrackFrame

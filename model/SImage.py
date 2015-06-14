@@ -6,7 +6,7 @@ from PyQt5.QtGui import QImage, QPixmap
 class SImage():
     def __init__(self, path):
         self.frameIdx = 0
-        self.holdFrameCount = 1#³ÖĞøÖ¡Êı
+        self.holdFrameCount = 1#æŒç»­å¸§æ•°
         self.__imageForRender = QImage(path)
 
     def getImage(self):
