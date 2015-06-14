@@ -1,3 +1,4 @@
 *.pyc
 *.png
 *.mp3
+build/exe.win32-3.4

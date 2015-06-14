@@ -1,8 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="Encoding">
-    <file url="file://$PROJECT_DIR$/utils/B.py" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/utils/Watcher.py" charset="UTF-8" />
+  <component name="Encoding" defaultCharsetForPropertiesFiles="UTF-8">
+    <file url="file://$PROJECT_DIR$/buildtest.py" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/model/SImage.py" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/model/TracksModel.py" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/model/__init__.py" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/module/App.py" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/module/AudioPlayBack.py" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/module/C.py" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/module/Events.py" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/module/__init__.py" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/ui/composite/Track.py" charset="UTF-8" />
     <file url="PROJECT" charset="UTF-8" />
   </component>
 </project>
