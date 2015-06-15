@@ -65,13 +65,13 @@ class Track(QWidget):
         pass
 
     def relayout(self, trackFrame):
+
         changeWidth = trackFrame.changeWidth
         trackFrame.changeWidth = 0
-        if trackFrame.isPressRightButton:  # 操作帧后面的帧往后移动
+        if trackFrame.isPressRightButton:  # 操作帧后面的帧往后移动 todo 修改model
             for idx in range(trackFrame.getIdx(), len(self.thumbArr)):
                 tf = self.thumbArr[idx]
                 tf.move(tf.x() + changeWidth, tf.y())
-
                 self.resize(self.trackFrameArea.x() + self.trackFrameArea.width(), self.height())
         elif trackFrame.isPressLeftButton:
             trackFrame.isPressLeftButton = False

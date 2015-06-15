@@ -157,7 +157,7 @@ class TrackFrame(QWidget):
         from module.App import App
 
         App().trackModel.setTrackSImage(self.trackIdx, self.getIdx(), count)
-        self.refSImage.holdFrameCount = count
+        # self.refSImage.holdFrameCount = count
         if count > 1:
             if not self.holdFrameCountLabel:
                 self.holdFrameCountLabel = QLabel(self)

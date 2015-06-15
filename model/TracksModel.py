@@ -72,7 +72,8 @@ class TrackModel():
         pass
 
     def renderFrame(self, trackInfo, frameIdx):
-        if frameIdx > 0 and frameIdx < len(trackInfo.frames)+1:
+        # todo render layer blend
+        if frameIdx > 0 and frameIdx < len(trackInfo.frames) + 1:
             simage = trackInfo.frames[frameIdx - 1]
             trackInfo.sImageIdx = frameIdx
             trackInfo.holdFrame = simage.holdFrameCount
@@ -87,7 +88,6 @@ class TrackModel():
                 if simage.startFrameIdx <= frameIdx and simage.endFrameIdx >= frameIdx:
                     self.renderFrame(trackInfo, simage.frameIdx)
                     break
-                    pass
                 pass
         pass
 
@@ -111,21 +111,6 @@ class TrackModel():
     def onRenderFrame(self, SequencePlaybackEvent):
         renderFrameIdx = SequencePlaybackEvent.frameIdx
         self.renderFrameByFrameIdx(renderFrameIdx)
-        # for trackInfo in self.tracks:
-        #     if renderFrameIdx < trackInfo.currentFrameIdx:
-        #         # 循环重置
-        #         trackInfo.sImageIdx = 0
-        #     trackInfo.currentFrameIdx = renderFrameIdx
-        #     if trackInfo.sImageIdx > 0:
-        #         if trackInfo.holdFrame > 1:
-        #             trackInfo.holdFrame -= 1
-        #         else:
-        #             nextSImageIdx = trackInfo.sImageIdx + 1
-        #             self.renderFrame(trackInfo, nextSImageIdx)
-        #     elif renderFrameIdx >= trackInfo.startFrameIdx:
-        #         i = renderFrameIdx - trackInfo.startFrameIdx
-        #         self.renderFrame(trackInfo, i)
-        # print('onRenderFrame', trackInfo.currentFrameIdx, trackInfo.sImageIdx)
 
     def onActNewTrack(self, name):
         self.newTrack(name=name)
@@ -155,5 +140,12 @@ class TrackModel():
     def delTrack(self, id):
         pass
 
-    def setTrackSImage(self, trackIdx, simageIdx, holdFrame):
+    def setTrackSImage(self, trackIdx, simageIdx, holdFrameCount):
+        for trackInfo in self.tracks:
+            if trackInfo.trackIdx == trackIdx:
+                for simage in trackInfo.frames:
+                    if simage.frameIdx == simageIdx:
+                        simage.holdFrameCount = holdFrameCount
+                        break
+                    pass
         pass
