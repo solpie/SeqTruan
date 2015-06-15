@@ -8,13 +8,22 @@ from model.SImage import *
 
 class TrackInfo(object):
     def __init__(self):
-        self.id = 0  # from 1
+        self.id = 0  # from 1 todo deleteme
         self.name = ''
         self.frames = []
         self.__refTrack = None
         self.__currentFrameIdx = -1
         self.__sImageIdx = -1
         self.__startFrameIdx = 1
+        self.__trackIdx = -1
+
+    @property
+    def trackIdx(self):
+        return self.__trackIdx
+
+    @trackIdx.setter
+    def trackIdx(self, value):
+        self.__trackIdx = value
 
     @property
     def startFrameIdx(self):
@@ -59,17 +68,30 @@ class TrackModel():
 
     def onMoveCursor(self, frameIdx):
         print('Move Cursor', frameIdx)
-        self.renderFrameByFrameIdx(frameIdx)
+        self.seekFrame(frameIdx)
         pass
 
     def renderFrame(self, trackInfo, frameIdx):
-        if frameIdx < len(trackInfo.frames):
-            simage = trackInfo.frames[frameIdx]
+        if frameIdx > 0 and frameIdx < len(trackInfo.frames)+1:
+            simage = trackInfo.frames[frameIdx - 1]
             trackInfo.sImageIdx = frameIdx
             trackInfo.holdFrame = simage.holdFrameCount
             # print('render frame', trackInfo.name, frameIdx)
             Event.dis(SequencePlaybackEvent.RENDER, simage)
-    def renderFrameByFrameIdx(self,renderFrameIdx):
+
+    def seekFrame(self, frameIdx):
+        for trackInfo in self.tracks:
+            if frameIdx > len(trackInfo.frames):
+                continue
+            for simage in trackInfo.frames:
+                if simage.startFrameIdx <= frameIdx and simage.endFrameIdx >= frameIdx:
+                    self.renderFrame(trackInfo, simage.frameIdx)
+                    break
+                    pass
+                pass
+        pass
+
+    def renderFrameByFrameIdx(self, renderFrameIdx):
         for trackInfo in self.tracks:
             if renderFrameIdx < trackInfo.currentFrameIdx:
                 # 循环重置
@@ -85,6 +107,7 @@ class TrackModel():
                 i = renderFrameIdx - trackInfo.startFrameIdx
                 self.renderFrame(trackInfo, i)
         pass
+
     def onRenderFrame(self, SequencePlaybackEvent):
         renderFrameIdx = SequencePlaybackEvent.frameIdx
         self.renderFrameByFrameIdx(renderFrameIdx)
@@ -102,7 +125,7 @@ class TrackModel():
         #     elif renderFrameIdx >= trackInfo.startFrameIdx:
         #         i = renderFrameIdx - trackInfo.startFrameIdx
         #         self.renderFrame(trackInfo, i)
-                # print('onRenderFrame', trackInfo.currentFrameIdx, trackInfo.sImageIdx)
+        # print('onRenderFrame', trackInfo.currentFrameIdx, trackInfo.sImageIdx)
 
     def onActNewTrack(self, name):
         self.newTrack(name=name)
@@ -125,10 +148,12 @@ class TrackModel():
 
         trackInfo.name = name
         self.tracks.append(trackInfo)
-        trackInfo.id = len(self.tracks)
-
+        trackInfo.trackIdx = len(self.tracks)
         Event.dis(TracksModelEvent.NEW_TRACK, trackInfo)
         pass
 
     def delTrack(self, id):
+        pass
+
+    def setTrackSImage(self, trackIdx, simageIdx, holdFrame):
         pass

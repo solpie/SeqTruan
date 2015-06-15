@@ -3,12 +3,14 @@ from ui import *
 from .TrackFrame import TrackFrame
 from module.Events import *
 
+
 class Track(QWidget):
     def __init__(self, parent=None):
         super(Track, self).__init__(parent)
         self.deleteTrackFrame = None
         self.currentFrameWidth = TIMELINE_TRACK_FRAME_MAX_WIDTH
         self.trackInfo = None
+        self.__trackIdx = -1
         setupDrag(self, moveFunc=self.onMove)
 
         self.trackFrameArea = QWidget(self)
@@ -33,6 +35,14 @@ class Track(QWidget):
         self.tailButton.resize(10, 40)
         self.tailButton.paintEvent = self.tailButtonPaintEvent
         self.tailButton.move(80, 0)
+
+    @property
+    def trackIdx(self):
+        return self.__trackIdx
+
+    @trackIdx.setter
+    def trackIdx(self, value):
+        self.__trackIdx = value
 
     def onMove(self, e):
         trackInfo = self.trackInfo
@@ -91,12 +101,16 @@ class Track(QWidget):
         self.tailButton.move(
             self.trackFrameArea.x() + lastTrackFrameEndPos, 0)
 
-    def load(self, imgs):
+    def load(self, trackInfo):
+        imgs = trackInfo.frames
+        self.trackIdx = trackInfo.trackIdx
         for i in range(0, len(imgs)):
             sImage = imgs[i]
+            sImage.startFrameIdx = i + 1
             trackFrame = TrackFrame(self.trackFrameArea)
             trackFrame.setPixmap(sImage.getPixmap())
             trackFrame.setIdx(i + 1)
+            trackFrame.trackIdx = self.trackIdx
             trackFrame.relayout = self.relayout
             trackFrame.move(i * trackFrame.width(), 0)
             trackFrame.refSImage = sImage

@@ -2,7 +2,7 @@ __author__ = 'toramisu'
 from ui import *
 from OpenGL.GL import *
 
-class TimestampBar(QOpenGLWidget):
+class TimestampBar(QWidget):
     def __init__(self, parent=None):
         super(TimestampBar, self).__init__(parent)
         self.setZoomLevel(ZOOM_LEVEL_NORMAL)
@@ -10,7 +10,7 @@ class TimestampBar(QOpenGLWidget):
 
     def setZoomLevel(self, zoomLevel):
         if zoomLevel == ZOOM_LEVEL_NORMAL:
-            # self.paintEvent = self.paintNormal
+            self.paintEvent = self.paintNormal
             pass
         pass
 
