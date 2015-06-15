@@ -17,6 +17,7 @@ class App(Singleton):
         self.ext = External()
         pass
 
+
     def initUI(self):
         self.mainWin = SeqTruanWindow()
         # self.shortcut = \
@@ -51,3 +52,6 @@ class App(Singleton):
         # self.ext.load('test/')
 
         pass
+
+
+app = App()

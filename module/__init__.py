@@ -1,2 +1,2 @@
 __author__ = 'toramisu'
-from .App import App
+from .App import app as App

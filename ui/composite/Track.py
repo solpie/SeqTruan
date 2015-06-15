@@ -45,17 +45,16 @@ class Track(QWidget):
         self.__trackIdx = value
 
     def onMove(self, e):
-        trackInfo = self.trackInfo
+        from module import App
+
         if e.dragObject.dx > 30:
-            trackInfo.startFrameIdx += 1
+            App.trackModel.setTrackInfoStartFrameIdxByDelta(self.trackIdx, 1)
             setX(self, self.x() + self.currentFrameWidth)
-            print(self, 'update startFrameIdx', trackInfo.startFrameIdx)
         elif e.dragObject.dx < -30:
             moveX = self.x() - self.currentFrameWidth
             if moveX > 0:
-                trackInfo.startFrameIdx -= 1
+                App.trackModel.setTrackInfoStartFrameIdxByDelta(self.trackIdx, -1)
                 setX(self, moveX)
-                print(self, 'update startFrameIdx', trackInfo.startFrameIdx)
 
     def deletePreTrackFrame(self):
         if self.deleteTrackFrame:
@@ -65,6 +64,7 @@ class Track(QWidget):
         pass
 
     def relayout(self, trackFrame):
+        from module import App
 
         changeWidth = trackFrame.changeWidth
         trackFrame.changeWidth = 0
@@ -73,6 +73,8 @@ class Track(QWidget):
                 tf = self.thumbArr[idx]
                 tf.move(tf.x() + changeWidth, tf.y())
                 self.resize(self.trackFrameArea.x() + self.trackFrameArea.width(), self.height())
+                App.trackModel.setTrackFrameInfo(tf.trackIdx, tf.getIdx(),
+                                                   frameIdx=tf.getFramePos(self.currentFrameWidth))
         elif trackFrame.isPressLeftButton:
             trackFrame.isPressLeftButton = False
             trackFrame.move(trackFrame.x() + changeWidth, trackFrame.y())

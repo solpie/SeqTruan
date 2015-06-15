@@ -149,3 +149,28 @@ class TrackModel():
                         break
                     pass
         pass
+
+    def setTrackFrameInfo(self, trackIdx, trackFrameIdx, frameIdx=-1, holdFrameCount=-1):
+        for trackInfo in self.tracks:
+            if trackInfo.trackIdx == trackIdx:
+                for simage in trackInfo.frames:
+                    if simage.frameIdx == trackFrameIdx:
+                        if holdFrameCount > 0:
+                            simage.holdFrameCount = holdFrameCount
+                        if frameIdx > 0:
+                            simage.startFrameIdx = frameIdx
+                        print('setTrackFrameInfo() ', simage.startFrameIdx, simage.holdFrameCount)
+                        break
+                break
+
+    def getTrackInfoByIdx(self, trackIdx):
+        for trackInfo in self.tracks:
+            if trackInfo.trackIdx == trackIdx:
+                return trackInfo
+        return None
+
+    def setTrackInfoStartFrameIdxByDelta(self, trackIdx, dt):
+        trackInfo = self.getTrackInfoByIdx(trackIdx)
+        trackInfo.startFrameIdx += dt
+        print('setTrackInfoStartFrameIdxByDelta()', dt, 'startFrameIdx:', trackInfo.startFrameIdx)
+        pass
