@@ -39,7 +39,7 @@ view/timeline/Timeline.h
 view/timeline/Timeline.cpp
 view/timeline/TrackToolBar.h
 view/timeline/TrackToolBar.cpp
-model/Singleton.h)
+model/Singleton.h events/Event.h)
 
 # Use the Widgets module from Qt 5.
 target_link_libraries(SeqTruan Qt5::Widgets)
