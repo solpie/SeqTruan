@@ -1,3 +1,0 @@
-PyOpenGL
-pyqt5
-pywin32
