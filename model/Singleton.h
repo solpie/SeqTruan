@@ -7,44 +7,35 @@
 #define SEQTRUAN_SINGLETON_H
 
 
-#include <assert.h>
-#include <dsdriver.h>
-
-//template<typename T>
-//class Singleton {
-//protected:
-//    static T *ms_Singleton;
+//class S {
 //public:
-//    Singleton(void) {
-//        assert(!ms_Singleton);
-//        ms_Singleton = static_cast< T * >(this);
+//    static S &getInstance() {
+//        static S instance; // Guaranteed to be destroyed.
+//        // Instantiated on first use.
+//        return instance;
 //    }
 //
-//    ~Singleton(void) {
-//        assert(ms_Singleton);
-//        ms_Singleton = 0;
-//    }
+//private:
+//    S() { };                   // Constructor? (the {} brackets) are needed here.
 //
-//    static T &getSingleton(void) {
-//        assert(ms_Singleton);
-//        return (*ms_Singleton);
-//    }
+//    // C++ 11
+//    // =======
+//    // We can use the better technique of deleting the methods
+//    // we don't want.
+//    S(S const &) = delete;
 //
-//    static T *getSingletonPtr(void) { return ms_Singleton; }
+//    void operator=(S const &) = delete;
+//
 //};
+
+template<typename T>
 class Singleton {
 public:
-    static Singleton& Instance() {
-        static Singleton theSingleton;
-        return theSingleton;
+    static T &_() {
+        static T instance;
+        return instance;
     }
-
-    /* more (non-static) functions here */
-
-private:
-    Singleton();                            // ctor hidden
-    Singleton(Singleton const&);            // copy ctor hidden
-    Singleton& operator=(Singleton const&); // assign op. hidden
-    ~Singleton();                           // dtor hidden
 };
+
+
 #endif //SEQTRUAN_SINGLETON_H

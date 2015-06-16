@@ -8,10 +8,38 @@
 #endif //SEQTRUAN_TRACKMODEL_H
 
 #include "Singleton.h"
-class TrackModel:public Singleton{
+
+class TrackModel :public Singleton<TrackModel>{
 public:
-//    TrackModel();
+//    static TrackModel &_() {
+//        static TrackModel instance;
+//        return instance;
+//    }
 
     void newTrack();
 
+//private:
+//    TrackModel() { };
+//
+//    TrackModel(TrackModel const &) = delete;
+//
+//    void operator=(TrackModel const &) = delete;
 };
+//
+//class TrackModel {
+//public:
+//    static TrackModel &_() {
+//        static TrackModel instance;
+//        return instance;
+//    }
+//
+//    void newTrack();
+//
+//private:
+//    TrackModel() { };
+//
+//    TrackModel(TrackModel const &) = delete;
+//
+//    void operator=(TrackModel const &) = delete;
+//};
+////

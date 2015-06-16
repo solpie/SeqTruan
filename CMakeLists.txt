@@ -34,7 +34,7 @@ set(SRC view/viewport/ViewPort.cpp)
 add_executable(SeqTruan WIN32 main.cpp
  view/SeqTruanWin.cpp
  model/TrackModel.cpp
- model/Singleton.cpp
+ model/Singleton.h
   ${SRC} view/timeline/Timeline.h view/timeline/Timeline.cpp view/timeline/TrackToolBar.h view/timeline/TrackToolBar.cpp model/Singleton.h)
 
 # Use the Widgets module from Qt 5.

@@ -19,6 +19,9 @@ TrackToolBar::TrackToolBar(QWidget *parent):QWidget(parent)
     newTrackButton = new QPushButton("new Track",this);
 //    QObject::connect(newTrackButton, &QPushButton::clicked, someFunction);
 //    newTrackButton->mouseMoveEvent
+//    TrackModel *t = TrackModel::_();
+//    t->newTrack();
+    TrackModel::_().newTrack();
     connect(newTrackButton, &QPushButton::clicked, [=](int result) {
         printf("click me");
 
