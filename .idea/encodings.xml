@@ -2,15 +2,6 @@
 <project version="4">
   <component name="Encoding" defaultCharsetForPropertiesFiles="UTF-8">
     <file url="file://$PROJECT_DIR$/model" charset="GBK" />
-    <file url="file://$PROJECT_DIR$/model/SImage.py" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/model/TracksModel.py" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/model/__init__.py" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/module/App.py" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/module/AudioPlayBack.py" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/module/C.py" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/module/Events.py" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/module/__init__.py" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/ui/composite/Track.py" charset="UTF-8" />
     <file url="PROJECT" charset="UTF-8" />
   </component>
 </project>
