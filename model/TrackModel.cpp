@@ -5,7 +5,6 @@
 #include <iostream>
 
 #include "TrackModel.h"
-#include "events/subject.h"
 #include "events/Event.h"
 void foo(TrackModel *i)
 {
@@ -13,8 +12,8 @@ void foo(TrackModel *i)
 }
 void TrackModel::newTrack() {
 
-    Subject<std::string> s;
-    s.registerObserver("ORANGE", std::bind(foo, this));
+//    Subject<std::string> s;
+//    s.registerObserver("ORANGE", std::bind(foo, this));
 //    __.registerObserver("GREEN", std::bind(this->func1, 0));
 
 //    __.registerObserver("GREEN", &this->func1);

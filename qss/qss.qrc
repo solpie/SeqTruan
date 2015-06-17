@@ -1,7 +1,7 @@
 <RCC>
     <qresource>
         <file alias="qss_slider">slider.qss</file>
-        <file alias="qss_scrollBar">scrollbar.qss</file>
+        <file>scrollbar.qss</file>
         <file alias="qss_button">button.qss</file>
     </qresource>
 </RCC>

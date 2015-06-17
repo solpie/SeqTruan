@@ -8,6 +8,7 @@
 #endif //SEQTRUAN_SEQTRUANWIN_H
 #include "viewport/ViewPort.h"
 #include "QWidget"
+#include "QtCore"
 #include "timeline/Timeline.h"
 class SeqTruanWin : public QWidget {
 Q_OBJECT

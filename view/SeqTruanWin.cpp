@@ -10,7 +10,7 @@ SeqTruanWin::SeqTruanWin(QWidget *parent)
     timeline->move(0, 720);
     timeline->resize(1440, 720);
     timeline->show();
-
+    qDebug()<<"hello";
 //    testBtn = new QPushButton();
 //    testBtn->resize(100, 30);
 }
