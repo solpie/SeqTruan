@@ -27,5 +27,5 @@ void TrackModel::newTrack() {
 };
 
 void TrackModel::func1() {
-    std::cout << "foo( " << " )\n";
+//    qDebug()
 };
