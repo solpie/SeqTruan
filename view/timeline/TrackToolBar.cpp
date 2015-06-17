@@ -22,9 +22,9 @@ TrackToolBar::TrackToolBar(QWidget *parent):QWidget(parent)
 //    TrackModel *t = TrackModel::_();
 //    t->newTrack();
     TrackModel::_().newTrack();
-    connect(newTrackButton, &QPushButton::clicked, [=](int result) {
+    connect(newTrackButton, &QPushButton::clicked, []{
         printf("click me");
-
+        Evt_dis("type");
     });
 //    this.pressed.connect(someFunction);
 //    this->onClkNewTrackBtn();

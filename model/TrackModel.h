@@ -10,6 +10,8 @@
 #include "Singleton.h"
 #include <functional>
 #include <vector>
+#include <events/Event.h>
+
 class TrackModel :public Singleton<TrackModel>{
 public:
 

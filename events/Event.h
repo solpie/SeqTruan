@@ -16,54 +16,76 @@
 using namespace std;
 
 
-template<typename Event>
-class Subject {
+//template<typename Event>
+//class Subject {
+//public:
+//    Subject() = default;
+//
+//    template<typename Observer>
+//    void registerObserver(const Event &event, Observer &&observer) {
+//        observers_[event].push_back(forward<Observer>(observer));
+//    }
+//
+//    void notify(const Event &event) const {
+//        for (const auto &obs : observers_.at(event))
+//            obs();
+//    }
+//
+//    // disallow copying and assigning
+//    Subject(const Subject &) = delete;
+//
+//    Subject &operator=(const Subject &) = delete;
+//
+//private:
+//    map<Event, vector<function<void()>>> observers_;
+//};
+
+//class Evt : public Singleton<Evt> {
+////private:
+////    Subject<string> __;
+//public:
+//    Subject<string> __;
+//
+//    static void add(const string event, auto &&observer) {
+//        Evt::_().__.registerObserver(event, observer);
+//    }
+//
+//    static void dis(const string event) {
+//        Evt::_().__.notify(event);
+//    }
+//};
+
+class Evt : public Singleton<Evt> {
 public:
-    Subject() = default;
+    Evt() = default;
 
     template<typename Observer>
-    void registerObserver(const Event &event, Observer &&observer) {
-        observers_[event].push_back(forward<Observer>(observer));
+    void _add(const string &event, Observer &&observer) {
+        _observers[event].push_back(forward<function<void()>>(observer));
     }
 
-    template<typename Observer>
-    void registerObserver(Event &&event, Observer &&observer) {
-        observers_[move(event)].push_back(forward<Observer>(observer));
-    }
-
-    void notify(const Event &event) const {
-        for (const auto &obs : observers_.at(event))
+    void _dis(const string &event) const {
+        for (const auto &obs : _observers.at(event))
             obs();
     }
 
-    // disallow copying and assigning
-    Subject(const Subject &) = delete;
-
-    Subject &operator=(const Subject &) = delete;
-
-private:
-    map<Event, vector<function<void()>>> observers_;
-};
-
-class Evt : public Singleton<Evt> {
-//private:
-//    Subject<string> __;
-public:
-    Subject<string> __;
-
-    template<typename Observer>
-    static void add(const string event, Observer &&observer) {
-        Evt::_().__.registerObserver(event, observer);
+    static void add(const string event, auto &&observer) {
+        Evt::_()._add(event, observer);
     }
 
     static void dis(const string event) {
-        Evt::_().__.notify(event);
+        Evt::_()._dis(event);
     }
+
+    // disallow copying and assigning
+    Evt(const Evt &) = delete;
+
+    Evt &operator=(const Evt &) = delete;
+
+private:
+    map<string, vector<function<void()>>> _observers;
 };
 
 
-
-
-#define _func(func) std::bind([](TrackModel *self) {self->func();},this)
-#define Evt_add(type,func) Evt::add(type, _func(func));
+#define Evt_add(type, func) Evt::_()._add(type, [this] {func();});
 #define Evt_dis(type) Evt::dis(type);
