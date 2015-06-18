@@ -2,6 +2,7 @@
 // Created by toramisu on 2015/6/16.
 //
 
+#include <model/App.h>
 #include "TrackToolBar.h"
 #include "model/TrackModel.h"
 static void someFunction() {
@@ -21,7 +22,7 @@ TrackToolBar::TrackToolBar(QWidget *parent):QWidget(parent)
 //    newTrackButton->mouseMoveEvent
 //    TrackModel *t = TrackModel::_();
 //    t->newTrack();
-    TrackModel::_().newTrack();
+    App()._().trackModel->newTrack("curry","D:/projects/SeqTruanCpp/test/test10/");
     connect(newTrackButton, &QPushButton::clicked, []{
         printf("click me");
         Evt_dis("type");

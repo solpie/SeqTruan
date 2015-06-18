@@ -9,12 +9,13 @@
 
 #include "QWidget"
 #include "TrackToolBar.h"
-
-class Timeline:public QWidget{
+#include "TrackPanelArea.h"
+class Timeline : public QWidget {
 Q_OBJECT
 public:
-    Timeline(QWidget *parent=0);
+    Timeline(QWidget *parent = 0);
 
 private:
     TrackToolBar *trackToolBar;
+    TrackPanelArea *trackPanelArea;
 };

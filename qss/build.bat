@@ -1,1 +1,0 @@
-pyrcc5 -o qrc.py qss.qrc

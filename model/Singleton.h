@@ -6,7 +6,7 @@
 #ifndef SEQTRUAN_SINGLETON_H
 #define SEQTRUAN_SINGLETON_H
 
-
+//#include "utility"
 //class S {
 //public:
 //    static S &getInstance() {
@@ -31,10 +31,21 @@
 template<typename T>
 class Singleton {
 public:
-    static T &_() {
-        static T instance;
-        return instance;
-    }
+        static T &_() {
+            static T instance;
+            return instance;
+        }
+
+
+//private:
+//    Singleton() {};                   // Constructor? (the {} brackets) are needed here.
+//    // C++ 11
+//    // =======
+//    // We can use the better technique of deleting the methods
+//    // we don't want.
+//    Singleton(Singleton const&) = delete;
+//
+//    void operator=(Singleton const &) = delete;
 };
 
 

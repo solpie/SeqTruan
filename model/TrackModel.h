@@ -11,12 +11,48 @@
 #include <functional>
 #include <vector>
 #include <events/Event.h>
+#include <QtCore/qstring.h>
 
-class TrackModel :public Singleton<TrackModel>{
+//template<typename P>
+//class PayLoad {
+//public:
+//    P get() {
+//        return this;
+//    };
+//};
+
+class TrackFrameInfo {
+public:
+    int idx;
+    int holdCount;
+    int startIdx;
+//    auto *payLoad;
+//    PayLoad payLoad;
+};
+
+class TrackInfo {
+public:
+    TrackInfo(QString name) {
+        this->name = name;
+    };
+    QString name;
+    vector<TrackFrameInfo> frames;
+    int startIdx;
+
+    int getCurTrackFrameIdx() {
+        return _trackFrameIdx;
+    };
+private:
+    int _trackFrameIdx;
+};
+
+class TrackModel {
 public:
 
-    void newTrack();
+    void newTrack(QString name, QString imagesPath);
 
     void func1();
 
+private:
+    vector<TrackInfo *> _trackInfos;
 };

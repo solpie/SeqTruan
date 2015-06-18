@@ -30,8 +30,9 @@ set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -w -std=gnu++11")
 find_package(Qt5Widgets)
 #set(SRC view/viewport/ViewPort.cpp)
 # Tell CMake to create the helloworld executable
-qt5_add_resources(RESOURCES qss/qss.qrc)
+qt5_add_resources(RESOURCES qrc/rc.qrc)
 add_executable(SeqTruan WIN32 main.cpp ${RESOURCES}
+view/UI.h
 view/SeqTruanWin.cpp
 model/TrackModel.cpp
 view/viewport/ViewPort.cpp
@@ -40,6 +41,7 @@ view/timeline/Timeline.h
 view/timeline/Timeline.cpp
 view/timeline/TrackToolBar.h
 view/timeline/TrackToolBar.cpp
+view/timeline/TrackPanelArea.cpp
 model/Singleton.h events/Event.h)
 
 # Use the Widgets module from Qt 5.
