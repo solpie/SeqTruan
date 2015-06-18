@@ -7,6 +7,7 @@
 
 #endif //SEQTRUAN_TIMELINE_H
 
+#include <model/TrackModel.h>
 #include "QWidget"
 #include "TrackToolBar.h"
 #include "TrackPanelArea.h"
@@ -18,6 +19,8 @@ public:
     Timeline(QWidget *parent = 0);
 
 private:
+    void onNewTrack();
+
     TrackToolBar *trackToolBar;
     TrackPanelArea *trackPanelArea;
     TrackArea *trackArea;

@@ -52,7 +52,7 @@ public:
     void newTrack(QString name, QString imagesPath);
 
     void func1();
-
+    TrackInfo *newTrackInfo;
 private:
     vector<TrackInfo *> _trackInfos;
 };

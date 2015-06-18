@@ -22,10 +22,10 @@ TrackToolBar::TrackToolBar(QWidget *parent):QWidget(parent)
 //    newTrackButton->mouseMoveEvent
 //    TrackModel *t = TrackModel::_();
 //    t->newTrack();
-    App()._().trackModel->newTrack("curry","D:/projects/SeqTruanCpp/test/test10/");
     connect(newTrackButton, &QPushButton::clicked, []{
-        printf("click me");
-        Evt_dis("type");
+//        printf("click me");
+//
+        App()._().trackModel->newTrack("new track","");
     });
 //    this.pressed.connect(someFunction);
 //    this->onClkNewTrackBtn();

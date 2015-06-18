@@ -1,7 +1,7 @@
 //
 // Created by manoyuria on 2015/6/18.
 //
-
+#pragma once
 #ifndef SEQTRUAN_APP_H
 #define SEQTRUAN_APP_H
 
@@ -20,6 +20,7 @@ public:
         QApplication a(argc, argv);
         init();
         initUI();
+        test();
         a.exec();
     }
 
@@ -30,6 +31,11 @@ public:
     void initUI() {
         seqTruanWin = new SeqTruanWin();
         seqTruanWin->show();
+    }
+
+    void test() {
+        App()._().trackModel->newTrack("curry", "D:/projects/SeqTruanCpp/test/test10/");
+
     }
 
     TrackModel *trackModel;

@@ -6,8 +6,12 @@
 #define SEQTRUAN_UI_H
 
 #include "Theme.h"
+#include "events/Event.h"
+#include "events/TrackModelEvent.h"
 #include <c++/functional>
 #include "QWidget"
+#include "QPainter"
+#include "QPen"
 #include "Qt"
 #define setX(widget, x) widget->move(x,widget->y())
 #define setY(widget, y) widget->move(widget->x(),y)

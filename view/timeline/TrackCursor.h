@@ -16,6 +16,8 @@ public:
 private:
     QLabel *timeLabel;
     int i;
+protected:
+    virtual void paintEvent(QPaintEvent *qPaintEvent) override;
 };
 //#include "Qt"
 //TrackCursor::TrackCursor(QWidget *parent) : DragWidget(parent) {

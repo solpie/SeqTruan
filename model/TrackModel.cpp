@@ -30,7 +30,9 @@ void TrackModel::newTrack(QString name, QString dirname = "") {
                 }
             }
     }
-
+    newTrackInfo = trackInfo;
+    Evt_dis("newTrack");
+    newTrackInfo = NULL;
 //    Evt::add("type",[=](){this->func1();});
 //    Evt_dis("type")
 //    Evt::add("type2",std::bind([](TrackModel *self) {self->func1();},this));

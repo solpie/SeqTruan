@@ -25,7 +25,7 @@ project(SeqTruan)
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 # Instruct CMake to run moc automatically when needed.
 set(CMAKE_AUTOMOC ON)
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -w -std=gnu++11")
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -w -std=c++11")
 # Find the QtWidgets library
 find_package(Qt5Widgets)
 #set(SRC view/viewport/ViewPort.cpp)
@@ -46,7 +46,7 @@ view/timeline/TrackPanelArea.cpp
 view/timeline/TrackPanelArea.h
 view/timeline/TrackCursor.h
 view/timeline/TrackCursor.cpp
-view/timeline/TrackArea.cpp view/timeline/TrackArea.h)
+view/timeline/TrackArea.cpp view/timeline/TrackArea.h events/TrackModelEvent.h)
 
 # Use the Widgets module from Qt 5.
 target_link_libraries(SeqTruan Qt5::Widgets)
