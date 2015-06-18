@@ -8,10 +8,10 @@
 #endif //SEQTRUAN_TIMELINE_H
 
 #include <model/TrackModel.h>
-#include "QWidget"
 #include "TrackToolBar.h"
 #include "TrackPanelArea.h"
 #include "TrackArea.h"
+#include "view/UI.h"
 
 class Timeline : public QWidget {
 Q_OBJECT
@@ -21,6 +21,10 @@ public:
 private:
     void onNewTrack();
 
+    QScrollBar *vScrollBar;
+    int lastVScrollValue;
+    void onVScrollBar();
+    QScrollBar *hScrollBar;
     TrackToolBar *trackToolBar;
     TrackPanelArea *trackPanelArea;
     TrackArea *trackArea;

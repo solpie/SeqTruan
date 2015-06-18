@@ -46,7 +46,7 @@ view/timeline/TrackPanelArea.cpp
 view/timeline/TrackPanelArea.h
 view/timeline/TrackCursor.h
 view/timeline/TrackCursor.cpp
-view/timeline/TrackArea.cpp view/timeline/TrackArea.h events/TrackModelEvent.h)
+view/timeline/TrackArea.cpp view/timeline/TrackArea.h events/TrackModelEvent.h view/timeline/TimestampBar.cpp view/timeline/TimestampBar.h)
 
 # Use the Widgets module from Qt 5.
 target_link_libraries(SeqTruan Qt5::Widgets)

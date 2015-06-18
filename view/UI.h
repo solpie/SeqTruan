@@ -8,10 +8,12 @@
 #include "Theme.h"
 #include "events/Event.h"
 #include "events/TrackModelEvent.h"
-#include <c++/functional>
+#include <functional>
 #include "QWidget"
 #include "QPainter"
 #include "QPen"
+#include "QScrollBar"
+#include "QVBoxLayout"
 #include "Qt"
 #define setX(widget, x) widget->move(x,widget->y())
 #define setY(widget, y) widget->move(widget->x(),y)

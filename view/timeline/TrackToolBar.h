@@ -15,6 +15,9 @@ class TrackToolBar:public QWidget{
 public:
     TrackToolBar(QWidget *parent=0);
     void onClkNewTrackBtn();
+
+    void onVScrollBar();
+
 private:
     QPushButton *newTrackButton;
 

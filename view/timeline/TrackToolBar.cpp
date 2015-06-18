@@ -24,10 +24,12 @@ TrackToolBar::TrackToolBar(QWidget *parent):QWidget(parent)
 //    t->newTrack();
     connect(newTrackButton, &QPushButton::clicked, []{
 //        printf("click me");
-//
         App()._().trackModel->newTrack("new track","");
     });
 //    this.pressed.connect(someFunction);
 //    this->onClkNewTrackBtn();
 }
 
+void TrackToolBar::onVScrollBar() {
+
+}

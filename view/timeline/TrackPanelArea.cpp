@@ -5,3 +5,7 @@
 TrackPanelArea::TrackPanelArea(QWidget *parent) : QWidget(parent) {
 
 }
+
+void TrackPanelArea::add(TrackInfo *trackInfo) {
+
+}

@@ -6,6 +6,7 @@
 #ifndef SEQTRUAN_TRACKPANELAREA_H
 #define SEQTRUAN_TRACKPANELAREA_H
 
+#include <model/TrackModel.h>
 #include "QWidget"
 #include "TrackCursor.h"
 
@@ -13,6 +14,9 @@ class TrackPanelArea : public QWidget {
 Q_OBJECT
 public:
     TrackPanelArea(QWidget *parent=0);
+
+    void add(TrackInfo *trackInfo);
+
 
 
 };
