@@ -3,13 +3,15 @@
 //
 
 #include "Timeline.h"
-#include "view/Theme.h"
-#include "view/UI.h"
 
 Timeline::Timeline(QWidget *parent) : QWidget(parent) {
     trackToolBar = new TrackToolBar(this);
 
     trackPanelArea = new TrackPanelArea(this);
-    setY(trackPanelArea, trackToolBar->height());
     trackPanelArea->resize(TIMELINE_TRACK_PANEL_DEF_WIDTH, TIMELINE_HEIGHT);
+    setY(trackPanelArea, trackToolBar->height());
+
+    trackArea = new TrackArea(this);
+    trackArea->resize(1280, TIMELINE_HEIGHT);
+    trackArea->move(TIMELINE_TRACK_PANEL_DEF_WIDTH, 0);
 }

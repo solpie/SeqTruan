@@ -33,16 +33,20 @@ find_package(Qt5Widgets)
 qt5_add_resources(RESOURCES qrc/rc.qrc)
 add_executable(SeqTruan WIN32 main.cpp ${RESOURCES}
 view/UI.h
-view/SeqTruanWin.cpp
-model/TrackModel.cpp
-view/viewport/ViewPort.cpp
+events/Event.h
 model/Singleton.h
+model/TrackModel.cpp
+view/SeqTruanWin.cpp
+view/viewport/ViewPort.cpp
 view/timeline/Timeline.h
 view/timeline/Timeline.cpp
 view/timeline/TrackToolBar.h
 view/timeline/TrackToolBar.cpp
 view/timeline/TrackPanelArea.cpp
-model/Singleton.h events/Event.h)
+view/timeline/TrackPanelArea.h
+view/timeline/TrackCursor.h
+view/timeline/TrackCursor.cpp
+view/timeline/TrackArea.cpp view/timeline/TrackArea.h)
 
 # Use the Widgets module from Qt 5.
 target_link_libraries(SeqTruan Qt5::Widgets)

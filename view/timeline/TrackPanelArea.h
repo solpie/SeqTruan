@@ -6,12 +6,17 @@
 #ifndef SEQTRUAN_TRACKPANELAREA_H
 #define SEQTRUAN_TRACKPANELAREA_H
 
-#endif //SEQTRUAN_TRACKPANELAREA_H
-
 #include "QWidget"
+#include "TrackCursor.h"
 
 class TrackPanelArea : public QWidget {
 Q_OBJECT
 public:
-    TrackPanelArea(QWidget *parent);
+    TrackPanelArea(QWidget *parent=0);
+
+
 };
+
+#endif //SEQTRUAN_TRACKPANELAREA_H
+
+

@@ -10,6 +10,8 @@
 #include "QWidget"
 #include "TrackToolBar.h"
 #include "TrackPanelArea.h"
+#include "TrackArea.h"
+
 class Timeline : public QWidget {
 Q_OBJECT
 public:
@@ -18,4 +20,5 @@ public:
 private:
     TrackToolBar *trackToolBar;
     TrackPanelArea *trackPanelArea;
+    TrackArea *trackArea;
 };
