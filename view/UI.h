@@ -10,6 +10,7 @@
 #include "events/TrackModelEvent.h"
 #include <functional>
 #include "Qt"
+#include "QtCore"
 #include "QFile"
 #include "QWidget"
 #include "QVBoxLayout"
@@ -19,6 +20,12 @@
 #include "QComboBox"
 #include "QPainter"
 #include "QPen"
+#include "QBrush"
+#include "QPainterPath"
+#include "QColor"
+#include "QLinearGradient"
+/////////////////////
+#include "OverWidget.h"
 //////////////////////////////////////////////// qt method
 #define setX(widget, x) widget->move(x,widget->y())
 #define setY(widget, y) widget->move(widget->x(),y)

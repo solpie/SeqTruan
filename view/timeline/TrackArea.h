@@ -20,6 +20,7 @@ public:
 private:
     TimestampBar *timestampBar;
     TrackCursor *trackCursor;
+    QVBoxLayout *vbox;
 };
 
 

@@ -58,7 +58,7 @@ view/timeline/Track.h
 view/timeline/TimelineToolBar.cpp
 view/timeline/TimelineToolBar.h
 view/viewport/Transport.cpp
-view/viewport/Transport.h)
+view/viewport/Transport.h view/timeline/TrackFrame.cpp view/timeline/TrackFrame.h view/timeline/TrackFrameThumb.cpp view/timeline/TrackFrameThumb.h view/OverWidget.cpp view/OverWidget.h)
 
 # Use the Widgets module from Qt 5.
 target_link_libraries(SeqTruan Qt5::Widgets)

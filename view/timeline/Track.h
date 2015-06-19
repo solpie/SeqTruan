@@ -7,10 +7,20 @@
 #define SEQTRUAN_TRACK_H
 
 #include "view/UI.h"
-
+#include "model/TrackModel.h"
 class Track : public QWidget {
 public:
+    Track();
     Track(QWidget *parent);
+
+    void load(TrackInfo *trackInfo);
+    TrackInfo *trackInfo;
+    void paintHead();
+    OverWidget *headButton;
+
+    void paintTail();
+
+    OverWidget *tailButton;
 };
 
 
