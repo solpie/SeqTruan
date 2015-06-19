@@ -7,14 +7,10 @@
 Track::Track() {
     resize(1280, TIMELINE_TRACK_DEF_HEIGHT);
 //    this->setStyleSheet("background:#343434");
-}
+    trackFrameArea = new QWidget(this);
+    trackFrameArea->move(TIMELINE_TRACK_FRAME_MAX_WIDTH - 9, 0);
+    trackFrameArea->resize(80, 75);
 
-Track::Track(QWidget *parent) : QWidget(parent) {
-    Track();
-}
-
-void Track::load(TrackInfo *trackInfo) {
-    this->trackInfo = trackInfo;
     headButton = new OverWidget(this);
     headButton->resize(10, 40);
     headButton->move(31 - 9, 0);
@@ -25,7 +21,46 @@ void Track::load(TrackInfo *trackInfo) {
     tailButton->resize(10, 40);
     tailButton->move(80, 0);
     over(tailButton, paintEvent_, paintTail);
+}
 
+Track::Track(QWidget *parent) : QWidget(parent) {
+    Track();
+}
+
+void Track::load(TrackInfo *trackInfo) {
+    this->trackInfo = trackInfo;
+
+//    for (const auto &obs : _observers.at(event))
+//        obs();
+    int len = sizeof(trackInfo->frames);
+    for (int i = 0; i < 10; i++) {
+        TrackFrameInfo *trackFrameInfo = trackInfo->frames[i];
+        TrackFrame *trackFrame = new TrackFrame(trackFrameArea);
+        trackFrame->setPixmap(trackFrameInfo->payLoad);
+        trackFrame->idx = i + 1;
+        trackFrame->move(i * trackFrame->width(), 0);
+
+    }
+    _setWidth(trackFrameArea, (len + 1) * TIMELINE_TRACK_FRAME_MAX_WIDTH);
+
+//    imgs = trackInfo.frames
+//    self.trackIdx = trackInfo.trackIdx
+//    for i in range(0, len(imgs)):
+//    sImage = imgs[i]
+//    sImage.startFrameIdx = i + 1
+//    trackFrame = TrackFrame(self.trackFrameArea)
+//    trackFrame.setPixmap(sImage.getPixmap())
+
+//    trackFrame.setIdx(i + 1)
+//    trackFrame.trackIdx = self.trackIdx
+//    trackFrame.relayout = self.relayout
+//    trackFrame.move(i * trackFrame.width(), 0)
+//    trackFrame.refSImage = sImage
+//    self.thumbArr.append(trackFrame)
+//    self.trackFrameArea.resize((len(self.thumbArr) + 1) * TIMELINE_TRACK_FRAME_MAX_WIDTH,
+//                               self.trackFrameArea.height())
+//    self.tailButton.move(self.trackFrameArea.x() + self.trackFrameArea.width() - TIMELINE_TRACK_FRAME_MAX_WIDTH,
+//                         0)
 
 }
 

@@ -27,6 +27,9 @@ public:
     int idx;
     int holdCount;
     int startIdx;
+//    int frameIdx;
+
+    QImage *payLoad;
 //    auto *payLoad;
 //    PayLoad payLoad;
 };
@@ -37,7 +40,7 @@ public:
         this->name = name;
     };
     QString name;
-    vector<TrackFrameInfo> frames;
+    vector<TrackFrameInfo*> frames;
     int startIdx;
 
     int getCurTrackFrameIdx() {

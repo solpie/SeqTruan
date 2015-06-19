@@ -8,6 +8,7 @@
 
 #include "view/UI.h"
 #include "model/TrackModel.h"
+#include "TrackFrame.h"
 class Track : public QWidget {
 public:
     Track();
@@ -21,6 +22,8 @@ public:
     void paintTail();
 
     OverWidget *tailButton;
+private:
+    QWidget *trackFrameArea;
 };
 
 

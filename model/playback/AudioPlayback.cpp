@@ -8,11 +8,11 @@
 AudioPlayback::AudioPlayback() {
     audioplayback = new QMediaPlayer();
     audioplayback->setVolume(50);
-    audioplayback->connect(audioplayback, QMediaPlayer::positionChanged, [this] { this->onPosition(); });
+    audioplayback->connect(audioplayback, QMediaPlayer::positionChanged, [this]{this->onPosition();});
 }
 
 void AudioPlayback::onPosition() {
-    qDebug() << audioplayback->position() << audioplayback->state();
+//    qDebug() << audioplayback->position() << audioplayback->state();
     Evt_dis(AUDIO_TICK);
 }
 

@@ -19,6 +19,7 @@
 #include "QScrollBar"
 #include "QComboBox"
 #include "QPainter"
+#include "QPixmap"
 #include "QPen"
 #include "QBrush"
 #include "QPainterPath"
@@ -30,19 +31,22 @@
 #define _setX_(widget, x) widget->move(x,widget->y())
 #define _setY(widget, y) widget->move(widget->x(),y)
 #define _setHeight(widget, height) widget->resize(widget->width(),height)
-#define setMouseTransparent(widget) widget->setAttribute(Qt::WA_TransparentForMouseEvents, true)
+#define _setWidth(widget, width) widget->resize(width,widget->height())
+#define _setMouseTransparent(widget) widget->setAttribute(Qt::WA_TransparentForMouseEvents, true)
 #define setColor1(widget, color) qwidget->setAutoFillBackground(True)
 
-#define setQss(widget, alias) \
+#define _setQss(widget, alias) \
+do { \
 QFile f(alias);\
-f.open(QIODevice::ReadOnly);\
-QByteArray ba = f.readAll();\
-widget->setStyleSheet(ba.data());\
-f.close();
+f.open(QIODevice::ReadOnly); \
+QByteArray ba = f.readAll(); \
+(widget)->setStyleSheet(ba.data()); \
+f.close(); \
+} while(FALSE)
 
-class UI :public Singleton<UI>{
+class UI : public Singleton<UI> {
 public:
-//    static void setQss(QWidget *w, const QString alias) {
+//    static void _setQss(QWidget *w, const QString alias) {
 //        QFile f(alias);
 //        f.open(QIODevice::ReadOnly);
 //        QByteArray ba = f.readAll();

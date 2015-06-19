@@ -15,9 +15,7 @@ Timeline::Timeline(QWidget *parent) : QWidget(parent) {
     trackArea = new TrackArea(this);
     trackArea->resize(1280, TIMELINE_HEIGHT);
     trackArea->move(TIMELINE_TRACK_PANEL_DEF_WIDTH, 0);
-//    Evt::_().add(TrackModelEvent::NEW_TRACK,[](TrackInfo *trackInfo){onNewTrack(trackInfo);});
-//    Evt::_().add("newTrack",func1);
-    Evt_add("newTrack", onNewTrack);
+    Evt_add(TrackModelEvent_NEW_TRACK, onNewTrack);
 
     vScrollBar = new QScrollBar(this);
     lastVScrollValue = 0;
@@ -26,25 +24,16 @@ Timeline::Timeline(QWidget *parent) : QWidget(parent) {
     vScrollBar->resize(15, 235);
     connect(vScrollBar, QScrollBar::valueChanged, this, onVScrollBar);
 
-    hScrollBar = new QScrollBar(Qt::Horizontal,this);
+    hScrollBar = new QScrollBar(Qt::Horizontal, this);
     lastHScrollValue = 0;
     hScrollBar->resize(500, 15);
     hScrollBar->setPageStep(200);
     connect(hScrollBar, QScrollBar::valueChanged, this, onHScrollBar);
     _setHeight(this, TIMELINE_HEIGHT);
 
-    QFile f(":/qss_scrollbar");
-    f.open(QIODevice::ReadOnly);
-    QByteArray ba = f.readAll();
-    f.close();
-    vScrollBar->setStyleSheet(ba.data());
+    _setQss(vScrollBar, QSS_SCROLLBAR);
+    _setQss(hScrollBar, QSS_SCROLLBAR);
 
-    hScrollBar->setStyleSheet(ba.data());
-//    qDebug()<<UI::_().getQss(":/qss_scrollBar");
-//    f.close();
-//    setQss(vScrollBar, ":/qss_scrollBar");
-//    sq(*vScrollBar, ":/qss_scrollBar");
-//    UI::setQss(vScrollBar, ":/qss_scrollBar");
     timelineToolBar = new TimelineToolBar(this);
 }
 

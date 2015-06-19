@@ -35,7 +35,6 @@ qt5_add_resources(RESOURCES qrc/rc.qrc)
 add_executable(SeqTruan WIN32 main.cpp ${RESOURCES}
 events/Event.h
 events/TrackModelEvent.h
-events/TrackModelEvent.cpp
 events/ActionEvent.h
 model/Singleton.h
 model/TrackModel.cpp

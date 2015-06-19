@@ -30,6 +30,11 @@ void TrackModel::newTrack(QString name, QString dirname = "") {
                 else {
                     // This is where you might call your encrypting function
                     qDebug() << "Image file: " << fi.absoluteFilePath();
+
+                    QImage *img = new QImage(fi.absoluteFilePath());
+                    TrackFrameInfo *trackFrameInfo = new TrackFrameInfo();
+                    trackFrameInfo->payLoad = img;
+                    trackInfo->frames.push_back(trackFrameInfo);
                 }
             }
     }
@@ -37,7 +42,7 @@ void TrackModel::newTrack(QString name, QString dirname = "") {
         sequencePlayback->endFrameIdx = sizeof(trackInfo->frames);
     }
     newTrackInfo = trackInfo;
-    Evt_dis("newTrack");
+    Evt_dis(TrackModelEvent_NEW_TRACK);
     newTrackInfo = NULL;
 //    Evt::add("type",[=](){this->func1();});
 //    Evt_dis("type")

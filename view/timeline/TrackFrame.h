@@ -6,9 +6,23 @@
 #ifndef SEQTRUAN_TRACKFRAME_H
 #define SEQTRUAN_TRACKFRAME_H
 
+#include "view/UI.h"
 
-class TrackFrame {
+class TrackFrame : public QWidget {
+public:
+    TrackFrame(QWidget *parent);
 
+    void setPixmap(QImage *pixmap);
+    int idx=0;
+
+private:
+    OverWidget *thumb;
+
+    void paintThumb();
+
+    QPixmap thumbPixmap;
+    int thumbWidth;
+    int thumbHeight;
 };
 
 

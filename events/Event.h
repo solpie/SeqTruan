@@ -14,6 +14,7 @@
 #include <utility> // for forward
 #include "ActionEvent.h"
 #include "PlaybackEvent.h"
+#include "TrackModelEvent.h"
 using namespace std;
 
 
