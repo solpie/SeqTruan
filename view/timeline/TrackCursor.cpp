@@ -9,7 +9,6 @@ TrackCursor::TrackCursor(QWidget *parent) : DragWidget(parent) {
     exPressFunc = [] {
 //        qDebug() << "press me";
         printf("dd");
-
     };
     timeLabel = new QLabel("00:00:24", this);
     timeLabel->move(2, 10);
@@ -19,7 +18,6 @@ TrackCursor::TrackCursor(QWidget *parent) : DragWidget(parent) {
 }
 
 void TrackCursor::paintEvent(QPaintEvent *event) {
-    printf("");
     QPainter p(this);
     QPen pen;
     pen.setColor(QColor(TIMELINE_CURSOR_EDGE_COL));

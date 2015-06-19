@@ -18,7 +18,7 @@ public:
     virtual ~SeqTruanWin() { }
 
 private:
-    ViewPort *viewport;
-    Timeline *timeline;
+    ViewPort *_viewport;
+    Timeline *_timeline;
     QPushButton *testBtn;
 };

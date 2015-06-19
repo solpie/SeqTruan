@@ -32,10 +32,13 @@ find_package(Qt5Widgets)
 # Tell CMake to create the helloworld executable
 qt5_add_resources(RESOURCES qrc/rc.qrc)
 add_executable(SeqTruan WIN32 main.cpp ${RESOURCES}
-view/UI.h
 events/Event.h
+events/TrackModelEvent.h
+events/TrackModelEvent.cpp
+events/ActionEvent.h
 model/Singleton.h
 model/TrackModel.cpp
+view/UI.h
 view/SeqTruanWin.cpp
 view/viewport/ViewPort.cpp
 view/timeline/Timeline.h
@@ -46,7 +49,16 @@ view/timeline/TrackPanelArea.cpp
 view/timeline/TrackPanelArea.h
 view/timeline/TrackCursor.h
 view/timeline/TrackCursor.cpp
-view/timeline/TrackArea.cpp view/timeline/TrackArea.h events/TrackModelEvent.h view/timeline/TimestampBar.cpp view/timeline/TimestampBar.h)
+view/timeline/TrackArea.cpp
+view/timeline/TrackArea.h
+view/timeline/TimestampBar.cpp
+view/timeline/TimestampBar.h
+view/timeline/Track.cpp
+view/timeline/Track.h
+view/timeline/TimelineToolBar.cpp
+view/timeline/TimelineToolBar.h
+view/viewport/Transport.cpp
+view/viewport/Transport.h)
 
 # Use the Widgets module from Qt 5.
 target_link_libraries(SeqTruan Qt5::Widgets)

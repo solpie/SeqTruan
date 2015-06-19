@@ -5,6 +5,7 @@
 #include <iostream>
 
 #include "TrackModel.h"
+#include "events/TrackModelEvent.h"
 #include "QtCore"
 
 void TrackModel::newTrack(QString name, QString dirname = "") {
@@ -43,3 +44,8 @@ void TrackModel::func1() {
 //    qDebug()
     printf("ii");
 };
+
+void TrackModel::setZoomLevel(int lv) {
+    //todo
+//    Evt_dis(TrackModelEvent::SET_ZOOM_LEVEL);
+}

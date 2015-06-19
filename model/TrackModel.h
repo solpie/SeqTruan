@@ -53,6 +53,10 @@ public:
 
     void func1();
     TrackInfo *newTrackInfo;
+
+    void setZoomLevel(int lv);
+
+
 private:
     vector<TrackInfo *> _trackInfos;
 };

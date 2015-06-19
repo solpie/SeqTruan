@@ -12,7 +12,7 @@
 #include "TrackPanelArea.h"
 #include "TrackArea.h"
 #include "view/UI.h"
-
+#include "TimelineToolBar.h"
 class Timeline : public QWidget {
 Q_OBJECT
 public:
@@ -25,7 +25,16 @@ private:
     int lastVScrollValue;
     void onVScrollBar();
     QScrollBar *hScrollBar;
+    int lastHScrollValue;
+
+    void onHScrollBar();
+
+
+protected:
+    virtual void resizeEvent(QResizeEvent *qResizeEvent) override;
+
     TrackToolBar *trackToolBar;
     TrackPanelArea *trackPanelArea;
     TrackArea *trackArea;
+    TimelineToolBar *timelineToolBar;
 };

@@ -3,16 +3,21 @@
 //
 
 #include "SeqTruanWin.h"
-SeqTruanWin::SeqTruanWin(QWidget *parent)
-{
+
+SeqTruanWin::SeqTruanWin(QWidget *parent) {
     resize(1440, 1056);
-    timeline = new Timeline(this);
-    timeline->move(0, 720);
-    timeline->resize(1440, 720);
-    timeline->show();
-    qDebug()<<"inited SeqTruanWin";
-//    testBtn = new QPushButton();
-//    testBtn->resize(100, 30);
+
+    QSplitter *vSplitter = new QSplitter(Qt::Vertical, this);
+    vSplitter->resize(width(), height());
+    vSplitter->setOpaqueResize(false);
+
+    ViewPort *viewPort = new ViewPort(vSplitter);
+
+    _timeline = new Timeline(vSplitter);
+    _timeline->move(0, 720);
+//    _timeline->resize(1440, 720);
+    _timeline->show();
+    qDebug() << "inited SeqTruanWin";
 }
 
 

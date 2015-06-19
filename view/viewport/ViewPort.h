@@ -6,11 +6,15 @@
 #define SEQTRUAN_VIEWPORT_H
 
 #endif //SEQTRUAN_VIEWPORT_H
-#include "QtWidgets/QWidget"
+
+#include "view/UI.h"
+#include "Transport.h"
+
 class ViewPort : public QWidget {
 Q_OBJECT
 public:
-    ViewPort(QWidget *parent=0);
+    ViewPort(QWidget *parent = 0);
 
-
+private:
+    Transport *_transport;
 };

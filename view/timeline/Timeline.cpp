@@ -25,6 +25,18 @@ Timeline::Timeline(QWidget *parent) : QWidget(parent) {
     vScrollBar->move(TIMELINE_TRACK_PANEL_DEF_WIDTH - 15, trackToolBar->height());
     vScrollBar->resize(15, 235);
     connect(vScrollBar, QScrollBar::valueChanged, this, onVScrollBar);
+
+    hScrollBar = new QScrollBar(this);
+    lastHScrollValue = 0;
+    hScrollBar->resize(500, 15);
+    hScrollBar->setPageStep(200);
+    connect(hScrollBar, QScrollBar::valueChanged, this, onHScrollBar);
+    setHeight(this, TIMELINE_HEIGHT);
+
+    timelineToolBar = new TimelineToolBar(this);
+//    setStyle(hScrollBar, ':qss_scrollBar')
+//    setStyle(vScrollBar, ':qss_scrollBar')
+//    self.timelineToolBar = TimelineToolBar(self)
 }
 
 void Timeline::onNewTrack() {
@@ -38,4 +50,16 @@ void Timeline::onVScrollBar() {
     lastVScrollValue = vScrollBar->value();
     trackPanelArea->scroll(0, dy);
     trackArea->trackStack->scroll(0, dy);
+}
+
+void Timeline::onHScrollBar() {
+//    int dx = lastHScrollValue -
+}
+
+void Timeline::resizeEvent(QResizeEvent *event) {
+    setHeight(trackPanelArea, height());
+    setHeight(trackArea, height() - 15);
+    setHeight(vScrollBar, height() - 85);
+    hScrollBar->move(vScrollBar->x() + vScrollBar->width(), vScrollBar->y() + vScrollBar->height());
+    setY(timelineToolBar, hScrollBar->y());
 }
