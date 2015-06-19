@@ -4,6 +4,6 @@
 #include "ViewPort.h"
 
 ViewPort::ViewPort(QWidget *parent) : QWidget(parent) {
-    resize(1280, 720);
+    resize(1280, 500);
     _transport = new Transport(this);
 };

@@ -26,17 +26,25 @@ Timeline::Timeline(QWidget *parent) : QWidget(parent) {
     vScrollBar->resize(15, 235);
     connect(vScrollBar, QScrollBar::valueChanged, this, onVScrollBar);
 
-    hScrollBar = new QScrollBar(this);
+    hScrollBar = new QScrollBar(Qt::Horizontal,this);
     lastHScrollValue = 0;
     hScrollBar->resize(500, 15);
     hScrollBar->setPageStep(200);
     connect(hScrollBar, QScrollBar::valueChanged, this, onHScrollBar);
     setHeight(this, TIMELINE_HEIGHT);
 
+    QFile f(":/qss_scrollbar");
+    f.open(QIODevice::ReadOnly);
+    QByteArray ba = f.readAll();
+    f.close();
+    vScrollBar->setStyleSheet(ba.data());
+    hScrollBar->setStyleSheet(ba.data());
+//    qDebug()<<UI::_().getQss(":/qss_scrollBar");
+//    f.close();
+//    setQss(vScrollBar, ":/qss_scrollBar");
+//    sq(*vScrollBar, ":/qss_scrollBar");
+//    UI::setQss(vScrollBar, ":/qss_scrollBar");
     timelineToolBar = new TimelineToolBar(this);
-//    setStyle(hScrollBar, ':qss_scrollBar')
-//    setStyle(vScrollBar, ':qss_scrollBar')
-//    self.timelineToolBar = TimelineToolBar(self)
 }
 
 void Timeline::onNewTrack() {
@@ -54,6 +62,7 @@ void Timeline::onVScrollBar() {
 
 void Timeline::onHScrollBar() {
 //    int dx = lastHScrollValue -
+    //todo
 }
 
 void Timeline::resizeEvent(QResizeEvent *event) {

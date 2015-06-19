@@ -10,13 +10,10 @@ SeqTruanWin::SeqTruanWin(QWidget *parent) {
     QSplitter *vSplitter = new QSplitter(Qt::Vertical, this);
     vSplitter->resize(width(), height());
     vSplitter->setOpaqueResize(false);
-
     ViewPort *viewPort = new ViewPort(vSplitter);
-
     _timeline = new Timeline(vSplitter);
-    _timeline->move(0, 720);
-//    _timeline->resize(1440, 720);
-    _timeline->show();
+
+    setStyleSheet("background:#484848");
     qDebug() << "inited SeqTruanWin";
 }
 

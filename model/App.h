@@ -8,7 +8,7 @@
 #endif //SEQTRUAN_APP_H
 
 #include <QApplication>
-
+#include "QStyleFactory"
 #include "Singleton.h"
 #include "TrackModel.h"
 #include "view/SeqTruanWin.h"
@@ -18,6 +18,8 @@ public:
 
     void start(int argc, char *argv[]) {
         QApplication a(argc, argv);
+        a.setApplicationName("SeqTruan");
+        a.setStyle(QStyleFactory::create("Fusion"));
         init();
         initUI();
         test();
