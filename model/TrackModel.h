@@ -12,7 +12,8 @@
 #include <vector>
 #include <events/Event.h>
 #include <QtCore/qstring.h>
-
+#include "playback/SequencePlayback.h"
+#include "playback/AudioPlayback.h"
 //template<typename P>
 //class PayLoad {
 //public:
@@ -48,7 +49,7 @@ private:
 
 class TrackModel {
 public:
-
+    TrackModel();
     void newTrack(QString name, QString imagesPath);
 
     void func1();
@@ -58,6 +59,9 @@ public:
     void setZoomLevel(int lv);
 
     int frameWidth = 40;
+    SequencePlayback *sequencePlayback;
+    AudioPlayback *audioPlayback;
 private:
     vector<TrackInfo *> _trackInfos;
+
 };

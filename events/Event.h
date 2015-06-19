@@ -13,6 +13,7 @@
 #include <vector>
 #include <utility> // for forward
 #include "ActionEvent.h"
+#include "PlaybackEvent.h"
 using namespace std;
 
 

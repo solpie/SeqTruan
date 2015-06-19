@@ -27,9 +27,9 @@
 /////////////////////
 #include "OverWidget.h"
 //////////////////////////////////////////////// qt method
-#define setX(widget, x) widget->move(x,widget->y())
-#define setY(widget, y) widget->move(widget->x(),y)
-#define setHeight(widget, height) widget->resize(widget->width(),height)
+#define _setX_(widget, x) widget->move(x,widget->y())
+#define _setY(widget, y) widget->move(widget->x(),y)
+#define _setHeight(widget, height) widget->resize(widget->width(),height)
 #define setMouseTransparent(widget) widget->setAttribute(Qt::WA_TransparentForMouseEvents, true)
 #define setColor1(widget, color) qwidget->setAutoFillBackground(True)
 

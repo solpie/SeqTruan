@@ -5,8 +5,11 @@
 #include <iostream>
 
 #include "TrackModel.h"
-#include "events/TrackModelEvent.h"
-#include "QtCore"
+
+TrackModel::TrackModel() {
+    sequencePlayback = new SequencePlayback();
+    audioPlayback = new AudioPlayback();
+}
 
 void TrackModel::newTrack(QString name, QString dirname = "") {
 //    Evt_add("type", func1);
@@ -27,9 +30,11 @@ void TrackModel::newTrack(QString name, QString dirname = "") {
                 else {
                     // This is where you might call your encrypting function
                     qDebug() << "Image file: " << fi.absoluteFilePath();
-
                 }
             }
+    }
+    if (sizeof(trackInfo->frames) > sequencePlayback->endFrameIdx) {
+        sequencePlayback->endFrameIdx = sizeof(trackInfo->frames);
     }
     newTrackInfo = trackInfo;
     Evt_dis("newTrack");
