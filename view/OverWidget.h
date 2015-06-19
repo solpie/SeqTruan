@@ -8,12 +8,15 @@
 
 #include "view/UI.h"
 
-#define paintEvent_ "paintEvent"
 #define over(widget, e, func)  widget->add(e, [this] { this->func(); });
+#define paintEvent_ "paintEvent"
+#define mousePressEvent_ "mousePressEvent"
+#define mouseMoveEvent_ "mouseMoveEvent"
+#define mouseReleaseEvent_ "mouseReleaseEvent"
 
 class OverWidget : public QWidget {
 public:
-    OverWidget(QWidget *parent);
+    OverWidget(QWidget *parent) : QWidget(parent) { };
 
     template<typename Observer>
     void add(const string &event, Observer &&observer) {
@@ -26,10 +29,19 @@ private:
             obs();
     }
 
-    virtual void paintEvent(QPaintEvent *qPaintEvent) override;
+protected:
+
+    virtual void mousePressEvent(QMouseEvent *mouseEvent) override { dis(mousePressEvent_); };
+
+    virtual void mouseMoveEvent(QMouseEvent *mouseEvent) override { dis(mouseMoveEvent_); };
+
+    virtual void mouseReleaseEvent(QMouseEvent *mouseEvent) override { dis(mouseReleaseEvent_); };
+
+    virtual void paintEvent(QPaintEvent *qPaintEvent) override { dis(paintEvent_); };
 
     map<string, vector<function<void()>>> _observers;
 };
 
 
 #endif //SEQTRUAN_HEADBUTTON_H
+
