@@ -17,11 +17,11 @@ public:
     void load(TrackInfo *trackInfo);
     TrackInfo *trackInfo;
     void paintHead();
-    OverWidget *headButton;
+    OverWidget<QWidget> *headButton;
 
     void paintTail();
 
-    OverWidget *tailButton;
+    OverWidget<QWidget> *tailButton;
 private:
     QWidget *trackFrameArea;
 };

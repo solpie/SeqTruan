@@ -16,13 +16,15 @@ public:
     int idx=0;
 
 private:
-    OverWidget *thumb;
+    OverWidget<QWidget> *thumb;
 
     void paintThumb();
 
     QPixmap *thumbPixmap;
 //    int thumbWidth;
 //    int thumbHeight;
+    QLabel *frameIdx;
+    OverWidget<QPushButton> *leftButton;
 };
 
 

@@ -19,7 +19,7 @@ TrackPanel::TrackPanel(QWidget *parent) : QWidget(parent) {
 //            sliderReleased()
 //    self.opacitySlider.mousePressEvent = self.onPressSlider
 //    self.opacitySlider.mouseMoveEvent = self.onMoveSlider
-    connect(opacitySlider, QSlider::valueChanged, [this](int pos) { this->onOpacityChanged(pos); });
+    connect(opacitySlider, QSlider::valueChanged, [this](int pos){this->onOpacityChanged(pos);});
 //    connect(opacitySlider, QSlider::sliderMoved, [this](int pos) { this->onOpacityChanged(pos); });
     trackNameLabel = new QLabel(this);
     trackNameLabel->move(5, 5);

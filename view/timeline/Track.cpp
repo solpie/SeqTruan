@@ -11,15 +11,17 @@ Track::Track() {
     trackFrameArea->move(TIMELINE_TRACK_FRAME_MAX_WIDTH - 9, 0);
     trackFrameArea->resize(80, 75);
 
-    headButton = new OverWidget(this);
+    headButton = new OverWidget<QWidget>;
     headButton->resize(10, 40);
     headButton->move(31 - 9, 0);
     headButton->setStyleSheet("border:none");
+    headButton->setParent(this);
     over(headButton, paintEvent_, paintHead);
 
-    tailButton = new OverWidget(this);
+    tailButton = new OverWidget<QWidget>;
     tailButton->resize(10, 40);
     tailButton->move(80, 0);
+    tailButton->setParent(this);
     over(tailButton, paintEvent_, paintTail);
 }
 

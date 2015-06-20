@@ -14,19 +14,18 @@
 #define mouseMoveEvent_ "mouseMoveEvent"
 #define mouseReleaseEvent_ "mouseReleaseEvent"
 
-class OverWidget : public QWidget {
+template<class QCLS>
+class OverWidget : public QCLS {
 public:
-    OverWidget(QWidget *parent) : QWidget(parent) { };
-
     template<typename Observer>
     void add(const string &event, Observer &&observer) {
-        _observers[event].push_back(forward<function<void()>>(observer));
+        _funcs[event] = forward<function<void()>>(observer);
     }
 
 private:
     void dis(const string event) {
-        for (const auto &obs : _observers.at(event))
-            obs();
+        if (_funcs.find(event) != _funcs.end())
+            _funcs.at(event)();
     }
 
 protected:
@@ -39,7 +38,7 @@ protected:
 
     virtual void paintEvent(QPaintEvent *qPaintEvent) override { dis(paintEvent_); };
 
-    map<string, vector<function<void()>>> _observers;
+    map<string, function<void()>> _funcs;
 };
 
 
