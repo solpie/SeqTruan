@@ -16,14 +16,12 @@ TrackFrame::TrackFrame(QWidget *parent) : QWidget(parent) {
 //    setStyle(self.leftButton, ':qss_button', 'frameButton')
 //    self.leftButton.mousePressEvent = self.onPressLeftButton
 //    self.leftButton.mouseReleaseEvent = self.onRels
-//    leftButton = new OverWidget(this);
 
 
-    thumb = new OverWidget<QWidget>;
+    thumb = new OverWidget<QWidget>(this);
     thumb->resize(40, 50);
     over(thumb, paintEvent_, paintThumb);
     _setMouseTransparent(thumb);
-    thumb->setParent(this);
 
 
     frameIdx = new QLabel(this);
@@ -33,12 +31,13 @@ TrackFrame::TrackFrame(QWidget *parent) : QWidget(parent) {
     frameIdx->setText("0");
 
 
-    leftButton = new OverWidget<QPushButton>();
+    leftButton = new OverWidget<QPushButton>(this);
     leftButton->resize(8, 8);
     leftButton->setObjectName("frameButton");
     leftButton->add(mousePressEvent_, [this] { qDebug() << this << "leftButton"; });
     _setQss(leftButton, ":/qss_button");
-    leftButton->setParent(this);
+
+    qDebug()<<this<<leftButton;
 }
 
 void TrackFrame::paintThumb() {

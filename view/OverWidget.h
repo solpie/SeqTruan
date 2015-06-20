@@ -17,6 +17,8 @@
 template<class QCLS>
 class OverWidget : public QCLS {
 public:
+    OverWidget(QWidget *parent = 0) : QCLS(parent) { };
+
     template<typename Observer>
     void add(const string &event, Observer &&observer) {
         _funcs[event] = forward<function<void()>>(observer);

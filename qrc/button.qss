@@ -7,3 +7,12 @@ QPushButton#frameButton {
 QPushButton#frameButton:hover {
     background: rgb(77,101,101);
 }
+OverWidget#frameButton {
+    background: #5c5c5c;
+    border-style: solid;
+    border-width: 1px;
+    border-color: #343434;
+}
+OverWidget#frameButton:hover {
+    background: rgb(77,101,101);
+}

@@ -13,7 +13,7 @@ AudioPlayback::AudioPlayback() {
 
 void AudioPlayback::onPosition() {
 //    qDebug() << audioplayback->position() << audioplayback->state();
-    Evt_dis(AUDIO_TICK);
+//    Evt_dis(AUDIO_TICK);
 }
 
 void AudioPlayback::load(QString path) {

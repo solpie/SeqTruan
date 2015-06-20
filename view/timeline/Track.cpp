@@ -11,17 +11,17 @@ Track::Track() {
     trackFrameArea->move(TIMELINE_TRACK_FRAME_MAX_WIDTH - 9, 0);
     trackFrameArea->resize(80, 75);
 
-    headButton = new OverWidget<QWidget>;
+    headButton = new OverWidget<QWidget>(this);
     headButton->resize(10, 40);
     headButton->move(31 - 9, 0);
     headButton->setStyleSheet("border:none");
-    headButton->setParent(this);
+//    headButton->setParent(this);
     over(headButton, paintEvent_, paintHead);
 
-    tailButton = new OverWidget<QWidget>;
+    tailButton = new OverWidget<QWidget>(this);
     tailButton->resize(10, 40);
     tailButton->move(80, 0);
-    tailButton->setParent(this);
+//    tailButton->setParent(this);
     over(tailButton, paintEvent_, paintTail);
 }
 
@@ -41,7 +41,7 @@ void Track::load(TrackInfo *trackInfo) {
         trackFrame->move(i * TIMELINE_TRACK_FRAME_MAX_WIDTH, 0);
     }
     _setWidth(trackFrameArea, (len + 1) * TIMELINE_TRACK_FRAME_MAX_WIDTH);
-    _setX(tailButton,tailButton->width()+trackFrameArea->width()-TIMELINE_TRACK_FRAME_MAX_WIDTH);
+    _setX(tailButton,tailButton->width()+trackFrameArea->width());
 //    trackFrame.setPixmap(sImage.getPixmap())
 
 //    trackFrame.setIdx(i + 1)

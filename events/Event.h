@@ -15,6 +15,7 @@
 #include "ActionEvent.h"
 #include "PlaybackEvent.h"
 #include "TrackModelEvent.h"
+
 using namespace std;
 
 
@@ -47,9 +48,16 @@ public:
         _observers[event].push_back(forward<function<void()>>(observer));
     }
 
+//    template<typename Param>
+//    void dis(const string &event, Param *p = NULL) const {
+//        if (_observers.find(event) != _observers.end())
+//            for (const auto &obs : _observers.at(event))
+//                obs(p);
+//    }
     void dis(const string &event) const {
-        for (const auto &obs : _observers.at(event))
-            obs();
+        if (_observers.find(event) != _observers.end())
+            for (const auto &obs : _observers.at(event))
+                obs();
     }
 
     // disallow copying and assigning

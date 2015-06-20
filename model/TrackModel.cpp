@@ -43,7 +43,7 @@ void TrackModel::newTrack(QString name, QString dirname = "") {
         sequencePlayback->endFrameIdx = sizeof(trackInfo->frames);
     }
     newTrackInfo = trackInfo;
-    Evt_dis(TrackModelEvent_NEW_TRACK);
+    Evt::_().dis(TrackModelEvent_NEW_TRACK);
     newTrackInfo = NULL;
 //    Evt::add("type",[=](){this->func1();});
 //    Evt_dis("type")

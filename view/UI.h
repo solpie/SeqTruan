@@ -46,7 +46,8 @@ f.open(QIODevice::ReadOnly); \
 QByteArray ba = f.readAll(); \
 (widget)->setStyleSheet(ba.data()); \
 f.close(); \
-} while(false)
+} while(false);
+
 
 class UI : public Singleton<UI> {
 public:
