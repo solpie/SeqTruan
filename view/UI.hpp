@@ -5,9 +5,9 @@
 #ifndef SEQTRUAN_UI_H
 #define SEQTRUAN_UI_H
 
-#include "Theme.h"
-#include "events/Event.h"
-#include "events/TrackModelEvent.h"
+#include "Theme.hpp"
+#include "events/Event.hpp"
+#include "events/TrackModelEvent.hpp"
 #include <functional>
 #include "QApplication"
 #include "Qt"
@@ -31,7 +31,7 @@
 #include "QColor"
 #include "QLinearGradient"
 /////////////////////
-#include "OverWidget.h"
+#include "OverWidget.hpp"
 //////////////////////////////////////////////// qt method
 #define _setX(widget, x) widget->move(x,widget->y())
 #define _setY(widget, y) widget->move(widget->x(),y)

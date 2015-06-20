@@ -7,13 +7,16 @@
 
 #endif //SEQTRUAN_VIEWPORT_H
 
-#include "view/UI.h"
-#include "Transport.h"
+#include "view/UI.hpp"
+#include "Transport.hpp"
 
 class ViewPort : public QWidget {
 Q_OBJECT
 public:
-    ViewPort(QWidget *parent = 0);
+    ViewPort(QWidget *parent = 0): QWidget(parent) {
+        resize(1280, 500);
+        _transport = new Transport(this);
+    };
 
 private:
     Transport *_transport;

@@ -6,7 +6,7 @@
 #ifndef SEQTRUAN_HEADBUTTON_H
 #define SEQTRUAN_HEADBUTTON_H
 
-#include "view/UI.h"
+#include "view/UI.hpp"
 
 #define over(widget, e, func)  widget->add(e, [this] { this->func(); });
 #define paintEvent_ "paintEvent"

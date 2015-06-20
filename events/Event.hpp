@@ -7,14 +7,14 @@
 
 #endif //SEQTRUAN_EVENT_H
 
-#include "model/Singleton.h"
+#include "model/Singleton.hpp"
 #include <functional>
 #include <map>
 #include <vector>
 #include <utility> // for forward
-#include "ActionEvent.h"
-#include "PlaybackEvent.h"
-#include "TrackModelEvent.h"
+#include "ActionEvent.hpp"
+#include "PlaybackEvent.hpp"
+#include "TrackModelEvent.hpp"
 
 using namespace std;
 

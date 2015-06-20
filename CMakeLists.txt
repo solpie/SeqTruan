@@ -11,7 +11,6 @@
 #set(CMAKE_SHARED_LIBRARY_LINK_CXX_FLAGS "${CMAKE_SHARED_LIBRARY_LINK_CXX_FLAGS} -static-libgcc -static-libstdc++")
 #set(CMAKE_CXX_STANDARD_LIBRARIES "${CMAKE_CXX_STANDARD_LIBRARIES} C:/Qt/Qt5.4.2/Tools/mingw491_32_merge/lib/gcc/i686-w64-mingw32/4.9.1/libstdc++.dll.a")#size 35k
 #set(SOURCE_FILES main.cpp)
-#add_executable(SeqTruan ${SOURCE_FILES} model/TrackModel.h model/TrackModel.cpp view/SeqTruanWin.h view/SeqTruanWin.cpp view/viewport/ViewPort.h view/viewport/ViewPort.cpp)
 
 
 
@@ -29,45 +28,32 @@ set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -w -std=c++11 -fpermissive")
 # Find the QtWidgets library
 find_package(Qt5Widgets)
 find_package(Qt5Multimedia REQUIRED)
-#set(SRC view/viewport/ViewPort.cpp)
 # Tell CMake to create the helloworld executable
 qt5_add_resources(RESOURCES qrc/rc.qrc)
 add_executable(SeqTruan WIN32 main.cpp ${RESOURCES}
-events/Event.h
-events/TrackModelEvent.h
-events/ActionEvent.h
-model/Singleton.h
-model/TrackModel.cpp
-view/UI.h
-view/OverWidget.h
-view/SeqTruanWin.cpp
-view/viewport/ViewPort.cpp
-view/timeline/Timeline.h
-view/timeline/Timeline.cpp
-view/timeline/trackPanel/TrackToolBar.h
-view/timeline/trackPanel/TrackToolBar.cpp
-view/timeline/trackPanel/TrackPanelArea.cpp
-view/timeline/trackPanel/TrackPanelArea.h
-view/timeline/TrackCursor.h
-view/timeline/TrackCursor.cpp
-view/timeline/TrackArea.cpp
-view/timeline/TrackArea.h
-view/timeline/TimestampBar.cpp
-view/timeline/TimestampBar.h
-view/timeline/Track.cpp
-view/timeline/Track.h
-view/timeline/TimelineToolBar.cpp
-view/timeline/TimelineToolBar.h
-view/viewport/Transport.cpp
-view/viewport/Transport.h
-view/timeline/TrackFrame.cpp
-view/timeline/TrackFrame.h
-model/playback/SequencePlayback.cpp
-model/playback/SequencePlayback.h
-model/playback/AudioPlayback.cpp
-model/playback/AudioPlayback.h
-#events/PlaybackEvent.h
-view/timeline/trackPanel/TrackPanel.cpp view/timeline/trackPanel/TrackPanel.h)
+events/Event.hpp
+events/TrackModelEvent.hpp
+events/ActionEvent.hpp
+model/Singleton.hpp
+model/TrackModel.hpp
+view/UI.hpp
+view/OverWidget.hpp
+view/SeqTruanWin.hpp
+view/viewport/ViewPort.hpp
+view/timeline/Timeline.hpp
+view/timeline/trackPanel/TrackToolBar.hpp
+view/timeline/trackPanel/TrackPanelArea.hpp
+view/timeline/trackPanel/TrackPanel.hpp
+view/timeline/TrackCursor.hpp
+view/timeline/TrackArea.hpp
+view/timeline/TimestampBar.hpp
+view/timeline/Track.hpp
+view/timeline/TimelineToolBar.hpp
+view/viewport/Transport.hpp
+view/timeline/TrackFrame.hpp
+model/playback/SequencePlayback.hpp
+model/playback/AudioPlayback.hpp
+)
 
 # Use the Widgets module from Qt 5.
 target_link_libraries(SeqTruan Qt5::Widgets Qt5::Multimedia)

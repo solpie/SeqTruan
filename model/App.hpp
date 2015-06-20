@@ -7,32 +7,23 @@
 
 #endif //SEQTRUAN_APP_H
 
-#include <QApplication>
-#include "QStyleFactory"
-#include "Singleton.h"
-#include "TrackModel.h"
-#include "view/SeqTruanWin.h"
-
+#include "Singleton.hpp"
+#include "model/TrackModel.hpp"
 class App : public Singleton<App> {
 public:
 
     void start(int argc, char *argv[]) {
-        QApplication a(argc, argv);
-        a.setApplicationName("SeqTruan");
-        a.setStyle(QStyleFactory::create("Fusion"));
         init();
         initUI();
-        test();
-        a.exec();
     }
+    TrackModel *trackModel;
 
     void init() {
         trackModel = new TrackModel();
     }
 
     void initUI() {
-        seqTruanWin = new SeqTruanWin();
-        seqTruanWin->show();
+
     }
 
     void test() {
@@ -41,7 +32,4 @@ public:
 //        App()._().trackModel->audioPlayback->play();
     }
 
-    TrackModel *trackModel;
-private:
-    SeqTruanWin *seqTruanWin;
 };

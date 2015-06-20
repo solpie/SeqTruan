@@ -8,7 +8,7 @@ TARGET = SeqTruan
 INCLUDEPATH += .
 
 # Input
-HEADERS += model/TrackModel.h view/SeqTruanWin.h view/viewport/ViewPort.h
+HEADERS += model/TrackModel.hpp view/SeqTruanWin.h view/viewport/ViewPort.h
 SOURCES += main.cpp \
            model/TrackModel.cpp \
            view/SeqTruanWin.cpp \
