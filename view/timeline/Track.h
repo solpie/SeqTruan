@@ -14,15 +14,16 @@ public:
     Track();
     Track(QWidget *parent);
 
-    void load(TrackInfo *trackInfo);
-    TrackInfo *trackInfo;
+    void load(int trackInfoIdx);
+    int trackInfoIdx=0;
+//    TrackInfo *trackInfo;
     void paintHead();
     OverWidget<QWidget> *headButton;
-
     void paintTail();
 
     OverWidget<QWidget> *tailButton;
 private:
+    vector<TrackFrame*> *trackFrames;
     QWidget *trackFrameArea;
 };
 

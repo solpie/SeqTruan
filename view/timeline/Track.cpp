@@ -2,7 +2,7 @@
 // Created by manoyuria on 2015/6/18.
 //
 
-#include "Track.h"
+#include <model/App.h>
 
 Track::Track() {
     resize(1280, TIMELINE_TRACK_DEF_HEIGHT);
@@ -29,19 +29,26 @@ Track::Track(QWidget *parent) : QWidget(parent) {
     Track();
 }
 
-void Track::load(TrackInfo *trackInfo) {
-    this->trackInfo = trackInfo;
-
-    int len = trackInfo->frames.size();
+void Track::load(int tIdx) {
+    TrackInfo *trackInfo = App()._().trackModel->getTrackInfo(tIdx);
+    trackInfoIdx = tIdx;
+    int len = trackInfo->trackFrameInfos->size();
     for (int i = 0; i < len; i++) {
-        TrackFrameInfo *trackFrameInfo = trackInfo->frames[i];
+        TrackFrameInfo *trackFrameInfo = trackInfo->trackFrameInfos->at(i);
+//        TrackFrameInfo *trackFrameInfo = trackInfo->trackFrameInfos[i];
         TrackFrame *trackFrame = new TrackFrame(trackFrameArea);
+        trackFrame->trackInfoIdx = trackInfo->idx;
+        trackFrameInfo->trackFrame = trackFrame;
+        trackFrame->trackFrameInfoIdx = trackFrameInfo->idx;
         trackFrame->setPixmap(trackFrameInfo->payLoad);
-        trackFrame->idx = i + 1;
+
+        trackFrameInfo->startFrameIdx = i + 1;
+        trackFrame->setIdx(i);
+
         trackFrame->move(i * TIMELINE_TRACK_FRAME_MAX_WIDTH, 0);
     }
     _setWidth(trackFrameArea, (len + 1) * TIMELINE_TRACK_FRAME_MAX_WIDTH);
-    _setX(tailButton,tailButton->width()+trackFrameArea->width());
+    _setX(tailButton, tailButton->width() + trackFrameArea->width());
 //    trackFrame.setPixmap(sImage.getPixmap())
 
 //    trackFrame.setIdx(i + 1)
@@ -92,3 +99,4 @@ void Track::paintTail() {
     p.setPen(pen);
     p.drawPath(path);
 }
+

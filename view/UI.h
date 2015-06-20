@@ -23,6 +23,7 @@
 #include "QScrollBar"
 #include "QComboBox"
 #include "QPainter"
+#include "QCursor"
 #include "QPixmap"
 #include "QPen"
 #include "QBrush"

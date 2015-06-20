@@ -6,6 +6,7 @@
 #ifndef SEQTRUAN_TRACKFRAME_H
 #define SEQTRUAN_TRACKFRAME_H
 
+#include <model/TrackModel.h>
 #include "view/UI.h"
 
 class TrackFrame : public QWidget {
@@ -13,20 +14,33 @@ public:
     TrackFrame(QWidget *parent);
 
     void setPixmap(QImage *qImage);
-    int idx=0;
 
-private:
+    int idx = 0;
+    int holdFrameCount = 0;
+    bool isPressLeftButton = false;
+    bool isPressRightButton = false;
+    int changeWidth = 0;
+    int trackInfoIdx;
+    int trackFrameInfoIdx;
+
+    void setIdx(int trackFrameIdx);
+
+protected:
+    void pressAndMoveEvent();
+
     OverWidget<QWidget> *thumb;
 
     void paintThumb();
 
     QPixmap *thumbPixmap;
-//    int thumbWidth;
-//    int thumbHeight;
     QLabel *frameIdx;
     OverWidget<QPushButton> *leftButton;
     OverWidget<QPushButton> *rightButton;
+
+
 //    QPushButton *leftButton;
+    void setHoldFrameCount(int holdFrameCount, int dx);
+
 };
 
 

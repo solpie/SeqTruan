@@ -24,7 +24,7 @@ TrackArea::TrackArea(QWidget *parent) : QWidget(parent) {
 
 void TrackArea::add(TrackInfo *trackInfo) {
     Track *track = new Track();
-    track->load(trackInfo);
+    track->load(trackInfo->idx);
     _setHeight(trackStack, trackStack->height() + track->height());
     qDebug()<<trackStack->height();
     vbox->addWidget(track);
