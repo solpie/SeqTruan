@@ -14,6 +14,10 @@ public:
 
 private:
     QLabel *trackNameLabel;
+    QCheckBox *visibleCheck;
+    void onOpacityChanged(int newPos);
+    void onPressSlider();
+    QSlider *opacitySlider;
 
 };
 
