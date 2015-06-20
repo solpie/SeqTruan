@@ -74,13 +74,42 @@ void TrackModel::relayout(int trackInfoIdx, int trackFrameInfoIdx) {
     int changeWidth = trackFrame->changeWidth;
     trackFrame->changeWidth = 0;
     if (trackFrame->isPressRightButton) {
-        for (int i = trackFrameInfo->idx+1; i < trackInfo->trackFrameInfos->size(); i++) {
-            TrackFrame *tf = trackInfo->trackFrameInfos->at(i)->trackFrame;
-//            _setX(tf, tf->x() + changeWidth);
-            tf->move(tf->x() + changeWidth, tf->y());
-            _setWidth(tf->parentWidget(), tf->parentWidget()->x() + tf->parentWidget()->width());
+        TrackFrame *preTf = trackFrame;
+        TrackFrame *tf;
+        for (int i = trackFrameInfo->idx + 1; i < trackInfo->trackFrameInfos->size(); i++) {
+            tf = trackInfo->trackFrameInfos->at(i)->trackFrame;
+            _setX(tf, preTf->x() + preTf->width());
             TrackFrameInfo *tfInfo = getTrackFrameInfo(tf->trackInfoIdx, tf->trackFrameInfoIdx);
             tfInfo->startFrameIdx += (changeWidth / frameWidth);
+            preTf = tf;
+        }
+        if (trackFrameInfo->idx + 1 < trackInfo->trackFrameInfos->size())
+            _setWidth(tf->parentWidget(), tf->x() + tf->width() + 40);
+        else {
+            _setWidth(trackFrame->parentWidget(), trackFrame->x() + trackFrame->width() + 40);
+        }
+    }
+    else if (trackFrame->isPressLeftButton) {
+        trackFrame->isPressLeftButton = false;
+        _setX(trackFrame, trackFrame->x() + changeWidth);
+        trackFrame->isPressLeftButton = true;
+        if (trackFrame->idx > 0) {
+            TrackFrame *preTrackFrame = trackInfo->trackFrameInfos->at(trackFrame->idx - 1)->trackFrame;
+            if (changeWidth > 0) {
+                preTrackFrame->setHoldFrameCount(preTrackFrame->holdFrameCount + 1, 0);
+
+            }
+            else {
+                if (preTrackFrame->holdFrameCount > 1) {
+                    preTrackFrame->setHoldFrameCount(preTrackFrame->holdFrameCount - 1,0);
+                }
+                else{//todo Á¬Ðø¸²¸Ç¼¸Ö¡
+//                    print('to delete preTrackFrame')
+//                    Event.add(ActionEvent.RELEASE_TRACK_FRAME_LEFT_BUTTON, self.deletePreTrackFrame)
+//                    self.deleteTrackFrame = preTrackFrame
+                }
+            }
+
         }
     }
 }

@@ -24,6 +24,7 @@ public:
     int trackFrameInfoIdx;
 
     void setIdx(int trackFrameIdx);
+    void setHoldFrameCount(int holdFrameCount, int dx);
 
 protected:
     void pressAndMoveEvent();
@@ -39,7 +40,6 @@ protected:
 
 
 //    QPushButton *leftButton;
-    void setHoldFrameCount(int holdFrameCount, int dx);
 
 };
 
