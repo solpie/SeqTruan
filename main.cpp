@@ -1,4 +1,3 @@
-#include <QApplication>
 #include "view/SeqTruanWin.h"
 #include "model/App.h"
 int main(int argc, char *argv[]) {

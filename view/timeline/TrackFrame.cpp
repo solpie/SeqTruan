@@ -17,7 +17,7 @@ TrackFrame::TrackFrame(QWidget *parent) : QWidget(parent) {
 //    self.leftButton.mousePressEvent = self.onPressLeftButton
 //    self.leftButton.mouseReleaseEvent = self.onRels
 
-
+//
     thumb = new OverWidget<QWidget>(this);
     thumb->resize(40, 50);
     over(thumb, paintEvent_, paintThumb);
@@ -33,11 +33,25 @@ TrackFrame::TrackFrame(QWidget *parent) : QWidget(parent) {
 
     leftButton = new OverWidget<QPushButton>(this);
     leftButton->resize(8, 8);
-    leftButton->setObjectName("frameButton");
+    leftButton->isCustomQss = true;
     leftButton->add(mousePressEvent_, [this] { qDebug() << this << "leftButton"; });
-    _setQss(leftButton, ":/qss_button");
+    UI::setQss(leftButton, ":/qss_button","frameButton");
 
-    qDebug()<<this<<leftButton;
+
+    rightButton = new OverWidget<QPushButton>(this);
+    rightButton->resize(8, 8);
+    rightButton->isCustomQss = true;
+    rightButton->add(mousePressEvent_, [this] { qDebug() << this << "leftButton"; });
+    UI::setQss(rightButton, ":/qss_button","frameButton");
+
+
+//    self.rightButton = QPushButton(self)
+//    self.isPressRightButton = False
+//    setStyle(self.rightButton, ':qss_button', 'frameButton')
+//    self.rightButton.resize(8, 8)
+//    self.rightButton.move(33, 32)
+//    self.rightButton.mousePressEvent = self.onPressRightButton
+//    self.rightButton.mouseReleaseEvent = self.onRels
 }
 
 void TrackFrame::paintThumb() {

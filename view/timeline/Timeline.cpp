@@ -15,8 +15,9 @@ Timeline::Timeline(QWidget *parent) : QWidget(parent) {
     trackArea = new TrackArea(this);
     trackArea->resize(1280, TIMELINE_HEIGHT);
     trackArea->move(TIMELINE_TRACK_PANEL_DEF_WIDTH, 0);
-    Evt_add(TrackModelEvent_NEW_TRACK, onNewTrack);
-//    Evt::_().add(TrackModelEvent_NEW_TRACK, [this] { onNewTrack(); });
+//    Evt_add(TrackModelEvent_NEW_TRACK, onNewTrack);
+    Evt::_().add(TrackModelEvent_NEW_TRACK, [this] (){ onNewTrack(); });
+//    Evt::_().add(TrackModelEvent_NEW_TRACK, onNewTrack);
 
 //    Evt::_().add(TrackModelEvent_NEW_TRACK, std::bind(this, &Timeline::onNewTrack));
 //    Evt::_().add(TrackModelEvent_NEW_TRACK,  onNewTrack);
@@ -37,8 +38,8 @@ Timeline::Timeline(QWidget *parent) : QWidget(parent) {
     connect(hScrollBar, QScrollBar::valueChanged, this, onHScrollBar);
     _setHeight(this, TIMELINE_HEIGHT);
 
-    _setQss(vScrollBar, QSS_SCROLLBAR);
-    _setQss(hScrollBar, QSS_SCROLLBAR);
+    UI::setQss(vScrollBar, QSS_SCROLLBAR);
+    UI::setQss(hScrollBar, QSS_SCROLLBAR);
 
     timelineToolBar = new TimelineToolBar(this);
 }

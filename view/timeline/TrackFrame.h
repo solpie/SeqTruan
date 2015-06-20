@@ -25,6 +25,8 @@ private:
 //    int thumbHeight;
     QLabel *frameIdx;
     OverWidget<QPushButton> *leftButton;
+    OverWidget<QPushButton> *rightButton;
+//    QPushButton *leftButton;
 };
 
 

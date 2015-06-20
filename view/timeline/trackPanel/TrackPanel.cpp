@@ -12,7 +12,7 @@ TrackPanel::TrackPanel(QWidget *parent) : QWidget(parent) {
     opacitySlider->resize(80, 15);
     opacitySlider->setRange(0, 100);
     opacitySlider->setValue(100);
-    _setQss(opacitySlider, ":/qss_slider");
+    UI::setQss(opacitySlider, ":/qss_slider");
 //    valueChanged()	Emitted when the slider's value has changed. The tracking() determines whether this signal is emitted during user interaction.
 //    sliderPressed()	Emitted when the user starts to drag the slider.
 //            sliderMoved()	Emitted when the user drags the slider.

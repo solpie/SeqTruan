@@ -24,13 +24,19 @@ public:
         _funcs[event] = forward<function<void()>>(observer);
     }
 
+    bool isCustomQss = false;
 private:
     void dis(const string event) {
         if (_funcs.find(event) != _funcs.end())
             _funcs.at(event)();
     }
 
+
 protected:
+//    virtual void setObjectName(const QString &name) override {
+//        this->QCLS::setObjectName(name);
+//        isCustomQss = true;
+//    };
 
     virtual void mousePressEvent(QMouseEvent *mouseEvent) override { dis(mousePressEvent_); };
 
@@ -38,7 +44,16 @@ protected:
 
     virtual void mouseReleaseEvent(QMouseEvent *mouseEvent) override { dis(mouseReleaseEvent_); };
 
-    virtual void paintEvent(QPaintEvent *qPaintEvent) override { dis(paintEvent_); };
+    virtual void paintEvent(QPaintEvent *qPaintEvent) override {
+        if (isCustomQss) {
+            QStyleOption opt;
+            opt.init(this);
+            QPainter p(this);
+            style()->drawPrimitive(QStyle::PE_Widget, &opt, &p, this);
+        }
+
+        dis(paintEvent_);
+    };
 
     map<string, function<void()>> _funcs;
 };

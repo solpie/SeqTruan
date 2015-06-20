@@ -39,41 +39,23 @@
 #define _setMouseTransparent(widget) widget->setAttribute(Qt::WA_TransparentForMouseEvents, true)
 #define setColor1(widget, color) qwidget->setAutoFillBackground(True)
 
-#define _setQss(widget, alias) \
-do { \
-QFile f(alias);\
-f.open(QIODevice::ReadOnly); \
-QByteArray ba = f.readAll(); \
-(widget)->setStyleSheet(ba.data()); \
-f.close(); \
-} while(false);
 
-
-class UI : public Singleton<UI> {
+class UI {
 public:
-//    static void _setQss(QWidget *w, const QString alias) {
-//        QFile f(alias);
-//        f.open(QIODevice::ReadOnly);
-//        QByteArray ba = f.readAll();
-////        qDebug()<<ba.data();
-//        w->setStyleSheet(ba.data());
-//        f.close();
-//
-////        QFile f(":/qss_scrollbar");
-////        f.open(QIODevice::ReadOnly);
-////        QByteArray ba = f.readAll();
-////        vScrollBar->setStyleSheet(ba.data());
-////        f.close();
-//    }
-    QString getQss(const QString alias) {
+    static void setQss(QWidget *w, QString alias, QString objName = "") {
         QFile f(alias);
         f.open(QIODevice::ReadOnly);
         QByteArray ba = f.readAll();
+        if (objName != "") {
+//            OverWidget<QWidget> *ow = (OverWidget<QWidget>*)&w;
+//            auto ow = &w;
+//            ow->isCustomQss=true;
+//            ow.isCustomQss=true;
+//            if(w->objectName()== "OverWidget")
+            w->setObjectName(objName);
+        }
+        w->setStyleSheet(ba.data());
         f.close();
-        QString s = ba.data();
-//        qDebug()<<s;
-
-        return ba.data();
     }
 };
 

@@ -14,7 +14,7 @@ Transport::Transport(QWidget *parent) : QWidget(parent) {
 //
     QPushButton *playButton = new QPushButton();
     playButton->setText("play");
-    Evt_add(ActionEvent_TOGGLE_PLAY,togglePlay);
+//    Evt_add(ActionEvent_TOGGLE_PLAY,togglePlay);
     connect(playButton,QPushButton::clicked,this,togglePlay);
     hbox->addWidget(playButton);
 

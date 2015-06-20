@@ -19,25 +19,6 @@
 using namespace std;
 
 
-//template<class EventType>
-//class Evt  {
-//public:
-//    using EventHandler = std::function<void(void ...)>;
-//
-//    void add(EventType &&event, EventHandler &&handler) {
-//        _handlers[std::move(event)].push_back(std::forward<EventHandler>(handler));
-//    }
-//
-//    void dis(const EventType &event, void &&... args) {
-//        for (const auto &handler: Evt::_handlers.at(event)) {
-//            handler(std::forward<void>(args)...);
-//        }
-//    }
-//
-//private:
-//    std::map<EventType, std::vector<EventHandler>> _handlers;
-//
-//};
 
 class Evt : public Singleton<Evt> {
 public:
@@ -49,15 +30,18 @@ public:
     }
 
 //    template<typename Param>
-//    void dis(const string &event, Param *p = NULL) const {
+//    void dis(const string &event, Param *p) const {
 //        if (_observers.find(event) != _observers.end())
-//            for (const auto &obs : _observers.at(event))
-//                obs(p);
+//            for (const auto &obs : _observers.at(event)) {
+//                std::bind(obs,p);
+//                obs();
+//            }
 //    }
     void dis(const string &event) const {
         if (_observers.find(event) != _observers.end())
-            for (const auto &obs : _observers.at(event))
+            for (const auto &obs : _observers.at(event)) {
                 obs();
+            }
     }
 
     // disallow copying and assigning
