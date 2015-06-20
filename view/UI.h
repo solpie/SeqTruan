@@ -13,6 +13,8 @@
 #include "QtCore"
 #include "QFile"
 #include "QWidget"
+#include "QLabel"
+#include "QCheckBox"
 #include "QVBoxLayout"
 #include "QPushButton"
 #include "QSplitter"
@@ -28,7 +30,7 @@
 /////////////////////
 #include "OverWidget.h"
 //////////////////////////////////////////////// qt method
-#define _setX_(widget, x) widget->move(x,widget->y())
+#define _setX(widget, x) widget->move(x,widget->y())
 #define _setY(widget, y) widget->move(widget->x(),y)
 #define _setHeight(widget, height) widget->resize(widget->width(),height)
 #define _setWidth(widget, width) widget->resize(width,widget->height())

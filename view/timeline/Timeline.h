@@ -8,8 +8,8 @@
 #endif //SEQTRUAN_TIMELINE_H
 
 #include <model/TrackModel.h>
-#include "TrackToolBar.h"
-#include "TrackPanelArea.h"
+#include "trackPanel/TrackToolBar.h"
+#include "trackPanel/TrackPanelArea.h"
 #include "TrackArea.h"
 #include "view/UI.h"
 #include "TimelineToolBar.h"

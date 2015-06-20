@@ -4,7 +4,6 @@
 
 #include <model/App.h>
 #include "TrackToolBar.h"
-#include "model/TrackModel.h"
 static void someFunction() {
 //    qDebug() << "pressed";
     printf("click me");

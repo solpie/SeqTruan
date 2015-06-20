@@ -24,7 +24,7 @@
 
 class TrackFrameInfo {
 public:
-    int idx;
+    int frameIdx;
     int holdCount;
     int startIdx;
 //    int frameIdx;

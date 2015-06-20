@@ -7,18 +7,17 @@
 #define SEQTRUAN_TRACKPANELAREA_H
 
 #include <model/TrackModel.h>
-#include "QWidget"
-#include "TrackCursor.h"
+#include "view/UI.h"
 
 class TrackPanelArea : public QWidget {
 Q_OBJECT
 public:
-    TrackPanelArea(QWidget *parent=0);
+    TrackPanelArea(QWidget *parent = 0);
 
     void add(TrackInfo *trackInfo);
 
 
-
+    QVBoxLayout *vbox;
 };
 
 #endif //SEQTRUAN_TRACKPANELAREA_H

@@ -12,7 +12,7 @@ class TrackFrame : public QWidget {
 public:
     TrackFrame(QWidget *parent);
 
-    void setPixmap(QImage *pixmap);
+    void setPixmap(QImage *qImage);
     int idx=0;
 
 private:
@@ -20,9 +20,9 @@ private:
 
     void paintThumb();
 
-    QPixmap thumbPixmap;
-    int thumbWidth;
-    int thumbHeight;
+    QPixmap *thumbPixmap;
+//    int thumbWidth;
+//    int thumbHeight;
 };
 
 

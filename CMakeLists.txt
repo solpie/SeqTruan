@@ -44,10 +44,10 @@ view/SeqTruanWin.cpp
 view/viewport/ViewPort.cpp
 view/timeline/Timeline.h
 view/timeline/Timeline.cpp
-view/timeline/TrackToolBar.h
-view/timeline/TrackToolBar.cpp
-view/timeline/TrackPanelArea.cpp
-view/timeline/TrackPanelArea.h
+view/timeline/trackPanel/TrackToolBar.h
+view/timeline/trackPanel/TrackToolBar.cpp
+view/timeline/trackPanel/TrackPanelArea.cpp
+view/timeline/trackPanel/TrackPanelArea.h
 view/timeline/TrackCursor.h
 view/timeline/TrackCursor.cpp
 view/timeline/TrackArea.cpp
@@ -62,14 +62,12 @@ view/viewport/Transport.cpp
 view/viewport/Transport.h
 view/timeline/TrackFrame.cpp
 view/timeline/TrackFrame.h
-view/timeline/TrackFrameThumb.cpp
-view/timeline/TrackFrameThumb.h
 model/playback/SequencePlayback.cpp
 model/playback/SequencePlayback.h
 model/playback/AudioPlayback.cpp
 model/playback/AudioPlayback.h
 #events/PlaybackEvent.h
-)
+view/timeline/trackPanel/TrackPanel.cpp view/timeline/trackPanel/TrackPanel.h)
 
 # Use the Widgets module from Qt 5.
 target_link_libraries(SeqTruan Qt5::Widgets Qt5::Multimedia)

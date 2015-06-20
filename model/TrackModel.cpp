@@ -35,6 +35,7 @@ void TrackModel::newTrack(QString name, QString dirname = "") {
                     TrackFrameInfo *trackFrameInfo = new TrackFrameInfo();
                     trackFrameInfo->payLoad = img;
                     trackInfo->frames.push_back(trackFrameInfo);
+                    trackFrameInfo->frameIdx = trackInfo->frames.size();
                 }
             }
     }
