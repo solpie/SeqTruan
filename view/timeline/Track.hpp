@@ -10,9 +10,10 @@
 #include "model/App.hpp"
 
 #include "TrackFrame.hpp"
+
 class Track : public QWidget {
 public:
-    Track(){
+    Track() {
         resize(1280, TIMELINE_TRACK_DEF_HEIGHT);
 //    this->setStyleSheet("background:#343434");
         trackFrameArea = new QWidget(this);
@@ -32,7 +33,8 @@ public:
 //    tailButton->setParent(this);
         over(tailButton, paintEvent_, paintTail);
     }
-    Track(QWidget *parent): QWidget(parent) {
+
+    Track(QWidget *parent) : QWidget(parent) {
         Track();
     }
 
@@ -40,11 +42,20 @@ public:
         TrackInfo *trackInfo = App()._().trackModel->getTrackInfo(tIdx);
         trackInfoIdx = tIdx;
         int len = trackInfo->trackFrameInfos->size();
+        TrackFrame *pre = NULL;
         for (int i = 0; i < len; i++) {
             TrackFrameInfo *trackFrameInfo = trackInfo->trackFrameInfos->at(i);
 //        TrackFrameInfo *trackFrameInfo = trackInfo->trackFrameInfos[i];
             TrackFrame *trackFrame = new TrackFrame(trackFrameArea);
+            if (pre != NULL) {
+                trackFrame->pre = pre;
+                pre->next = trackFrame;
+            }
+            pre = trackFrame;
+
+
             trackFrame->trackInfoIdx = trackInfo->idx;
+
             //fixme
 //            trackFrameInfo->trackFrame = trackFrame;
             trackFrame->trackFrameInfoIdx = trackFrameInfo->idx;
@@ -72,9 +83,10 @@ public:
 
     }
 
-    int trackInfoIdx=0;
+    int trackInfoIdx = 0;
+
 //    TrackInfo *trackInfo;
-    void paintHead(){
+    void paintHead() {
         QPainterPath path;
         int y = 17;
         path.moveTo(9, 0 + y);
@@ -91,7 +103,9 @@ public:
         p.setPen(pen);
         p.drawPath(path);
     }
+
     OverWidget<QWidget> *headButton;
+
     void paintTail() {
         QPainterPath path;
         path.moveTo(0, 22);
@@ -112,7 +126,7 @@ public:
 
     OverWidget<QWidget> *tailButton;
 private:
-    vector<TrackFrame*> *trackFrames;
+    vector<TrackFrame *> *trackFrames;
     QWidget *trackFrameArea;
 };
 

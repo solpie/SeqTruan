@@ -49,9 +49,10 @@ public:
         setMouseTracking(true);
     }
 
-    void setPixmap(QImage *qImage){
+    void setPixmap(QImage *qImage) {
         int thumbHeight = int(float(qImage->height()) / qImage->width() * (this->width() - 2));
-        thumbPixmap = new QPixmap(QPixmap::fromImage(qImage->scaled(this->width() - 2, thumbHeight, Qt::KeepAspectRatio)));
+        thumbPixmap = new QPixmap(
+                QPixmap::fromImage(qImage->scaled(this->width() - 2, thumbHeight, Qt::KeepAspectRatio)));
     }
 
     int idx = 0;
@@ -62,7 +63,7 @@ public:
     int trackInfoIdx;
     int trackFrameInfoIdx;
 
-    void setIdx(int trackFrameIdx){
+    void setIdx(int trackFrameIdx) {
         idx = trackFrameIdx;
         QString s = QString::number(idx + 1, 10);
         frameIdx->setText(s);
@@ -71,33 +72,63 @@ public:
     void setHoldFrameCount(int count, int dx = 1) {
         changeWidth = (count - holdFrameCount) * TIMELINE_TRACK_FRAME_MAX_WIDTH * dx;
         _setWidth(this, count * TIMELINE_TRACK_FRAME_MAX_WIDTH);
-        _setWidth(thumb,width());
+        _setWidth(thumb, width());
         _setX(rightButton, width() - rightButton->width() + 1);
         holdFrameCount = count;
+        qDebug() << this << this->frameIdx->text();
     }
 
+    void resizeFrame(int endPosX) {
+        _setWidth(this, endPosX - this->x());
+        _setWidth(thumb, width());
+        _setX(rightButton, width() - rightButton->width() + 1);
+        holdFrameCount = width() / App()._().trackModel->frameWidth;
+    }
+
+    TrackFrame *pre = NULL;
+    TrackFrame *next = NULL;
 protected:
+    //右拉rightbutton
+    void handleR(TrackFrame *cur) {
+        if (cur->next) {
+            _setX(cur->next, cur->x() + cur->width());
+            handleR(cur->next);
+        }
+        else {
+            _setWidth(cur->parentWidget(), cur->x() + cur->width() + 40);
+        }
+    }
+
+    void handleL(TrackFrame *cur) {
+        _setX(cur, cur->x() + cur->changeWidth);
+        cur->changeWidth = 0;
+        if (cur->pre) {
+            qDebug() << "handleL" << cur->pre << cur->pre->frameIdx->text();
+            cur->pre->resizeFrame(cur->x());
+        }
+    }
+
     void pressAndMoveEvent() {
         if (isPressLeftButton || isPressRightButton) {
             int posX = mapFromGlobal(QCursor::pos()).x();
             if (isPressRightButton) {
                 if (posX > width() + 30) {
                     setHoldFrameCount(holdFrameCount + 1, 1);
-//                    App()._().trackModel->relayout(trackInfoIdx,trackFrameInfoIdx);
+                    handleR(this);
                 }
                 else if (posX < width() - 30 and holdFrameCount > 1) {
                     setHoldFrameCount(holdFrameCount - 1, 1);
-//                    App()._().trackModel->relayout(trackInfoIdx,trackFrameInfoIdx);
+                    handleR(this);
                 }
             }
             else if (isPressLeftButton) {
                 if (posX < -30) {
                     setHoldFrameCount(holdFrameCount + 1, -1);
-//                    App()._().trackModel->relayout(trackInfoIdx,trackFrameInfoIdx);
+                    handleL(this);
                 }
                 else if (posX > 30 && holdFrameCount > 1) {
                     setHoldFrameCount(holdFrameCount - 1, -1);
-//                    App()._().trackModel->relayout(trackInfoIdx,trackFrameInfoIdx);
+                    handleL(this);
                 }
             }
         }
@@ -105,7 +136,7 @@ protected:
 
     OverWidget<QWidget> *thumb;
 
-    void paintThumb(){
+    void paintThumb() {
         QPainter pg(this->thumb);
         QLinearGradient lg(0, 0, 0, 38);
         lg.setColorAt(0.0, QColor(0x343434));
@@ -128,7 +159,7 @@ protected:
 
         QPainter pm(this->thumb);
         if (this->thumbPixmap != NULL) {
-            pm.drawPixmap(int((TIMELINE_TRACK_FRAME_MAX_WIDTH- 2 - this->thumbPixmap->width() ) * .5),
+            pm.drawPixmap(int((TIMELINE_TRACK_FRAME_MAX_WIDTH - 2 - this->thumbPixmap->width()) * .5),
                           int((22 - this->thumbPixmap->height()) * .5 + 9),
                           *this->thumbPixmap);
         }
@@ -139,7 +170,6 @@ protected:
     QLabel *frameIdx;
     OverWidget<QPushButton> *leftButton;
     OverWidget<QPushButton> *rightButton;
-
 
 //    QPushButton *leftButton;
 
