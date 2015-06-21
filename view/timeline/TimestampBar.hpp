@@ -11,7 +11,7 @@
 class TimestampBar : public QWidget {
 public:
     TimestampBar(QWidget *parent) : QWidget(parent) {
-
+        setStyleSheet("background:#3e3e3e");
     }
 
 
@@ -20,8 +20,13 @@ protected:
         QPainter p(this);
         QPen pen(QColor(0x343434));
         p.setPen(pen);
-        for (int i = 0; i < this->width(); i += TIMELINE_TRACK_FRAME_MAX_WIDTH) {
+        int fw = App()._().trackModel->frameWidth;
+        int fr = App()._().trackModel->sequencePlayback->getFramerate();
+        for (int i = 0; i < this->width(); i += fw) {
             p.drawLine(i, 15, i, this->height());
+        }
+        for (int i = 0; i < this->width(); i += fw * fr) {
+            p.drawLine(i, 5, i, this->height());
         }
     }
 

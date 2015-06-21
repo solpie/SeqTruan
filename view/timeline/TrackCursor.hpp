@@ -40,7 +40,8 @@ protected:
 
         p.setPen(pen);
         p.drawLine(0, 0, 0, this->height());
-        p.drawLine(TIMELINE_TRACK_FRAME_MAX_WIDTH, 0, TIMELINE_TRACK_FRAME_MAX_WIDTH, this->height());
+        int frameWidth = app.trackModel->frameWidth;
+        p.drawLine(frameWidth, 0, frameWidth, this->height());
 //    QWidget::paintEvent( < unnamed >);
     }
 

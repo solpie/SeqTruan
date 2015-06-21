@@ -18,14 +18,14 @@ public:
 //    this->setStyleSheet("background:#343434");
         trackFrameArea = new QWidget(this);
 //        trackFrameArea->move(TIMELINE_TRACK_FRAME_MAX_WIDTH - 9, 0);
-        _setX(trackFrameArea,App()._().trackModel->frameWidth);
+        _setX(trackFrameArea, App()._().trackModel->frameWidth);
 //        trackFrameArea->move(TIMELINE_TRACK_FRAME_MAX_WIDTH - 9, 0);
         trackFrameArea->resize(80, 75);
 
         headButton = new OverWidget<QWidget>(this);
         headButton->resize(10, 40);
 //        headButton->move(31 - 9, 0);
-        _setX(headButton,31);
+        _setX(headButton, 31);
         headButton->setStyleSheet("border:none");
 //    headButton->setParent(this);
         over(headButton, paintEvent_, paintHead);
@@ -45,42 +45,22 @@ public:
         TrackInfo *trackInfo = App()._().trackModel->getTrackInfo(tIdx);
         trackInfoIdx = tIdx;
         int len = trackInfo->trackFrameInfos->size();
-        TrackFrame *pre = NULL;
+        TrackFrame *pre = nullptr;
+        int fw = App()._().trackModel->frameWidth;
         for (int i = 0; i < len; i++) {
             TrackFrameInfo *trackFrameInfo = trackInfo->trackFrameInfos->at(i);
-//        TrackFrameInfo *trackFrameInfo = trackInfo->trackFrameInfos[i];
             TrackFrame *trackFrame = new TrackFrame(trackFrameArea);
-            if (pre != NULL) {
-                trackFrame->pre = pre;
-                pre->next = trackFrame;
-            }
-            pre = trackFrame;
-//            trackFrame->trackInfoIdx = trackInfo->idx;
-
-//            trackFrame->trackFrameInfoIdx = trackFrameInfo->idx;
+            pre = trackFrame->setPre(pre);
             trackFrame->setPixmap(trackFrameInfo->payLoad);
 
             trackFrameInfo->startFrameIdx = i + 1;
-            trackFrameInfo->endFrameIdx = i+1;
+            trackFrameInfo->endFrameIdx = i + 1;
             trackFrame->setIdx(i);
 
-            trackFrame->move(i * TIMELINE_TRACK_FRAME_MAX_WIDTH, 0);
+            trackFrame->move(i * fw, 0);
         }
-        _setWidth(trackFrameArea, (len + 1) * TIMELINE_TRACK_FRAME_MAX_WIDTH);
-        _setX(tailButton, tailButton->width() + trackFrameArea->width());
-//    trackFrame.setPixmap(sImage.getPixmap())
-
-//    trackFrame.setIdx(i + 1)
-//    trackFrame.trackIdx = self.trackIdx
-//    trackFrame.relayout = self.relayout
-//    trackFrame.move(i * trackFrame.width(), 0)
-//    trackFrame.refSImage = sImage
-//    self.thumbArr.append(trackFrame)
-//    self.trackFrameArea.resize((len(self.thumbArr) + 1) * TIMELINE_TRACK_FRAME_MAX_WIDTH,
-//                               self.trackFrameArea.height())
-//    self.tailButton.move(self.trackFrameArea.x() + self.trackFrameArea.width() - TIMELINE_TRACK_FRAME_MAX_WIDTH,
-//                         0)
-
+        _setWidth(trackFrameArea, (len) * fw);
+        _setX(tailButton, trackFrameArea->x() + trackFrameArea->width());
     }
 
     int trackInfoIdx = 0;
@@ -125,7 +105,6 @@ public:
 
     OverWidget<QWidget> *tailButton;
 private:
-    vector<TrackFrame *> *trackFrames;
     QWidget *trackFrameArea;
 };
 

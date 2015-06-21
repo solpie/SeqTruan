@@ -13,5 +13,29 @@ class OneLinker {
 public:
     CLS *pre = nullptr;
     CLS *next = nullptr;
-    OneLinker *pre1 = nullptr;
+
+    CLS *setPre(CLS *pre) {
+        if (pre) {
+            this->pre = pre;
+            pre->next = this;
+        }
+        return this;
+    }
+
+    CLS *remove() {
+        if (this->pre && this->next) {
+            this->pre->next = this->next;
+            this->next->pre = this->pre;
+        }
+        else {
+            if (this->next) {
+                this->next->pre = nullptr;
+            }
+            else if(this->pre) {
+                this->pre->next = nullptr;
+            }
+        }
+        this->next = this->pre = nullptr;
+        return  this;
+    }
 };

@@ -6,9 +6,7 @@
 #ifndef SEQTRUAN_TRACKFRAME_H
 #define SEQTRUAN_TRACKFRAME_H
 
-//#include <model/TrackModel.hpp>
 #include "view/UI.hpp"
-//#include "model/App.hpp"
 #include "utils/Linker.hpp"
 
 class TrackFrame : public OneLinker<TrackFrame>, public QWidget {
@@ -34,7 +32,10 @@ public:
         leftButton->isCustomQss = true;
         leftButton->add(mousePressEvent_, [this] { isPressLeftButton = true; });
         leftButton->add(mouseMoveEvent_, [this] { this->pressAndMoveEvent(); });
-        leftButton->add(mouseReleaseEvent_, [this] { isPressLeftButton = false; });
+        leftButton->add(mouseReleaseEvent_, [this] {
+            isPressLeftButton = false;
+            this->onRelLeftButton(this);
+        });
         UI::setQss(leftButton, ":/qss_button", "frameButton");
 
 
@@ -46,12 +47,8 @@ public:
         rightButton->add(mouseMoveEvent_, [this] { this->pressAndMoveEvent(); });
         rightButton->add(mouseReleaseEvent_, [this] { isPressRightButton = false; });
         UI::setQss(rightButton, ":/qss_button", "frameButton");
-
         setMouseTracking(true);
-
     }
-
-
 
     void setPixmap(QImage *qImage) {
         int thumbHeight = int(float(qImage->height()) / qImage->width() * (this->width() - 2));
@@ -73,8 +70,9 @@ public:
     }
 
     void setHoldFrameCount(int count, int dx = 1) {
-        changeWidth = (count - holdFrameCount) * TIMELINE_TRACK_FRAME_MAX_WIDTH * dx;
-        _setWidth(this, count * TIMELINE_TRACK_FRAME_MAX_WIDTH);
+        int frameWidth = app.trackModel->frameWidth;
+        changeWidth = (count - holdFrameCount) * frameWidth * dx;
+        _setWidth(this, count * frameWidth);
         _setWidth(thumb, width());
         _setX(rightButton, width() - rightButton->width() + 1);
         holdFrameCount = count;
@@ -89,7 +87,7 @@ public:
                 holdFrameCountLabel->show();
             }
             holdFrameCountLabel->setText(QString::number(count));
-            holdFrameCountLabel->move(App()._().trackModel->frameWidth * count - 20, 10);
+            holdFrameCountLabel->move(app.trackModel->frameWidth * count - 20, 10);
         }
     }
 
@@ -97,10 +95,29 @@ public:
         _setWidth(this, endPosX - this->x());
         _setWidth(thumb, width());
         _setX(rightButton, width() - rightButton->width() + 1);
-        holdFrameCount = width() / App()._().trackModel->frameWidth;
+        holdFrameCount = width() / app.trackModel->frameWidth;
     }
 
 protected:
+    void onRelLeftButton(TrackFrame *relTrackFrame) {
+        if (relTrackFrame->pre) {
+            if (relTrackFrame->pre->x() <= relTrackFrame->x()) {
+                qDebug() << this << "onRelLeftButton" << relTrackFrame->pre->idx;
+                TrackFrame *deleteMe = relTrackFrame->pre->remove();//todo 释放资源 保存历史操作
+                renameBackward(this);
+                qDebug() << this << "onRelLeftButton remove():" << relTrackFrame->pre->idx;
+//                onRelLeftButton(relTrackFrame);
+            }
+        }
+    }
+
+    void renameBackward(TrackFrame *cur) {
+        cur->setIdx(cur->idx - 1);
+        if (cur->next) {
+            renameBackward(cur->next);
+        }
+    }
+
     //右拉rightbutton
     void handleR(TrackFrame *cur) {
         if (cur->next) {
@@ -157,13 +174,13 @@ protected:
         lg.setColorAt(1.0, QColor(0x343434));
         pg.setBrush(QBrush(lg));
         pg.drawRect(0, 2, width(), 36);
-
+        int frameWidth = app.trackModel->frameWidth;
         QPainter p(this->thumb);
         QPen pen(QColor(0xc8c8c8));
         p.setPen(pen);
         p.drawLine(0, 1, this->thumb->width(), 1);
         p.drawLine(0, this->thumb->height() - 2 - 10, this->thumb->width(), this->thumb->height() - 2 - 10);
-        p.fillRect(0, 9, TIMELINE_TRACK_FRAME_MAX_WIDTH, 22, QColor(0xffffff));
+        p.fillRect(0, 9, frameWidth, 22, QColor(0xffffff));
         pen.setColor(QColor(0x343434));
         p.setPen(pen);
         p.drawLine(0, this->thumb->height() - 1 - 10, this->thumb->width(), this->thumb->height() - 1 - 10);
@@ -172,20 +189,16 @@ protected:
 
         QPainter pm(this->thumb);
         if (this->thumbPixmap != NULL) {
-            pm.drawPixmap(int((TIMELINE_TRACK_FRAME_MAX_WIDTH - 2 - this->thumbPixmap->width()) * .5),
+            pm.drawPixmap(int((frameWidth - 2 - this->thumbPixmap->width()) * .5),
                           int((22 - this->thumbPixmap->height()) * .5 + 9),
                           *this->thumbPixmap);
         }
-
     }
 
     QPixmap *thumbPixmap;
     QLabel *frameIdx;
     OverWidget<QPushButton> *leftButton;
     OverWidget<QPushButton> *rightButton;
-
-//    QPushButton *leftButton;
-
 };
 
 
