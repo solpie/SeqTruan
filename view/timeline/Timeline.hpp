@@ -14,9 +14,10 @@
 #include "TrackArea.hpp"
 #include "view/UI.hpp"
 #include "TimelineToolBar.hpp"
+
 class Timeline : public QWidget {
 public:
-    Timeline(QWidget *parent = 0): QWidget(parent) {
+    Timeline(QWidget *parent = 0) : QWidget(parent) {
         trackToolBar = new TrackToolBar(this);
 
         trackPanelArea = new TrackPanelArea(this);
@@ -27,7 +28,8 @@ public:
         trackArea->resize(1280, TIMELINE_HEIGHT);
         trackArea->move(TIMELINE_TRACK_PANEL_DEF_WIDTH, 0);
 //    Evt_add(TrackModelEvent_NEW_TRACK, onNewTrack);
-        Evt()._().add(TrackModelEvent_NEW_TRACK, [this] (){ onNewTrack(); });
+        Evt()._().trackModelEvent->add(TrackModelEvent_NEW_TRACK,
+                                       [this](TrackModelEvent *e) { onNewTrack(e->trackInfo); });
 //    Evt::_().add(TrackModelEvent_NEW_TRACK, onNewTrack);
 
 //    Evt::_().add(TrackModelEvent_NEW_TRACK, std::bind(this, &Timeline::onNewTrack));
@@ -56,24 +58,25 @@ public:
     }
 
 private:
-    void onNewTrack(){
-        TrackInfo *newTrackInfo = App()._().trackModel->newTrackInfo;
+    void onNewTrack(TrackInfo *newTrackInfo) {
         trackArea->add(newTrackInfo);
         trackPanelArea->add(newTrackInfo);
     }
 
     QScrollBar *vScrollBar;
     int lastVScrollValue;
-    void onVScrollBar(){
+
+    void onVScrollBar() {
         int dy = lastVScrollValue - vScrollBar->value();
         lastVScrollValue = vScrollBar->value();
         trackPanelArea->scroll(0, dy);
         trackArea->trackStack->scroll(0, dy);
     }
+
     QScrollBar *hScrollBar;
     int lastHScrollValue;
 
-    void onHScrollBar(){
+    void onHScrollBar() {
 //    int dx = lastHScrollValue -
         //todo
     }

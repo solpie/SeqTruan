@@ -7,7 +7,7 @@
 
 #endif //SEQTRUAN_EVENT_H
 
-#include "model/Singleton.hpp"
+#include "utils/Singleton.hpp"
 #include <functional>
 #include <map>
 #include <vector>
@@ -18,7 +18,33 @@
 
 using namespace std;
 
+#include "SequencePlaybackEvent.hpp"
 
+template<typename EVENT_CLS>
+class Event {
+public:
+    Event() = default;
+
+    template<typename Observer>
+    void add(const string &event, Observer &&observer) {
+        _observers[event].push_back(forward<function<void(EVENT_CLS *)>>(observer));
+    }
+
+    void dis(const string &event, EVENT_CLS *e) const {
+        if (_observers.find(event) != _observers.end())
+            for (const auto &obs : _observers.at(event)) {
+                obs(e);
+            }
+    }
+
+    // disallow copying and assigning
+    Event(const Event &) = delete;
+
+    Event &operator=(const Event &) = delete;
+
+private:
+    map<string, vector<function<void(EVENT_CLS *)>>> _observers;
+};
 
 class Evt : public Singleton<Evt> {
 public:
@@ -29,14 +55,6 @@ public:
         _observers[event].push_back(forward<function<void()>>(observer));
     }
 
-//    template<typename Param>
-//    void dis(const string &event, Param *p) const {
-//        if (_observers.find(event) != _observers.end())
-//            for (const auto &obs : _observers.at(event)) {
-//                std::bind(obs,p);
-//                obs();
-//            }
-//    }
     void dis(const string &event) const {
         if (_observers.find(event) != _observers.end())
             for (const auto &obs : _observers.at(event)) {
@@ -44,11 +62,18 @@ public:
             }
     }
 
+    void init() {
+        seq = new Event<SequencePlaybackEvent>();
+        trackModelEvent = new Event<TrackModelEvent>();
+    }
+
     // disallow copying and assigning
     Evt(const Evt &) = delete;
 
     Evt &operator=(const Evt &) = delete;
 
+    Event<SequencePlaybackEvent> *seq;
+    Event<TrackModelEvent> *trackModelEvent;
 private:
     map<string, vector<function<void()>>> _observers;
 };

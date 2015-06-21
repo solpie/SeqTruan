@@ -7,7 +7,7 @@
 
 #endif //SEQTRUAN_TRACKMODEL_H
 
-#include "Singleton.hpp"
+#include "utils/Singleton.hpp"
 #include <functional>
 #include <vector>
 #include "events/Event.hpp"
@@ -24,42 +24,29 @@
 //    };
 //};
 
-class TrackFrameInfo {
-public:
-    int idx;
-    int holdCount;
-    int startIdx;
+#include "TrackInfo.hpp"
+#include "TrackFrameInfo.hpp"
+
+//class TrackInfo {
+//public:
+//    TrackInfo(QString name) {
+//        this->name = name;
+//        trackFrameInfos = new vector<TrackFrameInfo *>();
+//    };
+//    QString name;
+//    vector<TrackFrameInfo *> *trackFrameInfos;
+//    int startIdx;
 //    int idx;
-
-    QImage *payLoad;
-    int startFrameIdx = 0;
-
-//    TrackFrame *trackFrame;
-    int trackInfoIdx;
-//    auto *payLoad;
-//    PayLoad payLoad;
-};
-
-class TrackInfo {
-public:
-    TrackInfo(QString name) {
-        this->name = name;
-        trackFrameInfos = new vector<TrackFrameInfo *>();
-    };
-    QString name;
-    vector<TrackFrameInfo *> *trackFrameInfos;
-    int startIdx;
-    int idx;
-
-    int getCurTrackFrameIdx() {
-        return _trackFrameIdx;
-    };
-//    Track *track;
-//    void updateTrackInfo(TrackInfo *trackInfo,int... p);
-private:
-    int _trackFrameIdx;
-
-};
+//
+//    int getCurTrackFrameIdx() {
+//        return _trackFrameIdx;
+//    };
+////    Track *track;
+////    void updateTrackInfo(TrackInfo *trackInfo,int... p);
+//private:
+//    int _trackFrameIdx;
+//
+//};
 
 #include <iostream>
 //#include "view/timeline/Track.hpp"
@@ -106,10 +93,10 @@ public:
         if (sizeof(trackInfo->trackFrameInfos) > sequencePlayback->endFrameIdx) {
             sequencePlayback->endFrameIdx = sizeof(trackInfo->trackFrameInfos);
         }
-        newTrackInfo = trackInfo;
-        Evt()._().dis(TrackModelEvent_NEW_TRACK);
+        TrackModelEvent *e = new TrackModelEvent();
+        e->trackInfo = trackInfo;
+        Evt()._().trackModelEvent->dis(TrackModelEvent_NEW_TRACK, e);
 //    Evt::_().dis(TrackModelEvent_NEW_TRACK,trackInfo);
-        newTrackInfo = NULL;
 //    Evt::add("type",[=](){this->func1();});
 //    Evt_dis("type")
 //    Evt::add("type2",std::bind([](TrackModel *self) {self->func1();},this));
@@ -117,60 +104,11 @@ public:
     };
 
 
-    TrackInfo *newTrackInfo;
+//    TrackInfo *newTrackInfo;
 
     void setZoomLevel(int lv) {
         //todo
 //    Evt_dis(TrackModelEvent::SET_ZOOM_LEVEL);
-    }
-
-    void relayout(int trackInfoIdx, int trackFrameInfoIdx) {
-        //fixme
-
-//        TrackInfo *trackInfo = _trackInfos->at(trackInfoIdx);
-//        TrackFrameInfo *trackFrameInfo = trackInfo->trackFrameInfos->at(trackFrameInfoIdx);
-//        TrackFrame *trackFrame = trackFrameInfo->trackFrame;
-//
-//        int changeWidth = trackFrame->changeWidth;
-//        trackFrame->changeWidth = 0;
-//        if (trackFrame->isPressRightButton) {
-//            TrackFrame *preTf = trackFrame;
-//            TrackFrame *tf;
-//            for (int i = trackFrameInfo->idx + 1; i < trackInfo->trackFrameInfos->size(); i++) {
-//                tf = trackInfo->trackFrameInfos->at(i)->trackFrame;
-//                _setX(tf, preTf->x() + preTf->width());
-//                TrackFrameInfo *tfInfo = getTrackFrameInfo(tf->trackInfoIdx, tf->trackFrameInfoIdx);
-//                tfInfo->startFrameIdx += (changeWidth / frameWidth);
-//                preTf = tf;
-//            }
-//            if (trackFrameInfo->idx + 1 < trackInfo->trackFrameInfos->size())
-//                _setWidth(tf->parentWidget(), tf->x() + tf->width() + 40);
-//            else {
-//                _setWidth(trackFrame->parentWidget(), trackFrame->x() + trackFrame->width() + 40);
-//            }
-//        }
-//        else if (trackFrame->isPressLeftButton) {
-//            trackFrame->isPressLeftButton = false;
-//            _setX(trackFrame, trackFrame->x() + changeWidth);
-//            trackFrame->isPressLeftButton = true;
-//            if (trackFrame->idx > 0) {
-//                TrackFrame *preTrackFrame = trackInfo->trackFrameInfos->at(trackFrame->idx - 1)->trackFrame;
-//                if (changeWidth > 0) {
-//                    preTrackFrame->setHoldFrameCount(preTrackFrame->holdFrameCount + 1, 0);
-//                }
-//                else {
-//                    if (preTrackFrame->holdFrameCount > 1) {
-//                        preTrackFrame->setHoldFrameCount(preTrackFrame->holdFrameCount - 1, 0);
-//                    }
-//                    else {//todo Á¬Ðø¸²¸Ç¼¸Ö¡
-////                    print('to delete preTrackFrame')
-////                    Event.add(ActionEvent.RELEASE_TRACK_FRAME_LEFT_BUTTON, self.deletePreTrackFrame)
-////                    self.deleteTrackFrame = preTrackFrame
-//                    }
-//                }
-//
-//            }
-//        }
     }
 
     TrackInfo *getTrackInfo(int tIdx) { return _trackInfos->at(tIdx); }

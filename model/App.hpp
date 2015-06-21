@@ -7,7 +7,7 @@
 
 #endif //SEQTRUAN_APP_H
 
-#include "Singleton.hpp"
+#include "utils/Singleton.hpp"
 #include "model/TrackModel.hpp"
 class App : public Singleton<App> {
 public:
@@ -19,6 +19,7 @@ public:
     TrackModel *trackModel;
 
     void init() {
+        Evt()._().init();
         trackModel = new TrackModel();
     }
 

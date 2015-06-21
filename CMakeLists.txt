@@ -35,7 +35,7 @@ events/Event.hpp
 events/TrackModelEvent.hpp
 events/ActionEvent.hpp
 events/PlaybackEvent.hpp
-model/Singleton.hpp
+utils/Singleton.hpp
 model/TrackModel.hpp
 model/App.hpp
 utils/Linker.hpp
@@ -57,7 +57,7 @@ view/viewport/Transport.hpp
 view/timeline/TrackFrame.hpp
 model/playback/SequencePlayback.hpp
 model/playback/AudioPlayback.hpp
-)
+events/SequencePlaybackEvent.hpp model/TrackInfo.hpp model/TrackFrameInfo.hpp)
 
 # Use the Widgets module from Qt 5.
 target_link_libraries(SeqTruan Qt5::Widgets Qt5::Multimedia)

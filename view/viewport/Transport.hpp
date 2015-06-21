@@ -27,10 +27,16 @@ public:
         QPushButton *stopButton = new QPushButton();
         stopButton->setText("stop");
         hbox->addWidget(stopButton);
+
+
+
     }
 
 private:
-    void togglePlay(){};
+    void togglePlay(){
+        Evt()._().seq->dis("test", new SequencePlaybackEvent());
+
+    };
 
     void onFrameRateChanged(){};
 };

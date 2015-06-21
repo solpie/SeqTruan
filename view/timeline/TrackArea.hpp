@@ -11,7 +11,8 @@
 #include "TrackCursor.hpp"
 #include "TimestampBar.hpp"
 #include "Track.hpp"
-class TrackArea :public QWidget{
+
+class TrackArea : public QWidget {
 public:
     TrackArea(QWidget *parent) : QWidget(parent) {
         timestampBar = new TimestampBar(this);
@@ -28,17 +29,29 @@ public:
 
         trackCursor = new TrackCursor(this);
         trackCursor->move(40, 0);
+        Evt()._().seq->add("test", [this](SequencePlaybackEvent *e){testEvent(e);});
+
     }
-    void add(TrackInfo *trackInfo){
+
+    void add(TrackInfo *trackInfo) {
         Track *track = new Track();
         track->load(trackInfo->idx);
         _setHeight(trackStack, trackStack->height() + track->height());
-        qDebug()<<trackStack->height();
+        qDebug() << trackStack->height();
         vbox->addWidget(track);
     }
+
     QWidget *trackStack;
 
-private:
+    void testEvent(SequencePlaybackEvent *e){
+
+    }
+protected:
+    virtual void resizeEvent(QResizeEvent *qResizeEvent) override {
+        _setHeight(trackCursor, height());
+    }
+
+
     TimestampBar *timestampBar;
     TrackCursor *trackCursor;
     QVBoxLayout *vbox;
