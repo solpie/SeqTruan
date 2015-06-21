@@ -44,6 +44,7 @@ public:
 
     void onRenderFrame(SequencePlaybackEvent *e) {
         int frameIdx = e->frameIdx;
+        _setX(trackCursor,frameIdx*App()._().trackModel->frameWidth);
     }
 
 protected:

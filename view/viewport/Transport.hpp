@@ -38,10 +38,10 @@ private:
 
     void onState(SequencePlaybackEvent *e) {
         if (e->state == PlaybackEvent::PLAY) {
-            playButton->setText("play");
+            playButton->setText("pause");
         }
         else if (PlaybackEvent::PAUSE) {
-            playButton->setText("pause");
+            playButton->setText("play");
         }
     }
 

@@ -29,7 +29,7 @@ public:
     void setFramerate(int frameRate) {
         this->frameRate = frameRate;
         this->timer->setInterval(1000 / this->frameRate);
-//        timer->connect(timer, QTimer::timeout, update);
+        timer->connect(timer, QTimer::timeout, [this]{update();});
     }
 
     void update() {
@@ -42,9 +42,11 @@ public:
 
     void togglePlay() {
         if (state == PlaybackEvent::PLAY) {
+            pause();
             setState(PlaybackEvent::PAUSE);
         }
         else if (state == PlaybackEvent::PAUSE || state == PlaybackEvent::STOP) {
+            play();
             setState(PlaybackEvent::PLAY);
         }
     }
