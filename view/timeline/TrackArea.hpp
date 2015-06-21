@@ -29,8 +29,7 @@ public:
 
         trackCursor = new TrackCursor(this);
         trackCursor->move(40, 0);
-        Evt()._().seq->add("test", [this](SequencePlaybackEvent *e){testEvent(e);});
-
+        Evt_add(SequencePlaybackEvent::RENDER_FRAME, onRenderFrame)
     }
 
     void add(TrackInfo *trackInfo) {
@@ -43,9 +42,10 @@ public:
 
     QWidget *trackStack;
 
-    void testEvent(SequencePlaybackEvent *e){
-
+    void onRenderFrame(SequencePlaybackEvent *e) {
+        int frameIdx = e->frameIdx;
     }
+
 protected:
     virtual void resizeEvent(QResizeEvent *qResizeEvent) override {
         _setHeight(trackCursor, height());

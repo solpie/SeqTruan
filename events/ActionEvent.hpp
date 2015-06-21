@@ -10,5 +10,7 @@
 #endif //SEQTRUAN_ACTIONEVENT_H
 
 
-#define ActionEvent_TOGGLE_PLAY "toggle play"
+class ActionEvent{
+    static constexpr const char *TOGGLE_PLAY = "TOGGLE_PLAY";
 
+};

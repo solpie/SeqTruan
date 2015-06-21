@@ -10,9 +10,8 @@
 #define SEQTRUAN_TRACKMODELEVENT_H
 
 #endif //SEQTRUAN_TRACKMODELEVENT_H
-#define TrackModelEvent_NEW_TRACK "newTrack"
 class TrackModelEvent {
 public:
-    TrackInfo *trackInfo;
+    static constexpr const char *NEW_TRACK = "NEW_TRACK";
 
 };

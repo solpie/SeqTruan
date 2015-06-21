@@ -27,9 +27,9 @@ public:
         trackArea = new TrackArea(this);
         trackArea->resize(1280, TIMELINE_HEIGHT);
         trackArea->move(TIMELINE_TRACK_PANEL_DEF_WIDTH, 0);
-//    Evt_add(TrackModelEvent_NEW_TRACK, onNewTrack);
-        Evt()._().trackModelEvent->add(TrackModelEvent_NEW_TRACK,
-                                       [this](TrackModelEvent *e) { onNewTrack(e->trackInfo); });
+        Evt_add(TrackModelEvent::NEW_TRACK, onNewTrack);
+//        Evt()._().trackModelEvent->add(TrackModelEvent_NEW_TRACK,
+//                                       [this](TrackModelEvent *e) { onNewTrack(e->trackInfo); });
 //    Evt::_().add(TrackModelEvent_NEW_TRACK, onNewTrack);
 
 //    Evt::_().add(TrackModelEvent_NEW_TRACK, std::bind(this, &Timeline::onNewTrack));

@@ -58,6 +58,7 @@ public:
 
     int idx = 0;
     int holdFrameCount = 0;
+    QLabel *holdFrameCountLabel = nullptr;
     bool isPressLeftButton = false;
     bool isPressRightButton = false;
     int changeWidth = 0;
@@ -66,7 +67,7 @@ public:
 
     void setIdx(int trackFrameIdx) {
         idx = trackFrameIdx;
-        QString s = QString::number(idx + 1, 10);
+        QString s = QString::number(idx + 1);
         frameIdx->setText(s);
     }
 
@@ -77,6 +78,18 @@ public:
         _setX(rightButton, width() - rightButton->width() + 1);
         holdFrameCount = count;
         qDebug() << this << this->frameIdx->text();
+        if (count > 1) {
+            if (!holdFrameCountLabel) {
+                holdFrameCountLabel = new QLabel(this);
+                holdFrameCountLabel->setAlignment(Qt::AlignRight);
+                holdFrameCountLabel->setWordWrap(true);
+                holdFrameCountLabel->setStyleSheet("color:#b6b6b6;border:none;");
+                holdFrameCountLabel->setMinimumWidth(15);
+                holdFrameCountLabel->show();
+            }
+            holdFrameCountLabel->setText(QString::number(count));
+            holdFrameCountLabel->move(App()._().trackModel->frameWidth * count - 20, 10);
+        }
     }
 
     void resizeFrame(int endPosX) {

@@ -6,10 +6,12 @@
 #ifndef SEQTRUAN_TRANSPORT_H
 #define SEQTRUAN_TRANSPORT_H
 
+#include <model/App.hpp>
 #include "view/UI.hpp"
-class Transport :public QWidget{
+
+class Transport : public QWidget {
 public:
-    Transport(QWidget *parent): QWidget(parent) {
+    Transport(QWidget *parent) : QWidget(parent) {
         QHBoxLayout *hbox = new QHBoxLayout(this);
         hbox->setSpacing(0);
 
@@ -18,27 +20,38 @@ public:
         hbox->addWidget(frameRate);
         connect(frameRate, QComboBox::currentTextChanged, this, onFrameRateChanged);
 //
-        QPushButton *playButton = new QPushButton();
+        playButton = new QPushButton();
         playButton->setText("play");
 //    Evt_add(ActionEvent_TOGGLE_PLAY,togglePlay);
-        connect(playButton,QPushButton::clicked,this,togglePlay);
+        connect(playButton, QPushButton::clicked, this, togglePlay);
         hbox->addWidget(playButton);
 
         QPushButton *stopButton = new QPushButton();
         stopButton->setText("stop");
         hbox->addWidget(stopButton);
 
-
-
+        Evt_add(SequencePlaybackEvent::STATE, onState);
     }
 
 private:
-    void togglePlay(){
-        Evt()._().seq->dis("test", new SequencePlaybackEvent());
+    QPushButton *playButton;
+
+    void onState(SequencePlaybackEvent *e) {
+        if (e->state == PlaybackEvent::PLAY) {
+            playButton->setText("play");
+        }
+        else if (PlaybackEvent::PAUSE) {
+            playButton->setText("pause");
+        }
+    }
+
+    void togglePlay() {
+        App()._().trackModel->sequencePlayback->togglePlay();
+//        Evt_dis(ActionEvent::TOGGLE_PLAY, nullptr)
 
     };
 
-    void onFrameRateChanged(){};
+    void onFrameRateChanged() { };
 };
 
 

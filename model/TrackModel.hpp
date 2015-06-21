@@ -93,9 +93,7 @@ public:
         if (sizeof(trackInfo->trackFrameInfos) > sequencePlayback->endFrameIdx) {
             sequencePlayback->endFrameIdx = sizeof(trackInfo->trackFrameInfos);
         }
-        TrackModelEvent *e = new TrackModelEvent();
-        e->trackInfo = trackInfo;
-        Evt()._().trackModelEvent->dis(TrackModelEvent_NEW_TRACK, e);
+        Evt_dis(TrackModelEvent::NEW_TRACK, trackInfo);
 //    Evt::_().dis(TrackModelEvent_NEW_TRACK,trackInfo);
 //    Evt::add("type",[=](){this->func1();});
 //    Evt_dis("type")

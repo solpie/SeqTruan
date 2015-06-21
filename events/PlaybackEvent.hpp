@@ -7,4 +7,11 @@
 #define SEQTRUAN_PLAYBACKEVENT_H
 
 #endif //SEQTRUAN_PLAYBACKEVENT_H
-#define AUDIO_TICK "audioplayback tick"
+
+class PlaybackEvent{
+public:
+    static constexpr const char *PLAY = "PLAY";
+    static constexpr const char *PAUSE = "PAUSE";
+    static constexpr const char *STOP = "STOP";
+
+};

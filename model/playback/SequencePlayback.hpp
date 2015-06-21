@@ -7,7 +7,6 @@
 #define SEQTRUAN_SEQQUENCEPLAYBACK_H
 
 
-#include <c++/bits/stringfwd.h>
 #include "QTimer"
 #include "events/Event.hpp"
 
@@ -16,36 +15,68 @@ public:
     SequencePlayback() {
         frameRate = 24;
         frameIdx = 1;
-        state = "stop";
+        state = PlaybackEvent::STOP;
+//        state = new string("stop");
         timer = new QTimer();
+        setFramerate(24);
     }
+
     int frameRate;
     int frameIdx;
     std::string state;
     int endFrameIdx;
-    void setFramerate(int frameRate){
+
+    void setFramerate(int frameRate) {
         this->frameRate = frameRate;
         this->timer->setInterval(1000 / this->frameRate);
+//        timer->connect(timer, QTimer::timeout, update);
     }
-    void update(){
+
+    void update() {
         frameIdx = (frameIdx + 1) % endFrameIdx;
+        SequencePlaybackEvent *e = new SequencePlaybackEvent();
+        e->frameIdx = frameIdx;
+        Evt_dis(SequencePlaybackEvent::RENDER_FRAME, e)
+
     }
-    void play(){
+
+    void togglePlay() {
+        if (state == PlaybackEvent::PLAY) {
+            setState(PlaybackEvent::PAUSE);
+        }
+        else if (state == PlaybackEvent::PAUSE || state == PlaybackEvent::STOP) {
+            setState(PlaybackEvent::PLAY);
+        }
+    }
+
+    void setState(string newstate) {
+        if (state != newstate) {
+            state = newstate;
+        }
+        SequencePlaybackEvent *e = new SequencePlaybackEvent();
+        e->state = state;
+        Evt_dis(SequencePlaybackEvent::STATE, e);
+    }
+
+    void play() {
         if (!timer->isActive()) {
             timer->start();
         }
     }
-    void pause(){
+
+    void pause() {
         if (timer->isActive()) {
             timer->stop();
         }
     }
-    void stop(){
+
+    void stop() {
         if (timer->isActive()) {
             timer->stop();
         }
         frameIdx = 1;
     }
+
 private:
     QTimer *timer;
 

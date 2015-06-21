@@ -19,7 +19,6 @@ public:
     TrackModel *trackModel;
 
     void init() {
-        Evt()._().init();
         trackModel = new TrackModel();
     }
 
