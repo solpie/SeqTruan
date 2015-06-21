@@ -31,11 +31,15 @@ public:
             if (this->next) {
                 this->next->pre = nullptr;
             }
-            else if(this->pre) {
+            else if (this->pre) {
                 this->pre->next = nullptr;
             }
         }
         this->next = this->pre = nullptr;
-        return  this;
+        return this;
+    }
+
+    void dispose() {
+
     }
 };

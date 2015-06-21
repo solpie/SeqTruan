@@ -19,13 +19,11 @@ public:
         over(thumb, paintEvent_, paintThumb);
         _setMouseTransparent(thumb);
 
-
         frameIdx = new QLabel(this);
         frameIdx->setStyleSheet("color:#b6b6b6;border:none;");
         _setMouseTransparent(frameIdx);
         frameIdx->move(4, 45);
         frameIdx->setText("0");
-
 
         leftButton = new OverWidget<QPushButton>(this);
         leftButton->resize(8, 8);
@@ -37,7 +35,6 @@ public:
             this->onRelLeftButton(this);
         });
         UI::setQss(leftButton, ":/qss_button", "frameButton");
-
 
         rightButton = new OverWidget<QPushButton>(this);
         rightButton->resize(8, 8);
@@ -57,7 +54,6 @@ public:
     }
 
     int idx = 0;
-    int holdFrameCount = 0;
     QLabel *holdFrameCountLabel = nullptr;
     bool isPressLeftButton = false;
     bool isPressRightButton = false;
@@ -71,12 +67,12 @@ public:
 
     void setHoldFrameCount(int count, int dx = 1) {
         int frameWidth = app.trackModel->frameWidth;
-        changeWidth = (count - holdFrameCount) * frameWidth * dx;
+        changeWidth = (count - _trackFrameInfo->getHoldFrame()) * frameWidth * dx;
+        _trackFrameInfo->setHoldFrame( count);
         _setWidth(this, count * frameWidth);
         _setWidth(thumb, width());
         _setX(rightButton, width() - rightButton->width() + 1);
-        holdFrameCount = count;
-        qDebug() << this << this->frameIdx->text();
+        qDebug() << this << "setHoldFrameCount" << this->frameIdx->text() << "width" << width();
         if (count > 1) {
             if (!holdFrameCountLabel) {
                 holdFrameCountLabel = new QLabel(this);
@@ -95,16 +91,32 @@ public:
         _setWidth(this, endPosX - this->x());
         _setWidth(thumb, width());
         _setX(rightButton, width() - rightButton->width() + 1);
-        holdFrameCount = width() / app.trackModel->frameWidth;
+        _trackFrameInfo->setHoldFrame( width() / app.trackModel->frameWidth);
+    }
+
+    void setTrackFrameInfo(TrackFrameInfo *tfi) {
+        _trackFrameInfo = tfi;
+    }
+
+    void updateTrackFrameInfo() {
+        int frameWidth = app.trackModel->frameWidth;
+        _trackFrameInfo->setStartFrame(this->x() / frameWidth + 1);
+        _trackFrameInfo->setHoldFrame((this->x() + this->width()) / frameWidth);
     }
 
 protected:
+    OverWidget<QWidget> *thumb;
+    TrackFrameInfo *_trackFrameInfo;
+
     void onRelLeftButton(TrackFrame *relTrackFrame) {
         if (relTrackFrame->pre) {
             if (relTrackFrame->pre->x() <= relTrackFrame->x()) {
                 qDebug() << this << "onRelLeftButton" << relTrackFrame->pre->idx;
                 TrackFrame *deleteMe = relTrackFrame->pre->remove();//todo 释放资源 保存历史操作
+                TrackFrameInfo *deleteMeInfo = _trackFrameInfo->pre->remove();//todo 释放资源 保存历史操作
                 renameBackward(this);
+//                relTrackFrame->updateTrackFrameInfo();
+                //todo 验证idx
                 qDebug() << this << "onRelLeftButton remove():" << relTrackFrame->pre->idx;
 //                onRelLeftButton(relTrackFrame);
             }
@@ -133,7 +145,7 @@ protected:
         _setX(cur, cur->x() + cur->changeWidth);
         cur->changeWidth = 0;
         if (cur->pre) {
-            qDebug() << "handleL" << cur->pre << cur->pre->frameIdx->text();
+            qDebug() << "handleL" << cur->pre->idx << cur->pre->frameIdx->text();
             cur->pre->resizeFrame(cur->x());
         }
     }
@@ -143,28 +155,27 @@ protected:
             int posX = mapFromGlobal(QCursor::pos()).x();
             if (isPressRightButton) {
                 if (posX > width() + 30) {
-                    setHoldFrameCount(holdFrameCount + 1, 1);
+                    setHoldFrameCount(_trackFrameInfo->getHoldFrame() + 1, 1);
                     handleR(this);
                 }
-                else if (posX < width() - 30 and holdFrameCount > 1) {
-                    setHoldFrameCount(holdFrameCount - 1, 1);
+                else if (posX < width() - 30 and _trackFrameInfo->getHoldFrame() > 1) {
+                    setHoldFrameCount(_trackFrameInfo->getHoldFrame() - 1, 1);
                     handleR(this);
                 }
             }
             else if (isPressLeftButton) {
                 if (posX < -30) {
-                    setHoldFrameCount(holdFrameCount + 1, -1);
+                    setHoldFrameCount(_trackFrameInfo->getHoldFrame() + 1, -1);
                     handleL(this);
                 }
-                else if (posX > 30 && holdFrameCount > 1) {
-                    setHoldFrameCount(holdFrameCount - 1, -1);
+                else if (posX > 30 && _trackFrameInfo->getHoldFrame() > 1) {
+                    setHoldFrameCount(_trackFrameInfo->getHoldFrame() - 1, -1);
                     handleL(this);
                 }
             }
         }
     }
 
-    OverWidget<QWidget> *thumb;
 
     void paintThumb() {
         QPainter pg(this->thumb);

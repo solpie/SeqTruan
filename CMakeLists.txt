@@ -59,7 +59,7 @@ view/viewport/Transport.hpp
 view/timeline/TrackFrame.hpp
 model/playback/SequencePlayback.hpp
 model/playback/AudioPlayback.hpp
-events/SequencePlaybackEvent.hpp model/TrackInfo.hpp model/TrackFrameInfo.hpp view/viewport/ComCanvas.hpp)
+events/SequencePlaybackEvent.hpp model/TrackInfo.hpp model/TrackFrameInfo.hpp view/viewport/ComCanvas.hpp utils/Sh1tMacro.hpp)
 
 # Use the Widgets module from Qt 5.
 target_link_libraries(SeqTruan Qt5::Widgets Qt5::OpenGL Qt5::Multimedia ${OPENGL_LIBRARIES})

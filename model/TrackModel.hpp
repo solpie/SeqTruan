@@ -79,13 +79,13 @@ public:
                     else {
                         // This is where you might call your encrypting function
                         qDebug() << "Image file: " << fi.absoluteFilePath();
-
                         QImage *img = new QImage(fi.absoluteFilePath());
                         TrackFrameInfo *trackFrameInfo = new TrackFrameInfo();
-                        trackFrameInfo->trackInfoIdx = trackInfo->idx;
+                        trackFrameInfo->setTrackInfoIdx(trackInfo->idx);
                         trackFrameInfo->payLoad = img;
-                        trackFrameInfo->idx = trackInfo->trackFrameInfos->size();
-                        trackFrameInfo->startFrameIdx = trackFrameInfo->idx + 1;
+                        trackFrameInfo->setIdx(trackInfo->trackFrameInfos->size());
+                        trackFrameInfo->setStartFrame(trackFrameInfo->getIdx() + 1);
+                        trackFrameInfo->setHoldFrame(1);
                         trackInfo->trackFrameInfos->push_back(trackFrameInfo);
                     }
                 }
@@ -112,10 +112,9 @@ public:
     QImage *getRenderFrame(int frameIdx) {
         for (TrackInfo *trackInfo:*_trackInfos) {
             for (TrackFrameInfo *trackFrameInfo:*trackInfo->trackFrameInfos) {
-                qDebug() << this << "getRenderFrame" << trackFrameInfo->idx;
-                if(frameIdx>=trackFrameInfo->startFrameIdx&&frameIdx<=trackFrameInfo->endFrameIdx)
-                {
-                    trackFrameInfo->idx;
+                qDebug() << this << "getRenderFrame" << trackFrameInfo->getIdx();
+                if (frameIdx >= trackFrameInfo->getStartFrame() && frameIdx <= trackFrameInfo->getEndFrame()) {
+                    //todo 实现链表查找
 //                    return new QPixmap(QPixmap::fromImage(trackFrameInfo->payLoad));
                     return trackFrameInfo->payLoad;
                 }

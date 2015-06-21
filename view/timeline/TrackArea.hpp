@@ -35,7 +35,7 @@ public:
 
     void add(TrackInfo *trackInfo) {
         Track *track = new Track();
-        track->load(trackInfo->idx);
+        track->load(trackInfo);
         _setHeight(trackStack, trackStack->height() + track->height());
         vbox->addWidget(track);
         qDebug() << trackStack->height();

@@ -41,22 +41,18 @@ public:
         Track();
     }
 
-    void load(int tIdx) {
-        TrackInfo *trackInfo = App()._().trackModel->getTrackInfo(tIdx);
-        trackInfoIdx = tIdx;
+    void load(TrackInfo *trackInfo) {
         int len = trackInfo->trackFrameInfos->size();
         TrackFrame *pre = nullptr;
         int fw = App()._().trackModel->frameWidth;
         for (int i = 0; i < len; i++) {
             TrackFrameInfo *trackFrameInfo = trackInfo->trackFrameInfos->at(i);
             TrackFrame *trackFrame = new TrackFrame(trackFrameArea);
+            trackFrame->setTrackFrameInfo(trackFrameInfo);
+
             pre = trackFrame->setPre(pre);
             trackFrame->setPixmap(trackFrameInfo->payLoad);
-
-            trackFrameInfo->startFrameIdx = i + 1;
-            trackFrameInfo->endFrameIdx = i + 1;
             trackFrame->setIdx(i);
-
             trackFrame->move(i * fw, 0);
         }
         _setWidth(trackFrameArea, (len) * fw);
