@@ -62,8 +62,6 @@ public:
     bool isPressLeftButton = false;
     bool isPressRightButton = false;
     int changeWidth = 0;
-    int trackInfoIdx;
-    int trackFrameInfoIdx;
 
     void setIdx(int trackFrameIdx) {
         idx = trackFrameIdx;

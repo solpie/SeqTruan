@@ -18,6 +18,7 @@ public:
 
     QImage *payLoad;
     int startFrameIdx = 0;
+    int endFrameIdx = 0;
 
 //    TrackFrame *trackFrame;
     int trackInfoIdx;

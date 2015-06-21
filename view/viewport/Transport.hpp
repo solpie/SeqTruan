@@ -15,7 +15,7 @@ public:
         QHBoxLayout *hbox = new QHBoxLayout(this);
         hbox->setSpacing(0);
 
-        QComboBox *frameRate = new QComboBox();
+        frameRate = new QComboBox();
         frameRate->addItems({"24", "30", "60"});
         hbox->addWidget(frameRate);
         connect(frameRate, QComboBox::currentTextChanged, this, onFrameRateChanged);
@@ -35,7 +35,7 @@ public:
 
 private:
     QPushButton *playButton;
-
+    QComboBox *frameRate;
     void onState(SequencePlaybackEvent *e) {
         if (e->state == PlaybackEvent::PLAY) {
             playButton->setText("pause");
@@ -47,11 +47,13 @@ private:
 
     void togglePlay() {
         App()._().trackModel->sequencePlayback->togglePlay();
-//        Evt_dis(ActionEvent::TOGGLE_PLAY, nullptr)
-
     };
 
-    void onFrameRateChanged() { };
+    void onFrameRateChanged() {
+        int fr = frameRate->currentText().toInt();
+        App()._().trackModel->sequencePlayback->setFramerate(fr);
+        qDebug()<<this<<"onFrameRateChanged"<<fr;
+    };
 };
 
 

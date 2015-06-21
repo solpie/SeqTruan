@@ -54,14 +54,13 @@ public:
             pre = trackFrame;
 
 
-            trackFrame->trackInfoIdx = trackInfo->idx;
+//            trackFrame->trackInfoIdx = trackInfo->idx;
 
-            //fixme
-//            trackFrameInfo->trackFrame = trackFrame;
-            trackFrame->trackFrameInfoIdx = trackFrameInfo->idx;
+//            trackFrame->trackFrameInfoIdx = trackFrameInfo->idx;
             trackFrame->setPixmap(trackFrameInfo->payLoad);
 
             trackFrameInfo->startFrameIdx = i + 1;
+            trackFrameInfo->endFrameIdx = i+1;
             trackFrame->setIdx(i);
 
             trackFrame->move(i * TIMELINE_TRACK_FRAME_MAX_WIDTH, 0);

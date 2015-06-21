@@ -27,6 +27,8 @@ set(CMAKE_AUTOMOC ON)
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -w -std=c++11 -fpermissive")
 # Find the QtWidgets library
 find_package(Qt5Widgets)
+find_package(Qt5OpenGL)
+#find_package(OpenGL)
 find_package(Qt5Multimedia REQUIRED)
 # Tell CMake to create the helloworld executable
 qt5_add_resources(RESOURCES qrc/rc.qrc)
@@ -57,9 +59,10 @@ view/viewport/Transport.hpp
 view/timeline/TrackFrame.hpp
 model/playback/SequencePlayback.hpp
 model/playback/AudioPlayback.hpp
-events/SequencePlaybackEvent.hpp model/TrackInfo.hpp model/TrackFrameInfo.hpp)
+events/SequencePlaybackEvent.hpp model/TrackInfo.hpp model/TrackFrameInfo.hpp view/viewport/ComCanvas.hpp)
 
 # Use the Widgets module from Qt 5.
-target_link_libraries(SeqTruan Qt5::Widgets Qt5::Multimedia)
+target_link_libraries(SeqTruan Qt5::Widgets Qt5::OpenGL Qt5::Multimedia ${OPENGL_LIBRARIES})
+#target_link_libraries(SeqTruan Qt5::Widgets Qt5::OpenGL Qt5::Multimedia ${OPENGL_LIBRARIES})
 
 #######################

@@ -21,7 +21,6 @@ public:
         setFramerate(24);
     }
 
-    int frameRate;
     int frameIdx;
     std::string state;
     int endFrameIdx;
@@ -29,7 +28,12 @@ public:
     void setFramerate(int frameRate) {
         this->frameRate = frameRate;
         this->timer->setInterval(1000 / this->frameRate);
-        timer->connect(timer, QTimer::timeout, [this]{update();});
+        timer->connect(timer, QTimer::timeout, [this] { update(); });
+//        Evt_dis(SequencePlaybackEvent::FRAME_RATE, e);
+    }
+
+    int getFramerate() {
+        return frameRate;
     }
 
     void update() {
@@ -37,7 +41,6 @@ public:
         SequencePlaybackEvent *e = new SequencePlaybackEvent();
         e->frameIdx = frameIdx;
         Evt_dis(SequencePlaybackEvent::RENDER_FRAME, e)
-
     }
 
     void togglePlay() {
@@ -79,7 +82,11 @@ public:
         frameIdx = 1;
     }
 
+protected:
+    int frameRate;
+
 private:
+
     QTimer *timer;
 
 };

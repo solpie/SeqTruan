@@ -12,6 +12,7 @@ class SequencePlaybackEvent {
 public:
     static constexpr const char *RENDER_FRAME = "RENDER_FRAME";
     static constexpr const char *STATE = "STATE";
+    static constexpr const char *FRAME_RATE = "FRAME_RATE";
     int frameIdx;
     string state;
 };

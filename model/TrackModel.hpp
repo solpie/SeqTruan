@@ -109,6 +109,21 @@ public:
 //    Evt_dis(TrackModelEvent::SET_ZOOM_LEVEL);
     }
 
+    QImage *getRenderFrame(int frameIdx) {
+        for (TrackInfo *trackInfo:*_trackInfos) {
+            for (TrackFrameInfo *trackFrameInfo:*trackInfo->trackFrameInfos) {
+                qDebug() << this << "getRenderFrame" << trackFrameInfo->idx;
+                if(frameIdx>=trackFrameInfo->startFrameIdx&&frameIdx<=trackFrameInfo->endFrameIdx)
+                {
+                    trackFrameInfo->idx;
+//                    return new QPixmap(QPixmap::fromImage(trackFrameInfo->payLoad));
+                    return trackFrameInfo->payLoad;
+                }
+            }
+        }
+        return nullptr;
+    }
+
     TrackInfo *getTrackInfo(int tIdx) { return _trackInfos->at(tIdx); }
 
     TrackFrameInfo *getTrackFrameInfo(int tIdx, int tfIdx) { return getTrackInfo(tIdx)->trackFrameInfos->at(tfIdx); }
