@@ -17,12 +17,15 @@ public:
         resize(1280, TIMELINE_TRACK_DEF_HEIGHT);
 //    this->setStyleSheet("background:#343434");
         trackFrameArea = new QWidget(this);
-        trackFrameArea->move(TIMELINE_TRACK_FRAME_MAX_WIDTH - 9, 0);
+//        trackFrameArea->move(TIMELINE_TRACK_FRAME_MAX_WIDTH - 9, 0);
+        _setX(trackFrameArea,App()._().trackModel->frameWidth);
+//        trackFrameArea->move(TIMELINE_TRACK_FRAME_MAX_WIDTH - 9, 0);
         trackFrameArea->resize(80, 75);
 
         headButton = new OverWidget<QWidget>(this);
         headButton->resize(10, 40);
-        headButton->move(31 - 9, 0);
+//        headButton->move(31 - 9, 0);
+        _setX(headButton,31);
         headButton->setStyleSheet("border:none");
 //    headButton->setParent(this);
         over(headButton, paintEvent_, paintHead);
@@ -52,8 +55,6 @@ public:
                 pre->next = trackFrame;
             }
             pre = trackFrame;
-
-
 //            trackFrame->trackInfoIdx = trackInfo->idx;
 
 //            trackFrame->trackFrameInfoIdx = trackFrameInfo->idx;
@@ -84,7 +85,6 @@ public:
 
     int trackInfoIdx = 0;
 
-//    TrackInfo *trackInfo;
     void paintHead() {
         QPainterPath path;
         int y = 17;

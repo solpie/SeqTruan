@@ -18,18 +18,13 @@ public:
         canvas = new ComCanvas(this);
 
         _transport = new Transport(this);
-        Evt_add(SequencePlaybackEvent::RENDER_FRAME, onRenderFrame)
+        Evt_add(SequencePlaybackEvent::RENDER_FRAME, onRenderFrame);
     };
 
 private:
     ComCanvas *canvas;
-    QPixmap *thumbPixmap = nullptr;
     QImage *img = nullptr;
 
-    void onRenderCanvas() {
-        QPainter p;
-        p.drawImage(0, 0, *img);
-    }
 
 protected:
     virtual void resizeEvent(QResizeEvent *qResizeEvent) override {

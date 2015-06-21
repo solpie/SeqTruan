@@ -7,6 +7,7 @@
 
 #include <QtWidgets/qlabel.h>
 #include "view/UI.hpp"
+#include "model/App.hpp"
 
 class TrackCursor : public DragWidget {
 //没重绘的部分透明 The Q_OBJECT macro at the beginning of the class definition is necessary for all classes that define signals or slots
@@ -14,14 +15,18 @@ Q_OBJECT
 public:
     TrackCursor(QWidget *parent = 0) : DragWidget(parent) {
         resize(60, 200);
-//        exPressFunc = [] {
-////        qDebug() << "press me";
-//            printf("dd");
-//        };
         timeLabel = new QLabel("00:00:24", this);
         timeLabel->move(2, 10);
         timeLabel->resize(60, 20);
         _setMouseTransparent(this);
+        Evt_add(ActionEvent::UPDATE_CURSOR, onUpdateCursor);
+    }
+
+    void onUpdateCursor(int *frameIdx) {
+        int fw = App()._().trackModel->frameWidth;
+        int px = (*frameIdx) * fw;
+        if (px != x())
+            _setX(this, px);
     }
 
 private:
@@ -43,17 +48,6 @@ protected:
 
     }
 };
-//#include "Qt"
-//TrackCursor::TrackCursor(QWidget *parent) : DragWidget(parent) {
-//    resize(60, 200);
-////    exPressFunc = [] {
-////        qDebug() << "press me";
-////    };
-//    timeLabel = new QLabel("00:00:24");
-//    timeLabel->move(2, 10);
-//    setMouseTransparent(this);
-//
-//}
 
 #endif //SEQTRUAN_TRACKCURSOR_H
 

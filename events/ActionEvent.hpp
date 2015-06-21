@@ -11,6 +11,8 @@
 
 
 class ActionEvent{
+public:
     static constexpr const char *TOGGLE_PLAY = "TOGGLE_PLAY";
+    static constexpr const char *UPDATE_CURSOR = "UPDATE_CURSOR";
 
 };

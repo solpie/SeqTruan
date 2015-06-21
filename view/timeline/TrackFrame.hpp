@@ -48,7 +48,10 @@ public:
         UI::setQss(rightButton, ":/qss_button", "frameButton");
 
         setMouseTracking(true);
+
     }
+
+
 
     void setPixmap(QImage *qImage) {
         int thumbHeight = int(float(qImage->height()) / qImage->width() * (this->width() - 2));

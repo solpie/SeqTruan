@@ -11,7 +11,7 @@
 #include "view/UI.hpp"
 #include "QOpenGLTexture"
 
-class ComCanvas : public QWidget, protected QOpenGLFunctions {
+class ComCanvas : public QWidget {
 public:
     ComCanvas(QWidget *parent) : QWidget(parent) {
         resize(1280, 720);

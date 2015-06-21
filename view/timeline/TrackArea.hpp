@@ -24,7 +24,8 @@ public:
 //    QVBoxLayout *vbox = new QVBoxLayout(trackStack);
         vbox = new QVBoxLayout(trackStack);
         vbox->setSpacing(0);
-        trackStack->move(0, timestampBar->height());
+        vbox->setContentsMargins(0, 0, 0, 0);
+        _setY(trackStack,timestampBar->height());
         trackStack->resize(1280, 10);
 
         trackCursor = new TrackCursor(this);
@@ -36,8 +37,8 @@ public:
         Track *track = new Track();
         track->load(trackInfo->idx);
         _setHeight(trackStack, trackStack->height() + track->height());
-        qDebug() << trackStack->height();
         vbox->addWidget(track);
+        qDebug() << trackStack->height();
     }
 
     QWidget *trackStack;

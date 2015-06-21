@@ -19,6 +19,8 @@ public:
 //        state = new string("stop");
         timer = new QTimer();
         setFramerate(24);
+        Evt_add(ActionEvent::UPDATE_CURSOR, onUpdateCursor);
+
     }
 
     int frameIdx;
@@ -86,7 +88,12 @@ protected:
     int frameRate;
 
 private:
-
+    void onUpdateCursor(int *fIdx) {
+       this->frameIdx = *fIdx;
+        SequencePlaybackEvent *e = new SequencePlaybackEvent();
+        e->frameIdx = this->frameIdx ;
+        Evt_dis(SequencePlaybackEvent::RENDER_FRAME, e)
+    }
     QTimer *timer;
 
 };
