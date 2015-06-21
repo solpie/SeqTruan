@@ -30,7 +30,34 @@ find_package(Qt5Widgets)
 find_package(Qt5Multimedia REQUIRED)
 # Tell CMake to create the helloworld executable
 qt5_add_resources(RESOURCES qrc/rc.qrc)
-add_executable(SeqTruan WIN32 main.cpp ${RESOURCES})
+add_executable(SeqTruan WIN32 main.cpp ${RESOURCES}
+events/Event.hpp
+events/TrackModelEvent.hpp
+events/ActionEvent.hpp
+events/PlaybackEvent.hpp
+model/Singleton.hpp
+model/TrackModel.hpp
+model/App.hpp
+utils/Linker.hpp
+view/UI.hpp
+view/Theme.hpp
+view/OverWidget.hpp
+view/SeqTruanWin.hpp
+view/viewport/ViewPort.hpp
+view/timeline/Timeline.hpp
+view/timeline/trackPanel/TrackToolBar.hpp
+view/timeline/trackPanel/TrackPanelArea.hpp
+view/timeline/trackPanel/TrackPanel.hpp
+view/timeline/TrackCursor.hpp
+view/timeline/TrackArea.hpp
+view/timeline/TimestampBar.hpp
+view/timeline/Track.hpp
+view/timeline/TimelineToolBar.hpp
+view/viewport/Transport.hpp
+view/timeline/TrackFrame.hpp
+model/playback/SequencePlayback.hpp
+model/playback/AudioPlayback.hpp
+)
 
 # Use the Widgets module from Qt 5.
 target_link_libraries(SeqTruan Qt5::Widgets Qt5::Multimedia)

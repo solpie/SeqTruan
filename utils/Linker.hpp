@@ -11,6 +11,7 @@
 template<typename CLS>
 class OneLinker {
 public:
-    CLS *pre= nullptr;
-    CLS *next= nullptr;
+    CLS *pre = nullptr;
+    CLS *next = nullptr;
+    OneLinker *pre1 = nullptr;
 };

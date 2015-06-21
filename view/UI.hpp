@@ -76,13 +76,13 @@ private:
     int _lastX;
     int _lastY;
 protected:
-    std::function<void()> &&exPressFunc = NULL;
+    std::function<void()> *exPressFunc = NULL;
 
     virtual void mousePressEvent(QMouseEvent *mouseEvent) {
         _isPress = true;
-        if (exPressFunc != NULL) {
-            exPressFunc();
-        }
+//        if (exPressFunc != NULL) {
+//            (&exPressFunc)();
+//        }
     }
 
     virtual void mouseMoveEvent(QMouseEvent *mouseEvent) {

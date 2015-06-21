@@ -9,26 +9,26 @@
 #include "view/UI.hpp"
 
 class TrackCursor : public DragWidget {
-//Q_OBJECT
+//没重绘的部分透明 The Q_OBJECT macro at the beginning of the class definition is necessary for all classes that define signals or slots
+Q_OBJECT
 public:
-    TrackCursor(QWidget *parent=0) : DragWidget(parent) {
+    TrackCursor(QWidget *parent = 0) : DragWidget(parent) {
         resize(60, 200);
-        exPressFunc = [] {
-//        qDebug() << "press me";
-            printf("dd");
-        };
+//        exPressFunc = [] {
+////        qDebug() << "press me";
+//            printf("dd");
+//        };
         timeLabel = new QLabel("00:00:24", this);
         timeLabel->move(2, 10);
-//    timeLabel->resize(60, 20);
-//    setMouseTransparent(this);
-
+        timeLabel->resize(60, 20);
+        _setMouseTransparent(this);
     }
 
 private:
     QLabel *timeLabel;
     int i;
 protected:
-    virtual void paintEvent(QPaintEvent *qPaintEvent) override{
+    virtual void paintEvent(QPaintEvent *qPaintEvent) override {
         QPainter p(this);
         QPen pen;
         pen.setColor(QColor(TIMELINE_CURSOR_EDGE_COL));
@@ -37,6 +37,10 @@ protected:
         p.drawLine(0, 0, 0, this->height());
         p.drawLine(TIMELINE_TRACK_FRAME_MAX_WIDTH, 0, TIMELINE_TRACK_FRAME_MAX_WIDTH, this->height());
 //    QWidget::paintEvent( < unnamed >);
+    }
+
+    virtual void resizeEvent(QResizeEvent *e) override {
+
     }
 };
 //#include "Qt"

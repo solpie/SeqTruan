@@ -15,7 +15,6 @@
 #include "view/UI.hpp"
 #include "TimelineToolBar.hpp"
 class Timeline : public QWidget {
-//Q_OBJECT
 public:
     Timeline(QWidget *parent = 0): QWidget(parent) {
         trackToolBar = new TrackToolBar(this);
