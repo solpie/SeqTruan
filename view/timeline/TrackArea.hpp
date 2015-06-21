@@ -12,7 +12,7 @@
 #include "TimestampBar.hpp"
 #include "Track.hpp"
 class TrackArea :public QWidget{
-Q_OBJECT
+//Q_OBJECT
 public:
     TrackArea(QWidget *parent) : QWidget(parent) {
         timestampBar = new TimestampBar(this);

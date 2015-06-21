@@ -11,7 +11,7 @@
 
 #endif //SEQTRUAN_TRACKTOOLBAR_H
 class TrackToolBar:public QWidget{
-    Q_OBJECT
+//    Q_OBJECT
 public:
     TrackToolBar(QWidget *parent=0):QWidget(parent)
     {

@@ -9,7 +9,7 @@
 #include "view/UI.hpp"
 
 class TrackCursor : public DragWidget {
-Q_OBJECT
+//Q_OBJECT
 public:
     TrackCursor(QWidget *parent=0) : DragWidget(parent) {
         resize(60, 200);

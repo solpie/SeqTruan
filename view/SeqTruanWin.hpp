@@ -10,7 +10,7 @@
 #include "view/UI.hpp"
 #include "view/timeline/Timeline.hpp"
 class SeqTruanWin : public QWidget {
-Q_OBJECT
+//Q_OBJECT
 public:
     SeqTruanWin(QWidget *parent = 0){
         resize(1440, 1056);

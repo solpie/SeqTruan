@@ -9,13 +9,13 @@
 
 #include <model/TrackModel.hpp>
 #include "model/App.hpp"
-#include "trackPanel/TrackPanelArea.hpp"
-#include "trackPanel/TrackToolBar.hpp"
+#include "view/timeline/trackPanel/TrackPanelArea.hpp"
+#include "view/timeline/trackPanel/TrackToolBar.hpp"
 #include "TrackArea.hpp"
 #include "view/UI.hpp"
 #include "TimelineToolBar.hpp"
 class Timeline : public QWidget {
-Q_OBJECT
+//Q_OBJECT
 public:
     Timeline(QWidget *parent = 0): QWidget(parent) {
         trackToolBar = new TrackToolBar(this);

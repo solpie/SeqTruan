@@ -8,10 +8,9 @@
 
 #include <model/TrackModel.hpp>
 #include "view/UI.hpp"
-#include "TrackPanel.hpp"
+#include "view/timeline/trackPanel/TrackPanel.hpp"
 
 class TrackPanelArea : public QWidget {
-Q_OBJECT
 public:
     TrackPanelArea(QWidget *parent = 0) : QWidget(parent) {
         QWidget *stack = new QWidget(this);

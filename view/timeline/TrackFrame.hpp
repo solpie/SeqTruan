@@ -9,8 +9,9 @@
 //#include <model/TrackModel.hpp>
 #include "view/UI.hpp"
 //#include "model/App.hpp"
+#include "utils/Linker.hpp"
 
-class TrackFrame : public QWidget {
+class TrackFrame : public OneLinker<TrackFrame>, public QWidget {
 public:
     TrackFrame(QWidget *parent) : QWidget(parent) {
         resize(40, 60);
@@ -85,8 +86,6 @@ public:
         holdFrameCount = width() / App()._().trackModel->frameWidth;
     }
 
-    TrackFrame *pre = NULL;
-    TrackFrame *next = NULL;
 protected:
     //右拉rightbutton
     void handleR(TrackFrame *cur) {

@@ -11,7 +11,7 @@
 #include "Transport.hpp"
 
 class ViewPort : public QWidget {
-Q_OBJECT
+//Q_OBJECT
 public:
     ViewPort(QWidget *parent = 0): QWidget(parent) {
         resize(1280, 500);
