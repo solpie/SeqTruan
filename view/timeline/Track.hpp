@@ -13,27 +13,23 @@
 
 class Track : public QWidget {
 public:
-    Track() {
+    Track(TrackInfo *trackInfo = nullptr) {
+//        _trackInfo = trackInfo;
         resize(1280, TIMELINE_TRACK_DEF_HEIGHT);
 //    this->setStyleSheet("background:#343434");
         trackFrameArea = new QWidget(this);
-//        trackFrameArea->move(TIMELINE_TRACK_FRAME_MAX_WIDTH - 9, 0);
         _setX(trackFrameArea, App()._().trackModel->frameWidth);
-//        trackFrameArea->move(TIMELINE_TRACK_FRAME_MAX_WIDTH - 9, 0);
         trackFrameArea->resize(80, 75);
 
         headButton = new OverWidget<QWidget>(this);
         headButton->resize(10, 40);
-//        headButton->move(31 - 9, 0);
         _setX(headButton, 31);
         headButton->setStyleSheet("border:none");
-//    headButton->setParent(this);
         over(headButton, paintEvent_, paintHead);
 
         tailButton = new OverWidget<QWidget>(this);
         tailButton->resize(10, 40);
         tailButton->move(80, 0);
-//    tailButton->setParent(this);
         over(tailButton, paintEvent_, paintTail);
     }
 
@@ -42,6 +38,7 @@ public:
     }
 
     void load(TrackInfo *trackInfo) {
+        _trackInfo = trackInfo;
         int len = trackInfo->trackFrameInfos->size();
         TrackFrame *pre = nullptr;
         int fw = App()._().trackModel->frameWidth;
@@ -59,8 +56,12 @@ public:
         _setX(tailButton, trackFrameArea->x() + trackFrameArea->width());
     }
 
-    int trackInfoIdx = 0;
-
+protected:
+    QWidget *trackFrameArea;
+    OverWidget<QWidget> *headButton;
+    TrackInfo *_trackInfo;
+    OverWidget<QWidget> *tailButton;
+private:
     void paintHead() {
         QPainterPath path;
         int y = 17;
@@ -78,8 +79,6 @@ public:
         p.setPen(pen);
         p.drawPath(path);
     }
-
-    OverWidget<QWidget> *headButton;
 
     void paintTail() {
         QPainterPath path;
@@ -99,8 +98,6 @@ public:
         p.drawPath(path);
     }
 
-    OverWidget<QWidget> *tailButton;
-private:
     bool isPress;
     int _lastX = -1;
 
@@ -113,8 +110,13 @@ private:
         if (isPress) {
             int dx;
             dx = _localPos.x() - _lastX;
-            int mx = (dx / app.trackModel->frameWidth) * app.trackModel->frameWidth;
-            _setX(this, x() + mx);
+            int fw = app.trackModel->frameWidth;
+            int newX = x() + (dx / fw) * fw;
+            if (newX >= 0 && newX != x()) {
+                _trackInfo->setStartFrame((newX / fw) + 1);
+                qDebug() << this << "setStartFrame" << _trackInfo->getStartFrame();
+                _setX(this, newX);
+            }
         }
     };
 
@@ -122,7 +124,6 @@ private:
         isPress = false;
 
     };
-    QWidget *trackFrameArea;
 };
 
 

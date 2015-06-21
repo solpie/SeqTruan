@@ -10,6 +10,7 @@
 
 #endif //SEQTRUAN_TRACKINFO_HPP
 using namespace std;
+
 class TrackInfo {
 public:
     TrackInfo(QString name) {
@@ -18,14 +19,21 @@ public:
     };
     QString name;
     vector<TrackFrameInfo *> *trackFrameInfos;
-    int startIdx;
     int idx;
 
     int getCurTrackFrameIdx() {
         return _trackFrameIdx;
     };
-//    Track *track;
-//    void updateTrackInfo(TrackInfo *trackInfo,int... p);
+
+    int getStartFrame() {
+        return _startFrame;
+    }
+
+    void setStartFrame(int v) {
+        _startFrame = v;
+    }
+protected:
+    int _startFrame;
 private:
     int _trackFrameIdx;
 
