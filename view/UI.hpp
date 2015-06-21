@@ -44,6 +44,7 @@
 #define _setWidth(widget, width) widget->resize(width,widget->height())
 #define _setMouseTransparent(widget) widget->setAttribute(Qt::WA_TransparentForMouseEvents, true)
 #define _setColor1(widget, color) qwidget->setAutoFillBackground(True)
+#define _localPos mapFromGlobal(QCursor::pos())
 
 
 class UI {

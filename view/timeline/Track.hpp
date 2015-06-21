@@ -101,6 +101,27 @@ public:
 
     OverWidget<QWidget> *tailButton;
 private:
+    bool isPress;
+    int _lastX = -1;
+
+    virtual void mousePressEvent(QMouseEvent *mouseEvent) override {
+        isPress = true;
+        _lastX = _localPos.x();
+    };
+
+    virtual void mouseMoveEvent(QMouseEvent *mouseEvent) override {
+        if (isPress) {
+            int dx;
+            dx = _localPos.x() - _lastX;
+            int mx = (dx / app.trackModel->frameWidth) * app.trackModel->frameWidth;
+            _setX(this, x() + mx);
+        }
+    };
+
+    virtual void mouseReleaseEvent(QMouseEvent *mouseEvent) override {
+        isPress = false;
+
+    };
     QWidget *trackFrameArea;
 };
 

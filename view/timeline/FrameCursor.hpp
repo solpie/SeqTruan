@@ -9,11 +9,11 @@
 #include "view/UI.hpp"
 #include "model/App.hpp"
 
-class TrackCursor : public DragWidget {
+class FrameCursor : public DragWidget {
 //没重绘的部分透明 The Q_OBJECT macro at the beginning of the class definition is necessary for all classes that define signals or slots
 Q_OBJECT
 public:
-    TrackCursor(QWidget *parent = 0) : DragWidget(parent) {
+    FrameCursor(QWidget *parent = 0) : DragWidget(parent) {
         resize(60, 200);
         timeLabel = new QLabel("00:00:24", this);
         timeLabel->move(2, 10);

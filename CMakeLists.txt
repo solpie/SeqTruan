@@ -50,7 +50,7 @@ view/timeline/Timeline.hpp
 view/timeline/trackPanel/TrackToolBar.hpp
 view/timeline/trackPanel/TrackPanelArea.hpp
 view/timeline/trackPanel/TrackPanel.hpp
-view/timeline/TrackCursor.hpp
+view/timeline/FrameCursor.hpp
 view/timeline/TrackArea.hpp
 view/timeline/TimestampBar.hpp
 view/timeline/Track.hpp
