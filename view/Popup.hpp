@@ -30,22 +30,24 @@ public:
         this->show();
         QLabel *item;
         qDebug() << this << "menu";
-        if (e->funcs.size() > items->size()) {
-            int addCount = items->size() - e->funcs.size();
-            for (int i = 0; i < addCount; i++) {
-                item = new QLabel();
-                items->push_back(item);
-                vbox->addWidget(item);
-            }
-        }
-//        int j = 0;
-//        map<QString, function<void()>>::iterator it = e->funcs.begin();
-//        for (; it != e->funcs.end(); ++it) {
-//            qDebug() << this << it->first;
-//            item = items->at(j);
-//            item->setText(it->first);
-//            ++j;
+//        if (e->funcs.size() > items->size()) {
+//            int addCount = items->size() - e->funcs.size();
+//            for (int i = 0; i < addCount; i++) {
+//                item = new QLabel();
+//                items->push_back(item);
+//                vbox->addWidget(item);
+//            }
 //        }
+//        int j = 0;
+        map<QString, function<void()>>::iterator it = e->funcs.begin();
+        for (; it != e->funcs.end(); ++it) {
+            qDebug() << this << it->first;
+            item = new QLabel();
+            item->setText(it->first);
+            items->push_back(item);
+            vbox->addWidget(item);
+//            ++j;
+        }
 //            for (QString name:e->funcs.key_comp()) {
 
 //        }

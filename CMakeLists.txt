@@ -66,7 +66,7 @@ model/TrackFrameInfo.hpp
 view/viewport/ComCanvas.hpp
 utils/Sh1tMacro.hpp
 view/timeline/trackPanel/OpacitySlider.hpp
-#view/Popup.hpp
+view/Popup.hpp
 events/PopupEvent.hpp)
 
 # Use the Widgets module from Qt 5.
