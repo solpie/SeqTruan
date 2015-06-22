@@ -112,9 +112,10 @@ protected:
         if (relTrackFrame->pre) {
             if (relTrackFrame->pre->x() <= relTrackFrame->x()) {
                 qDebug() << this << "onRelLeftButton" << relTrackFrame->pre->idx;
-                //fixme 此处有bug
+
                 TrackFrame *deleteMe = relTrackFrame->pre->remove();//todo 释放资源 保存历史操作
                 TrackFrameInfo *deleteMeInfo = _trackFrameInfo->pre->remove();//todo 释放资源 保存历史操作
+
                 renameBackward(this);
 //                relTrackFrame->updateTrackFrameInfo();
                 //todo 验证idx

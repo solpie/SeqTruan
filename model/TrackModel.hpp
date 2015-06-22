@@ -64,6 +64,7 @@ public:
         TrackInfo *trackInfo = new TrackInfo(name);
         trackInfo->idx = _trackInfos->size();
         _trackInfos->push_back(trackInfo);
+        TrackFrameInfo *pre= nullptr;
         if (dirname != "") {
             QDir dir(dirname);
             dir.setFilter(QDir::Dirs | QDir::Files | QDir::NoSymLinks);
@@ -81,6 +82,7 @@ public:
                         qDebug() << "Image file: " << fi.absoluteFilePath();
                         QImage *img = new QImage(fi.absoluteFilePath());
                         TrackFrameInfo *trackFrameInfo = new TrackFrameInfo();
+                        pre=trackFrameInfo->setPre(pre);
                         trackFrameInfo->setTrackInfoIdx(trackInfo->idx);
                         trackFrameInfo->payLoad = img;
                         trackFrameInfo->setIdx(trackInfo->trackFrameInfos->size());

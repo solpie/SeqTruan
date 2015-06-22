@@ -1,6 +1,7 @@
 #include <QtWidgets/qstylefactory.h>
 #include <QSurfaceFormat>
 #include "view/SeqTruanWin.hpp"
+#define QT_NO_DEBUG_OUTPUT
 int main(int argc, char *argv[]) {
     QApplication a(argc, argv);
     QSurfaceFormat format;
