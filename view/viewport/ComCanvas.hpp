@@ -17,11 +17,9 @@ public:
         resize(1280, 720);
     }
 
-    void setImage(QImage *qImage) {
-
-        img = qImage;
+    void setImage(vector<TrackFrameInfo *> *qImage) {
+        imgs = qImage;
         update();
-
 //        if (_texmap.find(qImage) != _texmap.end()) {
 //            texture = _texmap[qImage];
 //        }
@@ -41,7 +39,8 @@ protected:
     map<QImage *, QOpenGLTexture *> _texmap;
     QOpenGLTexture *texture;
     QOpenGLFunctions *f;
-    QImage *img = nullptr;
+//    QImage *img = nullptr;
+    vector<TrackFrameInfo *> *imgs = nullptr;
 
 //    void initializeGL() {
 //        // Set up the rendering context, load shaders and other resources, etc.:
@@ -59,19 +58,21 @@ protected:
 //        ...
 //    }
 //
-    void drawImage() {
-        if (img) {
-            QPainter painter(this);
-            painter.drawImage(0, 0, *img);
-        }
-    }
+//    void drawImage() {
+//        if (img) {
+//            QPainter painter(this);
+//            painter.drawImage(0, 0, *img);
+//        }
+//    }
 
     virtual void paintEvent(QPaintEvent *qPaintEvent) override {
-
-        if (img) {
-            QPainter painter(this);
-            painter.drawImage(0, 0, *img);
-        }
+        if (imgs)
+            for (TrackFrameInfo *trackFrameInfo:*imgs) {
+                QImage *img = trackFrameInfo->payLoad;
+                QPainter painter(this);
+                painter.setOpacity(trackFrameInfo->opacity);
+                painter.drawImage(0, 0, *img);
+            }
     }
 
     void paintGL() {

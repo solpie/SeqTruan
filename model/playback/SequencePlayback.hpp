@@ -30,7 +30,10 @@ public:
     void setFramerate(int frameRate) {
         this->frameRate = frameRate;
         this->timer->setInterval(1000 / this->frameRate);
-        timer->connect(timer, QTimer::timeout, [this] { update(); });
+        timer->connect(timer, QTimer::timeout, [this] {
+            frameIdx = (frameIdx + 1) % endFrameIdx;
+            update();
+        });
 //        Evt_dis(SequencePlaybackEvent::FRAME_RATE, e);
     }
 
@@ -39,7 +42,6 @@ public:
     }
 
     void update() {
-        frameIdx = (frameIdx + 1) % endFrameIdx;
         SequencePlaybackEvent *e = new SequencePlaybackEvent();
         e->frameIdx = frameIdx;
         Evt_dis(SequencePlaybackEvent::RENDER_FRAME, e)
@@ -89,11 +91,12 @@ protected:
 
 private:
     void onUpdateCursor(int *fIdx) {
-       this->frameIdx = *fIdx;
+        this->frameIdx = *fIdx;
         SequencePlaybackEvent *e = new SequencePlaybackEvent();
-        e->frameIdx = this->frameIdx ;
+        e->frameIdx = this->frameIdx;
         Evt_dis(SequencePlaybackEvent::RENDER_FRAME, e)
     }
+
     QTimer *timer;
 
 };

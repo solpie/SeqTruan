@@ -7,40 +7,53 @@
 #define SEQTRUAN_TRACKPANEL_H
 
 #include "view/UI.hpp"
-class TrackPanel :public QWidget{
+#include "OpacitySlider.hpp"
+
+class TrackPanel : public QWidget {
 public:
-    TrackPanel(QWidget *parent=0):QWidget(parent)
-    {
+    TrackPanel(QWidget *parent = 0) : QWidget(parent) {
         resize(TIMELINE_TRACK_PANEL_DEF_WIDTH, TIMELINE_TRACK_DEF_HEIGHT);
-        opacitySlider = new QSlider(Qt::Horizontal, this);
+        opacitySlider = new QSlider(this);
+        opacitySlider->setOrientation(Qt::Horizontal);
         opacitySlider->move(200, 37);
         opacitySlider->resize(80, 15);
         opacitySlider->setRange(0, 100);
         opacitySlider->setValue(100);
-        UI::setQss(opacitySlider, ":/qss_slider");
+        UI::setQss(opacitySlider, ":/qss_slider", "opacity");
 //    valueChanged()	Emitted when the slider's value has changed. The tracking() determines whether this signal is emitted during user interaction.
 //    sliderPressed()	Emitted when the user starts to drag the slider.
 //            sliderMoved()	Emitted when the user drags the slider.
 //            sliderReleased()
-//    self.opacitySlider.mousePressEvent = self.onPressSlider
-//    self.opacitySlider.mouseMoveEvent = self.onMoveSlider
-        connect(opacitySlider, QSlider::valueChanged, [this](int pos){this->onOpacityChanged(pos);});
-//    connect(opacitySlider, QSlider::sliderMoved, [this](int pos) { this->onOpacityChanged(pos); });
+//        over(opacitySlider, mousePressEvent_, onPressSlider);
+//        over(opacitySlider, mouseMoveEvent_, onMoveSlider);
+        connect(opacitySlider, QSlider::valueChanged, [this]() { this->onOpacityChanged(); });
+//        connect(opacitySlider, QSlider::sliderMoved, [this]() { this->onOpacityChanged(); });
+        opacitySlider->setMouseTracking(true);
         trackNameLabel = new QLabel(this);
         trackNameLabel->move(5, 5);
 
         visibleCheck = new QCheckBox(this);
         visibleCheck->move(200, 5);
     }
-    void setTrackName(QString tname){
+
+    void setTrackName(QString tname) {
         trackNameLabel->setText(tname);
     };
 
+    void setTrackInfo(TrackInfo *trackInfo) {
+        _trackInfo = trackInfo;
+        trackNameLabel->setText(_trackInfo->name);
+    }
+
 private:
+    TrackInfo *_trackInfo;
+    QSlider *opacitySlider;
+//    OpacitySlider *opacitySlider;
     QLabel *trackNameLabel;
     QCheckBox *visibleCheck;
-    void onOpacityChanged(int newPos){
-        qDebug() << this << this->opacitySlider->value();
+
+    void onOpacityChanged(int newPos = 0) {
+        qDebug() << this << "onOpacityChanged" << this->opacitySlider->value();
         // Make slider to follow the mouse directly and not by pageStep steps
         Qt::MouseButtons btns = QApplication::mouseButtons();
         QPoint localMousePos = opacitySlider->mapFromGlobal(QCursor::pos());
@@ -53,14 +66,31 @@ private:
             float posRatio = localMousePos.x() / (float) opacitySlider->size().width();
             int sliderRange = opacitySlider->maximum() - opacitySlider->minimum();
             int sliderPosUnderMouse = opacitySlider->minimum() + sliderRange * posRatio;
-            if (sliderPosUnderMouse != newPos) {
-                opacitySlider->setValue(sliderPosUnderMouse);
-                return;
-            }
+//            if (sliderPosUnderMouse != newPos) {
+            opacitySlider->setValue(sliderPosUnderMouse);
+//            return;
+//            }
         }
+        _trackInfo->setOpacity(opacitySlider->value() / double(100));
+        app.trackModel->sequencePlayback->update();
+//        opacitySlider->setValue(
+//                QStyle::sliderValueFromPosition(opacitySlider->minimum(), opacitySlider->maximum(), localMousePos.x(),
+//                                                opacitySlider->width()));
     };
-    void onPressSlider();
-    QSlider *opacitySlider;
+
+    void onMoveSlider(QMouseEvent *e) {
+        if (e->buttons() == Qt::LeftButton)
+            opacitySlider->setValue(
+                    QStyle::sliderValueFromPosition(opacitySlider->minimum(), opacitySlider->maximum(), e->x(),
+                                                    opacitySlider->width()));
+    }
+
+    void onPressSlider(QMouseEvent *e) {
+        if (e->buttons() == Qt::LeftButton)
+            opacitySlider->setValue(
+                    QStyle::sliderValueFromPosition(opacitySlider->minimum(), opacitySlider->maximum(), e->x(),
+                                                    opacitySlider->width()));
+    }
 
 };
 

@@ -8,7 +8,7 @@
 
 #include "view/UI.hpp"
 
-#define over(widget, e, func)  widget->add(e, [this] { this->func(); });
+#define over(widget, type, func)  widget->add(type, [this] (void* e1){ this->func(e1); });
 #define paintEvent_ "paintEvent"
 #define mousePressEvent_ "mousePressEvent"
 #define mouseMoveEvent_ "mouseMoveEvent"
@@ -21,14 +21,14 @@ public:
 
     template<typename Observer>
     void add(const string &event, Observer &&observer) {
-        _funcs[event] = forward<function<void()>>(observer);
+        _funcs[event] = forward<function<void(void*)>>(observer);
     }
 
     bool isCustomQss = false;
 private:
-    void dis(const string event) {
+    void dis(const string event, void *e = nullptr) {
         if (_funcs.find(event) != _funcs.end())
-            _funcs.at(event)();
+            _funcs.at(event)(e);
     }
 
 
@@ -38,24 +38,23 @@ protected:
 //        isCustomQss = true;
 //    };
 
-    virtual void mousePressEvent(QMouseEvent *mouseEvent) override { dis(mousePressEvent_); };
+    virtual void mousePressEvent(QMouseEvent *e) override { dis(mousePressEvent_, e); };
 
-    virtual void mouseMoveEvent(QMouseEvent *mouseEvent) override { dis(mouseMoveEvent_); };
+    virtual void mouseMoveEvent(QMouseEvent *e) override { dis(mouseMoveEvent_, e); };
 
-    virtual void mouseReleaseEvent(QMouseEvent *mouseEvent) override { dis(mouseReleaseEvent_); };
+    virtual void mouseReleaseEvent(QMouseEvent *e) override { dis(mouseReleaseEvent_, e); };
 
-    virtual void paintEvent(QPaintEvent *qPaintEvent) override {
+    virtual void paintEvent(QPaintEvent *e) override {
         if (isCustomQss) {
             QStyleOption opt;
             opt.init(this);
             QPainter p(this);
             style()->drawPrimitive(QStyle::PE_Widget, &opt, &p, this);
         }
-
-        dis(paintEvent_);
+        dis(paintEvent_,e);
     };
 
-    map<string, function<void()>> _funcs;
+    map<string, function<void(void*)>> _funcs;
 };
 
 

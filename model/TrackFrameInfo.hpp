@@ -59,7 +59,7 @@ public:
     QImage *payLoad;
 //    int endFrameIdx = 0;
 
-
+    double opacity;//
 protected:
     int _trackInfoIdx;
 

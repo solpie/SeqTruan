@@ -21,19 +21,20 @@ public:
     vector<TrackFrameInfo *> *trackFrameInfos;
     int idx;
 
-    int getCurTrackFrameIdx() {
-        return _trackFrameIdx;
-    };
+    int getCurTrackFrameIdx() { return _trackFrameIdx; };
 
-    int getStartFrame() {
-        return _startFrame;
-    }
+    int getStartFrame() { return _startFrame; }
 
-    void setStartFrame(int v) {
-        _startFrame = v;
-    }
+    void setStartFrame(int v) { _startFrame = v; }
+
+    double getOpacity() { return _opacity; }
+
+    void setOpacity(double v) { _opacity = v; }
+
 protected:
-    int _startFrame;
+    int _startFrame = 1;
+
+    double _opacity = 1.0;
 private:
     int _trackFrameIdx;
 

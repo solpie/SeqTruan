@@ -1,31 +1,31 @@
-QSlider::groove:horizontal {
+QSlider#opacity::groove:horizontal {
     background: #343434;
     height: 20px;
 }
 
-QSlider::sub-page:horizontal {
+QSlider#opacity::sub-page:horizontal {
     /*background: qlineargradient(x1: 0, y1: 0,    x2: 0, y2: 1,*/
     /*stop: 0 #66e, stop: 1 #bbf);*/
     background: #343434;
 }
 
-QSlider::add-page:horizontal {
+QSlider#opacity::add-page:horizontal {
     background: #343434;
     height: 10px;
 }
 
-QSlider::handle:horizontal {
+QSlider#opacity::handle:horizontal {
     background: #c2c2c2;
     border: 1px solid #2c2c2c;
     width: 3px;
 }
 
-QSlider::sub-page:horizontal:disabled {
+QSlider#opacity::sub-page:horizontal:disabled {
     background: #bbb;
     border-color: #999;
 }
 
-QSlider::add-page:horizontal:disabled {
+QSlider#opacity::add-page:horizontal:disabled {
     background: #eee;
     border-color: #999;
 }

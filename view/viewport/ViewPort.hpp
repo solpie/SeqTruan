@@ -32,9 +32,12 @@ protected:
     }
 
     void onRenderFrame(SequencePlaybackEvent *e) {
-        img = App()._().trackModel->getRenderFrame(e->frameIdx);
-        if (img)
-            canvas->setImage(img);
+        vector<TrackFrameInfo *> *imgs = App()._().trackModel->getRenderFrame(e->frameIdx);
+        if (imgs)
+            canvas->setImage(imgs);
+//        img = App()._().trackModel->getRenderFrame(e->frameIdx);
+//        if (img)
+//            canvas->setImage(img);
     }
 
     Transport *_transport;

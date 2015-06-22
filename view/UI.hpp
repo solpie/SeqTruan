@@ -49,11 +49,16 @@
 
 class UI {
 public:
+    static void over1(QWidget *w, QString type, void *func) {
+
+    }
+
     static void setQss(QWidget *w, QString alias, QString objName = "") {
         QFile f(alias);
         f.open(QIODevice::ReadOnly);
         QByteArray ba = f.readAll();
         if (objName != "") {
+//            (OverWidget<void>*)&w.isC
 //            OverWidget<QWidget> *ow = (OverWidget<QWidget>*)&w;
 //            auto ow = &w;
 //            ow->isCustomQss=true;

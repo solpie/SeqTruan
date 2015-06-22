@@ -28,9 +28,9 @@ public:
         leftButton = new OverWidget<QPushButton>(this);
         leftButton->resize(8, 8);
         leftButton->isCustomQss = true;
-        leftButton->add(mousePressEvent_, [this] { isPressLeftButton = true; });
-        leftButton->add(mouseMoveEvent_, [this] { this->pressAndMoveEvent(); });
-        leftButton->add(mouseReleaseEvent_, [this] {
+        leftButton->add(mousePressEvent_, [this](void *e) { isPressLeftButton = true; });
+        leftButton->add(mouseMoveEvent_, [this](void *e) { this->pressAndMoveEvent(); });
+        leftButton->add(mouseReleaseEvent_, [this](void *e) {
             isPressLeftButton = false;
             this->onRelLeftButton(this);
         });
@@ -40,9 +40,9 @@ public:
         rightButton->resize(8, 8);
         rightButton->move(33, 32);
         rightButton->isCustomQss = true;
-        rightButton->add(mousePressEvent_, [this] { isPressRightButton = true; });
-        rightButton->add(mouseMoveEvent_, [this] { this->pressAndMoveEvent(); });
-        rightButton->add(mouseReleaseEvent_, [this] { isPressRightButton = false; });
+        rightButton->add(mousePressEvent_, [this](void *e) { isPressRightButton = true; });
+        rightButton->add(mouseMoveEvent_, [this](void *e) { this->pressAndMoveEvent(); });
+        rightButton->add(mouseReleaseEvent_, [this](void *e) { isPressRightButton = false; });
         UI::setQss(rightButton, ":/qss_button", "frameButton");
         setMouseTracking(true);
     }
@@ -68,7 +68,7 @@ public:
     void setHoldFrameCount(int count, int dx = 1) {
         int frameWidth = app.trackModel->frameWidth;
         changeWidth = (count - _trackFrameInfo->getHoldFrame()) * frameWidth * dx;
-        _trackFrameInfo->setHoldFrame( count);
+        _trackFrameInfo->setHoldFrame(count);
         _setWidth(this, count * frameWidth);
         _setWidth(thumb, width());
         _setX(rightButton, width() - rightButton->width() + 1);
@@ -91,7 +91,7 @@ public:
         _setWidth(this, endPosX - this->x());
         _setWidth(thumb, width());
         _setX(rightButton, width() - rightButton->width() + 1);
-        _trackFrameInfo->setHoldFrame( width() / app.trackModel->frameWidth);
+        _trackFrameInfo->setHoldFrame(width() / app.trackModel->frameWidth);
     }
 
     void setTrackFrameInfo(TrackFrameInfo *tfi) {
@@ -177,7 +177,7 @@ protected:
     }
 
 
-    void paintThumb() {
+    void paintThumb(void *e) {
         QPainter pg(this->thumb);
         QLinearGradient lg(0, 0, 0, 38);
         lg.setColorAt(0.0, QColor(0x343434));

@@ -22,7 +22,7 @@ public:
 
     void add(TrackInfo *trackInfo) {
         TrackPanel *tp = new TrackPanel();
-        tp->setTrackName(trackInfo->name);
+        tp->setTrackInfo(trackInfo);
         _setHeight(vbox->parentWidget(), vbox->parentWidget()->height() + tp->height());
         vbox->addWidget(tp);
         qDebug() << this << this->height();

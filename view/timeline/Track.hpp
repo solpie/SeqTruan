@@ -62,7 +62,7 @@ protected:
     TrackInfo *_trackInfo;
     OverWidget<QWidget> *tailButton;
 private:
-    void paintHead() {
+    void paintHead(void *e) {
         QPainterPath path;
         int y = 17;
         path.moveTo(9, 0 + y);
@@ -80,7 +80,7 @@ private:
         p.drawPath(path);
     }
 
-    void paintTail() {
+    void paintTail(void *e) {
         QPainterPath path;
         path.moveTo(0, 22);
         path.lineTo(9, 22 - 9);
@@ -116,6 +116,7 @@ private:
                 _trackInfo->setStartFrame((newX / fw) + 1);
                 qDebug() << this << "setStartFrame" << _trackInfo->getStartFrame();
                 _setX(this, newX);
+                app.trackModel->sequencePlayback->update();
             }
         }
     };

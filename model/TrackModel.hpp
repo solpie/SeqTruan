@@ -49,8 +49,8 @@
 //};
 
 #include <iostream>
-//#include "view/timeline/Track.hpp"
 
+//#include "view/timeline/Track.hpp"
 class TrackModel {
 public:
     TrackModel() {
@@ -109,18 +109,26 @@ public:
 //    Evt_dis(TrackModelEvent::SET_ZOOM_LEVEL);
     }
 
-    QImage *getRenderFrame(int frameIdx) {
+    vector<TrackFrameInfo *> *getRenderFrame(int frameIdx) {
+        vector<TrackFrameInfo *> *images = new vector<TrackFrameInfo *>;
         for (TrackInfo *trackInfo:*_trackInfos) {
+            int trackFrameIdx = frameIdx - trackInfo->getStartFrame() + 1;
             for (TrackFrameInfo *trackFrameInfo:*trackInfo->trackFrameInfos) {
                 qDebug() << this << "getRenderFrame" << trackFrameInfo->getIdx();
-                if (frameIdx >= trackFrameInfo->getStartFrame() && frameIdx <= trackFrameInfo->getEndFrame()) {
+                if (trackFrameIdx >= trackFrameInfo->getStartFrame() &&
+                    trackFrameIdx <= trackFrameInfo->getEndFrame()) {
                     //todo 实现链表查找
 //                    return new QPixmap(QPixmap::fromImage(trackFrameInfo->payLoad));
-                    return trackFrameInfo->payLoad;
+                    //todo 透明度
+//                    trackFrameInfo->payLoad->setAlphaChannel()
+                    trackFrameInfo->opacity = trackInfo->getOpacity();
+                    images->push_back(trackFrameInfo);
+                    break;
                 }
             }
         }
-        return nullptr;
+        return images;
+//        return nullptr;
     }
 
     TrackInfo *getTrackInfo(int tIdx) { return _trackInfos->at(tIdx); }
