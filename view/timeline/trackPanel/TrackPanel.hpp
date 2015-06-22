@@ -26,19 +26,23 @@ public:
 //            sliderReleased()
 //        over(opacitySlider, mousePressEvent_, onPressSlider);
 //        over(opacitySlider, mouseMoveEvent_, onMoveSlider);
-        connect(opacitySlider, QSlider::valueChanged, [this]() { this->onOpacityChanged(); });
+        connect(opacitySlider, opacitySlider->valueChanged, [this]() { this->onOpacityChanged(); });
 //        connect(opacitySlider, QSlider::sliderMoved, [this]() { this->onOpacityChanged(); });
-        opacitySlider->setMouseTracking(true);
+//        opacitySlider->setMouseTracking(true);
         trackNameLabel = new QLabel(this);
         trackNameLabel->move(5, 5);
 
         visibleCheck = new QCheckBox(this);
+        visibleCheck->setCheckState(Qt::Checked);
         visibleCheck->move(200, 5);
+        connect(visibleCheck, visibleCheck->stateChanged, [this](int state) {
+            _trackInfo->visible = bool(state);
+            app.trackModel->sequencePlayback->update();
+
+            qDebug() << this << "stateChanged" << state << _trackInfo->visible;
+        });
     }
 
-    void setTrackName(QString tname) {
-        trackNameLabel->setText(tname);
-    };
 
     void setTrackInfo(TrackInfo *trackInfo) {
         _trackInfo = trackInfo;

@@ -66,13 +66,17 @@ protected:
 //    }
 
     virtual void paintEvent(QPaintEvent *qPaintEvent) override {
-        if (imgs)
-            for (TrackFrameInfo *trackFrameInfo:*imgs) {
+        if (imgs) {
+            TrackFrameInfo *trackFrameInfo;
+            int size = imgs->size();
+            for (int i = size - 1; i > -1; i--) {
+                trackFrameInfo = imgs->at(i);
                 QImage *img = trackFrameInfo->payLoad;
                 QPainter painter(this);
                 painter.setOpacity(trackFrameInfo->opacity);
                 painter.drawImage(0, 0, *img);
             }
+        }
     }
 
     void paintGL() {

@@ -31,6 +31,7 @@ public:
 
     void setOpacity(double v) { _opacity = v; }
 
+    bool visible = true;
 protected:
     int _startFrame = 1;
 

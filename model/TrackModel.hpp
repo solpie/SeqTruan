@@ -94,15 +94,8 @@ public:
             sequencePlayback->endFrameIdx = sizeof(trackInfo->trackFrameInfos);
         }
         Evt_dis(TrackModelEvent::NEW_TRACK, trackInfo);
-//    Evt::_().dis(TrackModelEvent_NEW_TRACK,trackInfo);
-//    Evt::add("type",[=](){this->func1();});
-//    Evt_dis("type")
-//    Evt::add("type2",std::bind([](TrackModel *self) {self->func1();},this));
-//    Evt::dis("type2");
     };
 
-
-//    TrackInfo *newTrackInfo;
 
     void setZoomLevel(int lv) {
         //todo
@@ -112,6 +105,8 @@ public:
     vector<TrackFrameInfo *> *getRenderFrame(int frameIdx) {
         vector<TrackFrameInfo *> *images = new vector<TrackFrameInfo *>;
         for (TrackInfo *trackInfo:*_trackInfos) {
+            if (!trackInfo->visible)
+                continue;
             int trackFrameIdx = frameIdx - trackInfo->getStartFrame() + 1;
             for (TrackFrameInfo *trackFrameInfo:*trackInfo->trackFrameInfos) {
                 qDebug() << this << "getRenderFrame" << trackFrameInfo->getIdx();
