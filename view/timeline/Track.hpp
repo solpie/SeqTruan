@@ -110,13 +110,13 @@ private:
         if (isPress) {
             int dx;
             dx = _localPos.x() - _lastX;
-            int fw = app.trackModel->frameWidth;
+            int fw = _app.trackModel->frameWidth;
             int newX = x() + (dx / fw) * fw;
             if (newX >= 0 && newX != x()) {
                 _trackInfo->setStartFrame((newX / fw) + 1);
                 qDebug() << this << "setStartFrame" << _trackInfo->getStartFrame();
                 _setX(this, newX);
-                app.trackModel->sequencePlayback->update();
+                _app.trackModel->sequencePlayback->update();
             }
         }
     };

@@ -15,4 +15,5 @@ public:
     static constexpr const char *TOGGLE_PLAY = "TOGGLE_PLAY";
     static constexpr const char *UPDATE_CURSOR = "UPDATE_CURSOR";
 
+    static constexpr const char *POPUP_MENU = "POPUP_MENU";
 };

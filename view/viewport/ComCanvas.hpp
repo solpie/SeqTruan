@@ -10,7 +10,7 @@
 
 #include "view/UI.hpp"
 #include "QOpenGLTexture"
-
+#include "QtOpenGL"
 class ComCanvas : public QWidget {
 public:
     ComCanvas(QWidget *parent) : QWidget(parent) {
@@ -50,20 +50,14 @@ protected:
 
 
 
-//    void resizeGL(int w, int h)
-//    {
-//        // Update projection matrix and other size related settings:
+    void resizeGL(int w, int h) {
+        glColor3f(1,1,1);
+        // Update projection matrix and other size related settings:
 //        m_projection.setToIdentity();
 //        m_projection.perspective(45.0f, w / float(h), 0.01f, 100.0f);
 //        ...
-//    }
-//
-//    void drawImage() {
-//        if (img) {
-//            QPainter painter(this);
-//            painter.drawImage(0, 0, *img);
-//        }
-//    }
+    }
+
 
     virtual void paintEvent(QPaintEvent *qPaintEvent) override {
         if (imgs) {

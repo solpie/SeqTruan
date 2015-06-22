@@ -61,7 +61,7 @@ private:
     void onNewTrack(TrackInfo *newTrackInfo) {
         trackArea->add(newTrackInfo);
         trackPanelArea->add(newTrackInfo);
-        app.trackModel->sequencePlayback->update();
+        _app.trackModel->sequencePlayback->update();
     }
 
     QScrollBar *vScrollBar;

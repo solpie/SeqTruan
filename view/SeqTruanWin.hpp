@@ -9,6 +9,7 @@
 #include "view/viewport/ViewPort.hpp"
 #include "view/UI.hpp"
 #include "view/timeline/Timeline.hpp"
+#include "view/Popup.hpp"
 class SeqTruanWin : public QWidget {
 public:
     SeqTruanWin(QWidget *parent = 0){
@@ -22,11 +23,16 @@ public:
 
         setStyleSheet("background:#484848");
         qDebug() << "inited SeqTruanWin";
+
+        popup = new Popup(this);
+        popup->hide();
+
     }
 
     virtual ~SeqTruanWin() { }
 
 private:
+    Popup *popup;
     ViewPort *_viewport;
     Timeline *_timeline;
     QPushButton *testBtn;

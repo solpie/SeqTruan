@@ -37,7 +37,7 @@
 #include "view/OverWidget.hpp"
 #include "model/App.hpp"
 //////////////////////////////////////////////// qt method
-#define app App()._()
+#define _app App()._()
 #define _setX(widget, x) widget->move(x,widget->y())
 #define _setY(widget, y) widget->move(widget->x(),y)
 #define _setHeight(widget, height) widget->resize(widget->width(),height)

@@ -16,6 +16,7 @@
 #include "PlaybackEvent.hpp"
 #include "TrackModelEvent.hpp"
 #include "SequencePlaybackEvent.hpp"
+#include "PopupEvent.hpp"
 
 #define Evt_add(type, func)  Evt()._().add(type, [this](void* e) { func(e); });
 #define Evt_dis(type, param) Evt()._().dis(type, param);

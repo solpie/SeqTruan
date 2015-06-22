@@ -37,9 +37,19 @@ public:
         visibleCheck->move(200, 5);
         connect(visibleCheck, visibleCheck->stateChanged, [this](int state) {
             _trackInfo->visible = bool(state);
-            app.trackModel->sequencePlayback->update();
+            _app.trackModel->sequencePlayback->update();
 
             qDebug() << this << "stateChanged" << state << _trackInfo->visible;
+        });
+
+
+        setContextMenuPolicy(Qt::CustomContextMenu);
+        connect(this, this->customContextMenuRequested, [=](const QPoint &q) {
+            qDebug() << this << "menu"<<q;
+            PopupEvent *e = new PopupEvent();
+            e->add("itme1",[]{});
+            e->add("itme2",[]{});
+            Evt_dis(ActionEvent::POPUP_MENU, e)
         });
     }
 
@@ -76,7 +86,7 @@ private:
 //            }
         }
         _trackInfo->setOpacity(opacitySlider->value() / double(100));
-        app.trackModel->sequencePlayback->update();
+        _app.trackModel->sequencePlayback->update();
 //        opacitySlider->setValue(
 //                QStyle::sliderValueFromPosition(opacitySlider->minimum(), opacitySlider->maximum(), localMousePos.x(),
 //                                                opacitySlider->width()));

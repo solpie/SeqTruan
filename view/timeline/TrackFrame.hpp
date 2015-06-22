@@ -66,7 +66,7 @@ public:
     }
 
     void setHoldFrameCount(int count, int dx = 1) {
-        int frameWidth = app.trackModel->frameWidth;
+        int frameWidth = _app.trackModel->frameWidth;
         changeWidth = (count - _trackFrameInfo->getHoldFrame()) * frameWidth * dx;
         _trackFrameInfo->setHoldFrame(count);
         _setWidth(this, count * frameWidth);
@@ -83,7 +83,7 @@ public:
                 holdFrameCountLabel->show();
             }
             holdFrameCountLabel->setText(QString::number(count));
-            holdFrameCountLabel->move(app.trackModel->frameWidth * count - 20, 10);
+            holdFrameCountLabel->move(_app.trackModel->frameWidth * count - 20, 10);
         }
     }
 
@@ -91,7 +91,7 @@ public:
         _setWidth(this, endPosX - this->x());
         _setWidth(thumb, width());
         _setX(rightButton, width() - rightButton->width() + 1);
-        _trackFrameInfo->setHoldFrame(width() / app.trackModel->frameWidth);
+        _trackFrameInfo->setHoldFrame(width() / _app.trackModel->frameWidth);
     }
 
     void setTrackFrameInfo(TrackFrameInfo *tfi) {
@@ -99,7 +99,7 @@ public:
     }
 
     void updateTrackFrameInfo() {
-        int frameWidth = app.trackModel->frameWidth;
+        int frameWidth = _app.trackModel->frameWidth;
         _trackFrameInfo->setStartFrame(this->x() / frameWidth + 1);
         _trackFrameInfo->setHoldFrame((this->x() + this->width()) / frameWidth);
     }
@@ -185,7 +185,7 @@ protected:
         lg.setColorAt(1.0, QColor(0x343434));
         pg.setBrush(QBrush(lg));
         pg.drawRect(0, 2, width(), 36);
-        int frameWidth = app.trackModel->frameWidth;
+        int frameWidth = _app.trackModel->frameWidth;
         QPainter p(this->thumb);
         QPen pen(QColor(0xc8c8c8));
         p.setPen(pen);
