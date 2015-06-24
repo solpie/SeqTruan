@@ -22,31 +22,7 @@
 #define Evt_dis(type, param) Evt()._().dis(type, param);
 using namespace std;
 
-//template<typename EVENT_CLS>
-//class Event {
-//public:
-//    Event() = default;
-//
-//    template<typename Observer>
-//    void add(const string &event, Observer &&observer) {
-//        _observers[event].push_back(forward<function<void(EVENT_CLS *)>>(observer));
-//    }
-//
-//    void dis(const string &event, EVENT_CLS *e) const {
-//        if (_observers.find(event) != _observers.end())
-//            for (const auto &obs : _observers.at(event)) {
-//                obs(e);
-//            }
-//    }
-//
-//    // disallow copying and assigning
-//    Event(const Event &) = delete;
-//
-//    Event &operator=(const Event &) = delete;
-//
-//private:
-//    map<string, vector<function<void(EVENT_CLS *)>>> _observers;
-//};
+
 
 class Evt : public Singleton<Evt> {
 public:

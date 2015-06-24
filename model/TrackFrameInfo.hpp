@@ -12,6 +12,19 @@
 
 #include "utils/Linker.hpp"
 #include "utils/Sh1tMacro.hpp"
+#include "ImageLoader.hpp"
+
+class ImageSlot : public QObject {
+Q_OBJECT
+public:
+    ImageSlot() : QObject() { };
+    QImage *payLoad;
+public slots:
+
+    void onLoaded(QImage *img) {
+        this->payLoad = img;
+    }
+};
 
 class TrackFrameInfo : public OneLinker<TrackFrameInfo> {
 public:
@@ -30,6 +43,7 @@ public:
     int getStartFrame() const {
         return _startFrame;
     }
+
 
     void setStartFrame(int v) {
         _startFrame = v;
@@ -57,15 +71,32 @@ public:
 
 
     QImage *payLoad;
-//    int endFrameIdx = 0;
+
+    QImage *getPayLoad() {
+        if (imageLoader->payLoad)
+            return imageLoader->payLoad;
+        return nullptr;
+    }
+
+    ImageLoader *imageLoader = nullptr;
+
+    void load(QString path) {
+        if (!imageLoader) {
+            imageLoader = new ImageLoader();
+        }
+        imageLoader->load(path);
+
+    }
 
     double opacity;//
+
+
 protected:
     int _trackInfoIdx;
 
-    int _holdFrame=1;
-    int _endFrame=1;
-    int _startFrame=1;
+    int _holdFrame = 1;
+    int _endFrame = 1;
+    int _startFrame = 1;
 
     int idx;
 

@@ -48,9 +48,7 @@ public:
             vbox->addWidget(item);
 //            ++j;
         }
-//            for (QString name:e->funcs.key_comp()) {
-
-//        }
+        move(e->posX, e->posY);
     }
 
 private:

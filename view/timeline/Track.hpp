@@ -18,7 +18,7 @@ public:
         resize(1280, TIMELINE_TRACK_DEF_HEIGHT);
 //    this->setStyleSheet("background:#343434");
         trackFrameArea = new QWidget(this);
-        _setX(trackFrameArea, App()._().trackModel->frameWidth);
+        _setX(trackFrameArea, _app.trackModel->frameWidth);
         trackFrameArea->resize(80, 75);
 
         headButton = new OverWidget<QWidget>(this);
@@ -48,7 +48,7 @@ public:
             trackFrame->setTrackFrameInfo(trackFrameInfo);
 
             pre = trackFrame->setPre(pre);
-            trackFrame->setPixmap(trackFrameInfo->payLoad);
+//            trackFrame->setPixmap(trackFrameInfo->payLoad);
             trackFrame->setIdx(i);
             trackFrame->move(i * fw, 0);
         }
@@ -110,20 +110,22 @@ private:
         if (isPress) {
             int dx;
             dx = _localPos.x() - _lastX;
-            int fw = _app.trackModel->frameWidth;
-            int newX = x() + (dx / fw) * fw;
-            if (newX >= 0 && newX != x()) {
-                _trackInfo->setStartFrame((newX / fw) + 1);
-                qDebug() << this << "setStartFrame" << _trackInfo->getStartFrame();
-                _setX(this, newX);
-                _app.trackModel->sequencePlayback->update();
+            if (abs(dx) > TIMELINE_DRAG_WIDTH) {
+                int fw = _app.trackModel->frameWidth;
+//            dx = _localPos.x() - _lastX + (fw - TIMELINE_DRAG_WIDTH);
+                int newX = x() + ceil(dx / fw) * fw;
+                if (newX >= 0 && newX != x()) {
+                    _trackInfo->setStartFrame((newX / fw) + 1);
+                    qDebug() << this << "setStartFrame" << _trackInfo->getStartFrame();
+                    _setX(this, newX);
+                    _app.trackModel->sequencePlayback->update();
+                }
             }
         }
     };
 
     virtual void mouseReleaseEvent(QMouseEvent *mouseEvent) override {
         isPress = false;
-
     };
 };
 

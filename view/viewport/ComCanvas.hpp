@@ -11,6 +11,7 @@
 #include "view/UI.hpp"
 #include "QOpenGLTexture"
 #include "QtOpenGL"
+
 class ComCanvas : public QWidget {
 public:
     ComCanvas(QWidget *parent) : QWidget(parent) {
@@ -18,7 +19,7 @@ public:
     }
 
     void setImage(vector<TrackFrameInfo *> *qImage) {
-        imgs = qImage;
+        trackFrameInfos = qImage;
         update();
 //        if (_texmap.find(qImage) != _texmap.end()) {
 //            texture = _texmap[qImage];
@@ -40,7 +41,7 @@ protected:
     QOpenGLTexture *texture;
     QOpenGLFunctions *f;
 //    QImage *img = nullptr;
-    vector<TrackFrameInfo *> *imgs = nullptr;
+    vector<TrackFrameInfo *> *trackFrameInfos = nullptr;
 
 //    void initializeGL() {
 //        // Set up the rendering context, load shaders and other resources, etc.:
@@ -51,7 +52,7 @@ protected:
 
 
     void resizeGL(int w, int h) {
-        glColor3f(1,1,1);
+        glColor3f(1, 1, 1);
         // Update projection matrix and other size related settings:
 //        m_projection.setToIdentity();
 //        m_projection.perspective(45.0f, w / float(h), 0.01f, 100.0f);
@@ -60,15 +61,18 @@ protected:
 
 
     virtual void paintEvent(QPaintEvent *qPaintEvent) override {
-        if (imgs) {
+        if (trackFrameInfos) {
             TrackFrameInfo *trackFrameInfo;
-            int size = imgs->size();
+            int size = trackFrameInfos->size();
             for (int i = size - 1; i > -1; i--) {
-                trackFrameInfo = imgs->at(i);
-                QImage *img = trackFrameInfo->payLoad;
-                QPainter painter(this);
-                painter.setOpacity(trackFrameInfo->opacity);
-                painter.drawImage(0, 0, *img);
+                trackFrameInfo = trackFrameInfos->at(i);
+                QImage *img = trackFrameInfo->getPayLoad();
+                if (img) {
+                    QPainter painter(this);
+                    painter.setOpacity(trackFrameInfo->opacity);
+                    painter.drawImage(0, 0, *img);
+                }
+
             }
         }
     }

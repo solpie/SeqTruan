@@ -78,17 +78,19 @@ private:
     int lastHScrollValue;
 
     void onHScrollBar() {
-//    int dx = lastHScrollValue -
-        //todo
+        int dx = lastHScrollValue - hScrollBar->value();
+        lastHScrollValue = hScrollBar->value();
+        trackArea->scroll(dx, 0);
     }
 
 
 protected:
     virtual void resizeEvent(QResizeEvent *qResizeEvent) override {
-        _setHeight(trackPanelArea, height());
-        _setHeight(trackArea, height() - 15);
-        _setHeight(vScrollBar, height() - 85);
+        trackArea->resize(width(), height()-15);
+//        _setHeight(trackArea, height() - 15);
+        _setHeight(vScrollBar, height() - 40);
         hScrollBar->move(vScrollBar->x() + vScrollBar->width(), vScrollBar->y() + vScrollBar->height());
+        _setWidth(hScrollBar, width() - TIMELINE_TRACK_PANEL_DEF_WIDTH);
         _setY(timelineToolBar, hScrollBar->y());
     }
 

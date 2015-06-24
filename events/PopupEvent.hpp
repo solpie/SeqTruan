@@ -11,7 +11,8 @@
 class PopupEvent {
 public:
     map<QString, function<void()>> funcs;
-
+    int posX;
+    int posY;
     template <typename F>
     void add(QString name, F &&func) {
         funcs[name] = forward<function<void()>>(func);

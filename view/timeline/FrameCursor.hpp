@@ -5,7 +5,6 @@
 #ifndef SEQTRUAN_TRACKCURSOR_H
 #define SEQTRUAN_TRACKCURSOR_H
 
-#include <QtWidgets/qlabel.h>
 #include "view/UI.hpp"
 #include "model/App.hpp"
 

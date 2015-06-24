@@ -48,9 +48,11 @@ public:
     }
 
     void setPixmap(QImage *qImage) {
-        int thumbHeight = int(float(qImage->height()) / qImage->width() * (this->width() - 2));
-        thumbPixmap = new QPixmap(
-                QPixmap::fromImage(qImage->scaled(this->width() - 2, thumbHeight, Qt::KeepAspectRatio)));
+        if (qImage) {
+            int thumbHeight = int(float(qImage->height()) / qImage->width() * (this->width() - 2));
+            thumbPixmap = new QPixmap(
+                    QPixmap::fromImage(qImage->scaled(this->width() - 2, thumbHeight, Qt::KeepAspectRatio)));
+        }
     }
 
     int idx = 0;
@@ -156,21 +158,21 @@ protected:
         if (isPressLeftButton || isPressRightButton) {
             int posX = mapFromGlobal(QCursor::pos()).x();
             if (isPressRightButton) {
-                if (posX > width() + 30) {
+                if (posX > width() + TIMELINE_DRAG_WIDTH) {
                     setHoldFrameCount(_trackFrameInfo->getHoldFrame() + 1, 1);
                     handleR(this);
                 }
-                else if (posX < width() - 30 and _trackFrameInfo->getHoldFrame() > 1) {
+                else if (posX < width() - TIMELINE_DRAG_WIDTH and _trackFrameInfo->getHoldFrame() > 1) {
                     setHoldFrameCount(_trackFrameInfo->getHoldFrame() - 1, 1);
                     handleR(this);
                 }
             }
             else if (isPressLeftButton) {
-                if (posX < -30) {
+                if (posX < -TIMELINE_DRAG_WIDTH) {
                     setHoldFrameCount(_trackFrameInfo->getHoldFrame() + 1, -1);
                     handleL(this);
                 }
-                else if (posX > 30 && _trackFrameInfo->getHoldFrame() > 1) {
+                else if (posX > TIMELINE_DRAG_WIDTH && _trackFrameInfo->getHoldFrame() > 1) {
                     setHoldFrameCount(_trackFrameInfo->getHoldFrame() - 1, -1);
                     handleL(this);
                 }
@@ -201,14 +203,17 @@ protected:
         p.drawLine(0, 0, this->thumb->width(), 0);
 
         QPainter pm(this->thumb);
-        if (this->thumbPixmap != NULL) {
+        if (this->thumbPixmap) {
             pm.drawPixmap(int((frameWidth - 2 - this->thumbPixmap->width()) * .5),
                           int((22 - this->thumbPixmap->height()) * .5 + 9),
                           *this->thumbPixmap);
         }
+        else {
+            setPixmap(_trackFrameInfo->getPayLoad());
+        }
     }
 
-    QPixmap *thumbPixmap;
+    QPixmap *thumbPixmap = nullptr;
     QLabel *frameIdx;
     OverWidget<QPushButton> *leftButton;
     OverWidget<QPushButton> *rightButton;

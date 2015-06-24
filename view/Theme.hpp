@@ -12,7 +12,7 @@
 #define TIMELINE_TRACK_FRAME_MAX_WIDTH 40
 #define TIMELINE_TRACK_DEF_HEIGHT 80
 #define TIMELINE_COL_BG 0x484848
-
+const int TIMELINE_DRAG_WIDTH = 5;
 
 ///////////////////////////qss path
 #define QSS_SCROLLBAR ":/qss_scrollbar"

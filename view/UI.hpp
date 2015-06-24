@@ -46,7 +46,6 @@
 #define _setColor1(widget, color) qwidget->setAutoFillBackground(True)
 #define _localPos mapFromGlobal(QCursor::pos())
 
-
 class UI {
 public:
     static void over1(QWidget *w, QString type, void *func) {

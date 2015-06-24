@@ -45,10 +45,12 @@ public:
 
         setContextMenuPolicy(Qt::CustomContextMenu);
         connect(this, this->customContextMenuRequested, [=](const QPoint &q) {
-            qDebug() << this << "menu"<<q;
+            qDebug() << this << "menu" << q;
             PopupEvent *e = new PopupEvent();
-            e->add("itme1",[]{});
-            e->add("itme2",[]{});
+            e->posX = q.x();
+            e->posY = q.y();
+            e->add("itme1", [] { });
+            e->add("itme2", [] { });
             Evt_dis(ActionEvent::POPUP_MENU, e)
         });
     }

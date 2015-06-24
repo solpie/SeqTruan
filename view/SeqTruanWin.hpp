@@ -6,19 +6,21 @@
 #define SEQTRUAN_SEQTRUANWIN_H
 
 #endif //SEQTRUAN_SEQTRUANWIN_H
+
 #include "view/viewport/ViewPort.hpp"
 #include "view/UI.hpp"
 #include "view/timeline/Timeline.hpp"
 #include "view/Popup.hpp"
-class SeqTruanWin : public QWidget {
+
+class SeqTruanWin : public QMainWindow {
 public:
-    SeqTruanWin(QWidget *parent = 0){
+    SeqTruanWin(QWidget *parent = 0) {
         resize(1440, 1056);
 
-        QSplitter *vSplitter = new QSplitter(Qt::Vertical, this);
+        vSplitter = new QSplitter(Qt::Vertical, this);
         vSplitter->resize(width(), height());
         vSplitter->setOpaqueResize(false);
-        ViewPort *viewPort = new ViewPort(vSplitter);
+        _viewport = new ViewPort(vSplitter);
         _timeline = new Timeline(vSplitter);
 
         setStyleSheet("background:#484848");
@@ -32,6 +34,15 @@ public:
     virtual ~SeqTruanWin() { }
 
 private:
+
+protected:
+    virtual void resizeEvent(QResizeEvent *qResizeEvent) override {
+        qDebug() << this << "resize window";
+        vSplitter->resize(width(), height());
+        _setY(_timeline,height()-_timeline->height());
+        _setWidth(_timeline, width());
+    }
+    QSplitter *vSplitter;
     Popup *popup;
     ViewPort *_viewport;
     Timeline *_timeline;

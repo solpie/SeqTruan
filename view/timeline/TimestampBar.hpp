@@ -20,8 +20,8 @@ protected:
         QPainter p(this);
         QPen pen(QColor(0x343434));
         p.setPen(pen);
-        int fw = App()._().trackModel->frameWidth;
-        int fr = App()._().trackModel->sequencePlayback->getFramerate();
+        int fw = _app.trackModel->frameWidth;
+        int fr = _app.trackModel->sequencePlayback->getFramerate();
         for (int i = 0; i < this->width(); i += fw) {
             p.drawLine(i, 15, i, this->height());
         }

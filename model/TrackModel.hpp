@@ -64,7 +64,7 @@ public:
         TrackInfo *trackInfo = new TrackInfo(name);
         trackInfo->idx = _trackInfos->size();
         _trackInfos->push_back(trackInfo);
-        TrackFrameInfo *pre= nullptr;
+        TrackFrameInfo *pre = nullptr;
         if (dirname != "") {
             QDir dir(dirname);
             dir.setFilter(QDir::Dirs | QDir::Files | QDir::NoSymLinks);
@@ -79,12 +79,13 @@ public:
                     }
                     else {
                         // This is where you might call your encrypting function
-                        qDebug() << "Image file: " << fi.absoluteFilePath();
-                        QImage *img = new QImage(fi.absoluteFilePath());
+//                        qDebug() << "Image file: " << fi.absoluteFilePath();
+//                        QImage *img = new QImage(fi.absoluteFilePath());
                         TrackFrameInfo *trackFrameInfo = new TrackFrameInfo();
-                        pre=trackFrameInfo->setPre(pre);
+                        trackFrameInfo->load(fi.absoluteFilePath());
+                        pre = trackFrameInfo->setPre(pre);
                         trackFrameInfo->setTrackInfoIdx(trackInfo->idx);
-                        trackFrameInfo->payLoad = img;
+//                        trackFrameInfo->payLoad = img;
                         trackFrameInfo->setIdx(trackInfo->trackFrameInfos->size());
                         trackFrameInfo->setStartFrame(trackFrameInfo->getIdx() + 1);
                         trackFrameInfo->setHoldFrame(1);

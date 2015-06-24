@@ -8,7 +8,7 @@
 
 #include <model/TrackModel.hpp>
 #include "view/UI.hpp"
-#include "FrameCursor.hpp"
+#include "view/timeline/FrameCursor.hpp"
 #include "TimestampBar.hpp"
 #include "Track.hpp"
 
@@ -25,7 +25,7 @@ public:
         vbox = new QVBoxLayout(trackStack);
         vbox->setSpacing(0);
         vbox->setContentsMargins(0, 0, 0, 0);
-        _setY(trackStack,timestampBar->height());
+        _setY(trackStack, timestampBar->height());
         trackStack->resize(1280, 10);
 
         trackCursor = new FrameCursor(this);
@@ -45,12 +45,15 @@ public:
 
     void onRenderFrame(SequencePlaybackEvent *e) {
         int frameIdx = e->frameIdx;
-        _setX(trackCursor,frameIdx*App()._().trackModel->frameWidth);
+        _setX(trackCursor, frameIdx * App()._().trackModel->frameWidth);
     }
 
 protected:
     virtual void resizeEvent(QResizeEvent *qResizeEvent) override {
         _setHeight(trackCursor, height());
+        _setWidth(timestampBar, width());
+        _setWidth(trackStack, width());
+        qDebug() << this << "timestampBar:" << timestampBar->width();
     }
 
 
