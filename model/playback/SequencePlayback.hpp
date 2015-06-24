@@ -7,9 +7,11 @@
 #define SEQTRUAN_SEQQUENCEPLAYBACK_H
 
 
+#include <events/PlaybackEvent.hpp>
+#include <events/SequencePlaybackEvent.hpp>
 #include "QTimer"
 #include "events/Event.hpp"
-
+#include "events/ActionEvent.hpp"
 class SequencePlayback {
 public:
     SequencePlayback() {

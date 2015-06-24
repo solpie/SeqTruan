@@ -27,7 +27,6 @@ public:
         trackArea = new TrackArea(this);
         trackArea->resize(1280, TIMELINE_HEIGHT);
         trackArea->move(TIMELINE_TRACK_PANEL_DEF_WIDTH, 0);
-        Evt_add(TrackModelEvent::NEW_TRACK, onNewTrack);
 //        Evt()._().trackModelEvent->add(TrackModelEvent_NEW_TRACK,
 //                                       [this](TrackModelEvent *e) { onNewTrack(e->trackInfo); });
 //    Evt::_().add(TrackModelEvent_NEW_TRACK, onNewTrack);
@@ -55,9 +54,16 @@ public:
         UI::setQss(hScrollBar, QSS_SCROLLBAR);
 
         timelineToolBar = new TimelineToolBar(this);
+
+        Evt_add(TrackModelEvent::NEW_TRACK, onNewTrack);
+        Evt_add(TrackModelEvent::LOAD_COMPLETE, onLoadTrackImage);
     }
 
 private:
+    void onLoadTrackImage(int idx = 0) {
+        trackArea->update();
+    }
+
     void onNewTrack(TrackInfo *newTrackInfo) {
         trackArea->add(newTrackInfo);
         trackPanelArea->add(newTrackInfo);
@@ -86,7 +92,7 @@ private:
 
 protected:
     virtual void resizeEvent(QResizeEvent *qResizeEvent) override {
-        trackArea->resize(width(), height()-15);
+        trackArea->resize(width(), height() - 15);
 //        _setHeight(trackArea, height() - 15);
         _setHeight(vScrollBar, height() - 40);
         hScrollBar->move(vScrollBar->x() + vScrollBar->width(), vScrollBar->y() + vScrollBar->height());

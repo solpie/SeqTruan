@@ -6,6 +6,7 @@
 #ifndef SEQTRUAN_TRACKPANEL_H
 #define SEQTRUAN_TRACKPANEL_H
 
+#include <events/PopupEvent.hpp>
 #include "view/UI.hpp"
 #include "OpacitySlider.hpp"
 

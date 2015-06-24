@@ -12,45 +12,15 @@
 #include <vector>
 #include "events/Event.hpp"
 #include <QtCore/qstring.h>
-//#include "view/timeline/TrackFrame.hpp"
-//#include "view/timeline/Track.hpp"
 #include "model/playback/SequencePlayback.hpp"
 #include "model/playback/AudioPlayback.hpp"
-//template<typename P>
-//class PayLoad {
-//public:
-//    P get() {
-//        return this;
-//    };
-//};
 
 #include "TrackInfo.hpp"
 #include "TrackFrameInfo.hpp"
 
-//class TrackInfo {
-//public:
-//    TrackInfo(QString name) {
-//        this->name = name;
-//        trackFrameInfos = new vector<TrackFrameInfo *>();
-//    };
-//    QString name;
-//    vector<TrackFrameInfo *> *trackFrameInfos;
-//    int startIdx;
-//    int idx;
-//
-//    int getCurTrackFrameIdx() {
-//        return _trackFrameIdx;
-//    };
-////    Track *track;
-////    void updateTrackInfo(TrackInfo *trackInfo,int... p);
-//private:
-//    int _trackFrameIdx;
-//
-//};
 
 #include <iostream>
 
-//#include "view/timeline/Track.hpp"
 class TrackModel {
 public:
     TrackModel() {
@@ -58,6 +28,7 @@ public:
         audioPlayback = new AudioPlayback();
         _trackInfos = new vector<TrackInfo *>();
     }
+
 
     void newTrack(QString name, QString dirname = "") {
 //    Evt_add("type", func1);
@@ -117,8 +88,6 @@ public:
                     trackFrameIdx <= trackFrameInfo->getEndFrame()) {
                     //todo 实现链表查找
 //                    return new QPixmap(QPixmap::fromImage(trackFrameInfo->payLoad));
-                    //todo 透明度
-//                    trackFrameInfo->payLoad->setAlphaChannel()
                     trackFrameInfo->opacity = trackInfo->getOpacity();
                     images->push_back(trackFrameInfo);
                     break;

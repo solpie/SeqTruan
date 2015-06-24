@@ -19,7 +19,7 @@
 int get##name() {\
     return __##name;\
 }
-#define propSet(type, name,func)    type __##name;\
+#define propSet(type, name, func)    type __##name;\
 void set##name(type i) {\
 __##name = i;\
 func();\
@@ -35,3 +35,13 @@ void set_##name(type *i) {\
 int get_##name() {\
     return *__##name;\
 }
+
+#define _OBS template<typename Observer>\
+void add(const string &event, Observer &&observer) {\
+    _funcs[event] = forward<function<void(void *)>>(observer);\
+}\
+void dis(const string event, void *e = nullptr) {\
+    if (_funcs.find(event) != _funcs.end())\
+        _funcs.at(event)(e);\
+}\
+map<string, function<void(void *)>> _funcs;

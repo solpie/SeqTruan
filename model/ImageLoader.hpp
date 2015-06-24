@@ -11,6 +11,8 @@
 #include "QImage"
 #include "QtCore"
 
+using namespace std;
+
 class ImageLoader : public QObject {
 Q_OBJECT
 public:
@@ -27,23 +29,33 @@ public:
     }
 
     QImage *payLoad = nullptr;
+    QString imagePath;
 
     void load(QString absPath) {
-        qDebug() << this << "Image loading in Thread:" << absPath;
-
-        QMetaObject::invokeMethod(this, "completed", Q_ARG(QString, absPath));
+        imagePath = absPath;
     }
 
+//    _OBS
+
+    void start() {
+        qDebug() << this << "Image loading in Thread:" << imagePath;
+        QMetaObject::invokeMethod(this, "completed", Q_ARG(QString, imagePath));
+    }
 
 public slots:
 
     void completed(QString absPath) {
-//        QImage image(absPath);
-//        payLoad = &image;
         payLoad = new QImage(absPath);
+//        Evt_dis("LOAD_COMPLETE", nullptr)
+
         qDebug() << this << "Image loaded!" << absPath;
-//        emit imageReady(&image);
+//        dis("LOAD_COMPLETE", nullptr);
+        emit imageLoaded(payLoad);
     }
+
+signals:
+
+    void imageLoaded(QImage *image);
 
 
 private:

@@ -30,6 +30,7 @@ set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -w -std=c++11 -fpermissive")
 # Find the QtWidgets library
 find_package(Qt5Widgets)
 find_package(Qt5OpenGL)
+find_package(Qt5Core)
 #find_package(OpenGL)
 find_package(Qt5Multimedia REQUIRED)
 # Tell CMake to create the helloworld executable
@@ -72,7 +73,7 @@ events/PopupEvent.hpp
 model/ImageLoader.hpp utils/Observer.hpp)
 
 # Use the Widgets module from Qt 5.
-target_link_libraries(SeqTruan Qt5::Widgets Qt5::OpenGL Qt5::Multimedia ${OPENGL_LIBRARIES})
+target_link_libraries(SeqTruan Qt5::Widgets Qt5::Core Qt5::OpenGL Qt5::Multimedia ${OPENGL_LIBRARIES})
 #target_link_libraries(SeqTruan Qt5::Widgets Qt5::OpenGL Qt5::Multimedia ${OPENGL_LIBRARIES})
 
 #######################

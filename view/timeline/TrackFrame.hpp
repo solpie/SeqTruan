@@ -8,12 +8,12 @@
 
 #include "view/UI.hpp"
 #include "utils/Linker.hpp"
+#include "model/ImageLoader.hpp"
 
 class TrackFrame : public OneLinker<TrackFrame>, public QWidget {
 public:
     TrackFrame(QWidget *parent) : QWidget(parent) {
         resize(40, 60);
-
         thumb = new OverWidget<QWidget>(this);
         thumb->resize(40, 50);
         over(thumb, paintEvent_, paintThumb);
@@ -98,7 +98,16 @@ public:
 
     void setTrackFrameInfo(TrackFrameInfo *tfi) {
         _trackFrameInfo = tfi;
+        connect(_trackFrameInfo->imageLoader, tfi->imageLoader->imageLoaded, [this](QImage *q) { this->onLoaded(q); });
+        tfi->imageLoader->start();
     }
+
+    void onLoaded(QImage *q) {
+        qDebug() << this << "update()";
+        setPixmap(q);
+        update();
+    }
+
 
     void updateTrackFrameInfo() {
         int frameWidth = _app.trackModel->frameWidth;
@@ -107,6 +116,7 @@ public:
     }
 
 protected:
+    ImageLoader *loader = nullptr;
     OverWidget<QWidget> *thumb;
     TrackFrameInfo *_trackFrameInfo;
 
@@ -202,14 +212,16 @@ protected:
         p.drawLine(0, 0, 0, this->thumb->height());
         p.drawLine(0, 0, this->thumb->width(), 0);
 
-        QPainter pm(this->thumb);
+
         if (this->thumbPixmap) {
+            QPainter pm(this->thumb);
             pm.drawPixmap(int((frameWidth - 2 - this->thumbPixmap->width()) * .5),
                           int((22 - this->thumbPixmap->height()) * .5 + 9),
                           *this->thumbPixmap);
         }
         else {
-            setPixmap(_trackFrameInfo->getPayLoad());
+//            setPixmap(_trackFrameInfo->getPayLoad());
+//            update();
         }
     }
 

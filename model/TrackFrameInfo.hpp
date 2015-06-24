@@ -85,7 +85,9 @@ public:
             imageLoader = new ImageLoader();
         }
         imageLoader->load(path);
-
+//        imageLoader->loadFunc = [] {
+//            qDebug() << this << "loadFunc";;
+//        };
     }
 
     double opacity;//
