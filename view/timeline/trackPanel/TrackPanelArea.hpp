@@ -14,6 +14,9 @@ class TrackPanelArea : public QWidget {
 public:
     TrackPanelArea(QWidget *parent = 0) : QWidget(parent) {
         QWidget *stack = new QWidget(this);
+
+        stack->setObjectName("track");
+        stack->setStyleSheet("QWidget#track{background:#343434;}");
         stack->resize(TIMELINE_TRACK_PANEL_DEF_WIDTH, 10);
         vbox = new QVBoxLayout(stack);
         vbox->setSpacing(0);

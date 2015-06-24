@@ -31,6 +31,15 @@ public:
         tailButton->resize(10, 40);
         tailButton->move(80, 0);
         over(tailButton, paintEvent_, paintTail);
+
+        setObjectName("track");
+        setStyleSheet("QWidget#track{border-width: 1px;border-style: solid;border-bottom-color: #343434;}");
+        QPalette bgpal = palette();
+//        bgpal.setColor(QPalette::Background, QColor(0, 0, 0, 255));
+        bgpal.setColor(QPalette::Background, Qt::transparent);
+//        bgpal.setColor(QPalette::Foreground, QColor(255, 255, 255, 255));
+        setPalette(bgpal);
+        setWindowOpacity(.5);
     }
 
     Track(QWidget *parent) : QWidget(parent) {
@@ -116,8 +125,15 @@ private:
                 int newX = x() + ceil(dx / fw) * fw;
                 if (newX >= 0 && newX != x()) {
                     _trackInfo->setStartFrame((newX / fw) + 1);
-                    qDebug() << this << "setStartFrame" << _trackInfo->getStartFrame();
                     _setX(this, newX);
+                    //todo track width() too long
+                    qDebug() << this << "setStartFrame" << _trackInfo->getStartFrame()\
+ << "x()" << x() << "width()" << width();
+                    int endWidth = this->x() + this->width() + fw;
+                    if (_app.trackModel->trackWidth < endWidth) {
+                        _app.trackModel->trackWidth = endWidth;
+                        Evt_dis(TrackModelEvent::MOVE_TRACK, nullptr);
+                    }
                     _app.trackModel->sequencePlayback->update();
                 }
             }

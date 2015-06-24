@@ -103,7 +103,7 @@ public:
     TrackFrameInfo *getTrackFrameInfo(int tIdx, int tfIdx) { return getTrackInfo(tIdx)->trackFrameInfos->at(tfIdx); }
 
     int frameWidth = 40;
-
+    int trackWidth = 1280;
     SequencePlayback *sequencePlayback;
     AudioPlayback *audioPlayback;
 private:

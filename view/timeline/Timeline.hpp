@@ -53,6 +53,7 @@ public:
         UI::setQss(vScrollBar, QSS_SCROLLBAR);
         UI::setQss(hScrollBar, QSS_SCROLLBAR);
 
+
         timelineToolBar = new TimelineToolBar(this);
 
         Evt_add(TrackModelEvent::NEW_TRACK, onNewTrack);
@@ -93,6 +94,8 @@ private:
 protected:
     virtual void resizeEvent(QResizeEvent *qResizeEvent) override {
         trackArea->resize(width(), height() - 15);
+
+        hScrollBar->setRange(0, trackArea->trackStack->width() - trackArea->width());
 //        _setHeight(trackArea, height() - 15);
         _setHeight(vScrollBar, height() - 40);
         hScrollBar->move(vScrollBar->x() + vScrollBar->width(), vScrollBar->y() + vScrollBar->height());
