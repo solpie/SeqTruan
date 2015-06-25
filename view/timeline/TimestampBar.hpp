@@ -39,7 +39,7 @@ protected:
 
     void updateCursor() {
         int posX = mapFromGlobal(QCursor::pos()).x();
-        int fw = App()._().trackModel->frameWidth;
+        int fw = _app.trackModel->frameWidth;
         int frameIdx = (posX / fw);
         Evt_dis(ActionEvent::UPDATE_CURSOR, &frameIdx);
     }

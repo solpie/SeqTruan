@@ -20,21 +20,14 @@ public:
     Timeline(QWidget *parent = 0) : QWidget(parent) {
         trackToolBar = new TrackToolBar(this);
 
-        trackPanelArea = new TrackPanelArea(this);
-        trackPanelArea->resize(TIMELINE_TRACK_PANEL_DEF_WIDTH, TIMELINE_HEIGHT);
-        _setY(trackPanelArea, trackToolBar->height());
 
         trackArea = new TrackArea(this);
         trackArea->resize(1280, TIMELINE_HEIGHT);
         trackArea->move(TIMELINE_TRACK_PANEL_DEF_WIDTH, 0);
-//        Evt()._().trackModelEvent->add(TrackModelEvent_NEW_TRACK,
-//                                       [this](TrackModelEvent *e) { onNewTrack(e->trackInfo); });
-//    Evt::_().add(TrackModelEvent_NEW_TRACK, onNewTrack);
 
-//    Evt::_().add(TrackModelEvent_NEW_TRACK, std::bind(this, &Timeline::onNewTrack));
-//    Evt::_().add(TrackModelEvent_NEW_TRACK,  onNewTrack);
-//    TrackInfo *trackInfo = new TrackInfo("hh");
-//    onNewTrack(trackInfo);
+        trackPanelArea = new TrackPanelArea(this);
+        trackPanelArea->resize(TIMELINE_TRACK_PANEL_DEF_WIDTH, TIMELINE_HEIGHT);
+        UI::setY(trackPanelArea, trackToolBar->height());
 
         vScrollBar = new QScrollBar(this);
         lastVScrollValue = 0;
@@ -48,7 +41,7 @@ public:
         hScrollBar->resize(500, 15);
         hScrollBar->setPageStep(200);
         connect(hScrollBar, QScrollBar::valueChanged, this, onHScrollBar);
-        _setHeight(this, TIMELINE_HEIGHT);
+        UI::setHeight(this, TIMELINE_HEIGHT);
 
         UI::setQss(vScrollBar, QSS_SCROLLBAR);
         UI::setQss(hScrollBar, QSS_SCROLLBAR);
@@ -58,8 +51,18 @@ public:
 
         Evt_add(TrackModelEvent::NEW_TRACK, onNewTrack);
         Evt_add(TrackModelEvent::LOAD_COMPLETE, onLoadTrackImage);
-    }
+        Evt_add(TrackModelEvent::MOVE_TRACK, onMoveTrack)
 
+    }
+    void onMoveTrack(void *e) {
+        if (trackArea->trackStack->width() < _app.trackModel->trackWidth) {
+            int trackWidth = _app.trackModel->trackWidth;
+            UI::setWidth(trackArea->trackStack, trackWidth);
+            hScrollBar->setRange(0, trackWidth - hScrollBar->width());
+            UI::setWidth(trackArea->timestampBar,trackWidth);
+            qDebug() << this << "resize trackStack "<<"trackWidth:" << trackArea->trackStack->width()<<"x():"<<trackArea->trackStack->x();
+        }
+    }
 private:
     void onLoadTrackImage(int idx = 0) {
         trackArea->update();
@@ -94,13 +97,12 @@ private:
 protected:
     virtual void resizeEvent(QResizeEvent *qResizeEvent) override {
         trackArea->resize(width(), height() - 15);
-
-        hScrollBar->setRange(0, trackArea->trackStack->width() - trackArea->width());
+        hScrollBar->setRange(0, trackArea->trackStack->width() - hScrollBar->width());
 //        _setHeight(trackArea, height() - 15);
-        _setHeight(vScrollBar, height() - 40);
+        UI::setHeight(vScrollBar, height() - 40);
         hScrollBar->move(vScrollBar->x() + vScrollBar->width(), vScrollBar->y() + vScrollBar->height());
-        _setWidth(hScrollBar, width() - TIMELINE_TRACK_PANEL_DEF_WIDTH);
-        _setY(timelineToolBar, hScrollBar->y());
+        UI::setWidth(hScrollBar, width() - TIMELINE_TRACK_PANEL_DEF_WIDTH);
+        UI::setY(timelineToolBar, hScrollBar->y());
     }
 
     TrackToolBar *trackToolBar;

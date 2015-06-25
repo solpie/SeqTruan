@@ -38,18 +38,25 @@
 #include "model/App.hpp"
 //////////////////////////////////////////////// qt method
 #define _app App()._()
-#define _setX(widget, x) widget->move(x,widget->y())
-#define _setY(widget, y) widget->move(widget->x(),y)
-#define _setHeight(widget, height) widget->resize(widget->width(),height)
-#define _setWidth(widget, width) widget->resize(width,widget->height())
 #define _setMouseTransparent(widget) widget->setAttribute(Qt::WA_TransparentForMouseEvents, true)
 #define _setColor1(widget, color) qwidget->setAutoFillBackground(True)
 #define _localPos mapFromGlobal(QCursor::pos())
 
 class UI {
 public:
-    static void over1(QWidget *w, QString type, void *func) {
+    static void setWidth(QWidget *w, int width) {
+        w->resize(width, w->height());
+    }
+    static void setHeight(QWidget *w, int height) {
+        w->resize(w->width(),height);
+    }
 
+    static void setX(QWidget *w, int x) {
+        w->move(x, w->y());
+    }
+
+    static void setY(QWidget *w, int y) {
+        w->move(w->x(), y);
     }
 
     static void setQss(QWidget *w, QString alias, QString objName = "") {

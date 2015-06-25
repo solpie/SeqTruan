@@ -71,9 +71,9 @@ public:
         int frameWidth = _app.trackModel->frameWidth;
         changeWidth = (count - _trackFrameInfo->getHoldFrame()) * frameWidth * dx;
         _trackFrameInfo->setHoldFrame(count);
-        _setWidth(this, count * frameWidth);
-        _setWidth(thumb, width());
-        _setX(rightButton, width() - rightButton->width() + 1);
+        UI::setWidth(this, count * frameWidth);
+        UI::setWidth(thumb, width());
+        UI::setX(rightButton, width() - rightButton->width() + 1);
         qDebug() << this << "setHoldFrameCount" << this->frameIdx->text() << "width" << width();
         if (count > 1) {
             if (!holdFrameCountLabel) {
@@ -90,9 +90,9 @@ public:
     }
 
     void resizeFrame(int endPosX) {
-        _setWidth(this, endPosX - this->x());
-        _setWidth(thumb, width());
-        _setX(rightButton, width() - rightButton->width() + 1);
+        UI::setWidth(this, endPosX - this->x());
+        UI::setWidth(thumb, width());
+        UI::setX(rightButton, width() - rightButton->width() + 1);
         _trackFrameInfo->setHoldFrame(width() / _app.trackModel->frameWidth);
     }
 
@@ -130,7 +130,6 @@ protected:
 
                 renameBackward(this);
 //                relTrackFrame->updateTrackFrameInfo();
-                //todo 验证idx
                 qDebug() << this << "onRelLeftButton remove():" << relTrackFrame->pre->idx;
 //                onRelLeftButton(relTrackFrame);
             }
@@ -147,16 +146,16 @@ protected:
     //右拉rightbutton
     void handleR(TrackFrame *cur) {
         if (cur->next) {
-            _setX(cur->next, cur->x() + cur->width());
+            UI::setX(cur->next, cur->x() + cur->width());
             handleR(cur->next);
         }
         else {
-            _setWidth(cur->parentWidget(), cur->x() + cur->width() + 40);
+            UI::setWidth(cur->parentWidget(), cur->x() + cur->width() + _app.trackModel->frameWidth);
         }
     }
 
     void handleL(TrackFrame *cur) {
-        _setX(cur, cur->x() + cur->changeWidth);
+        UI::setX(cur, cur->x() + cur->changeWidth);
         cur->changeWidth = 0;
         if (cur->pre) {
             qDebug() << "handleL" << cur->pre->idx << cur->pre->frameIdx->text();

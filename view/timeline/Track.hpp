@@ -15,15 +15,15 @@ class Track : public QWidget {
 public:
     Track(TrackInfo *trackInfo = nullptr) {
 //        _trackInfo = trackInfo;
-        resize(1280, TIMELINE_TRACK_DEF_HEIGHT);
+        resize(100, TIMELINE_TRACK_DEF_HEIGHT);
 //    this->setStyleSheet("background:#343434");
         trackFrameArea = new QWidget(this);
-        _setX(trackFrameArea, _app.trackModel->frameWidth);
+        UI::setX(trackFrameArea, _app.trackModel->frameWidth);
         trackFrameArea->resize(80, 75);
 
         headButton = new OverWidget<QWidget>(this);
         headButton->resize(10, 40);
-        _setX(headButton, 31);
+        UI::setX(headButton, 31);
         headButton->setStyleSheet("border:none");
         over(headButton, paintEvent_, paintHead);
 
@@ -31,9 +31,9 @@ public:
         tailButton->resize(10, 40);
         tailButton->move(80, 0);
         over(tailButton, paintEvent_, paintTail);
-
-        setObjectName("track");
-        setStyleSheet("QWidget#track{border-width: 1px;border-style: solid;border-bottom-color: #343434;}");
+//
+//        setObjectName("track");
+//        setStyleSheet("QWidget#track{border-width: 1px;border-style: solid;border-bottom-color: #343434;}");
         QPalette bgpal = palette();
 //        bgpal.setColor(QPalette::Background, QColor(0, 0, 0, 255));
         bgpal.setColor(QPalette::Background, Qt::transparent);
@@ -50,7 +50,7 @@ public:
         _trackInfo = trackInfo;
         int len = trackInfo->trackFrameInfos->size();
         TrackFrame *pre = nullptr;
-        int fw = App()._().trackModel->frameWidth;
+        int fw = _app.trackModel->frameWidth;
         for (int i = 0; i < len; i++) {
             TrackFrameInfo *trackFrameInfo = trackInfo->trackFrameInfos->at(i);
             TrackFrame *trackFrame = new TrackFrame(trackFrameArea);
@@ -61,8 +61,9 @@ public:
             trackFrame->setIdx(i);
             trackFrame->move(i * fw, 0);
         }
-        _setWidth(trackFrameArea, (len) * fw);
-        _setX(tailButton, trackFrameArea->x() + trackFrameArea->width());
+        UI::setWidth(trackFrameArea, (len) * fw);
+        UI::setWidth(this, (len + 1) * fw);
+        UI::setX(tailButton, trackFrameArea->x() + trackFrameArea->width());
     }
 
 protected:
@@ -125,13 +126,16 @@ private:
                 int newX = x() + ceil(dx / fw) * fw;
                 if (newX >= 0 && newX != x()) {
                     _trackInfo->setStartFrame((newX / fw) + 1);
-                    _setX(this, newX);
+                    UI::setX(this, newX);
                     //todo track width() too long
                     qDebug() << this << "setStartFrame" << _trackInfo->getStartFrame()\
  << "x()" << x() << "width()" << width();
-                    int endWidth = this->x() + this->width() + fw;
-                    if (_app.trackModel->trackWidth < endWidth) {
-                        _app.trackModel->trackWidth = endWidth;
+                    int endWidth = _trackInfo->getEndFrame() * fw + TIMELINE_HANDLE_BUTTON_WIDTH;
+                    UI::setWidth(this, endWidth);
+                    qDebug() << this << "track width:" << width();
+                    int endPosX = x() + endWidth;
+                    if (_app.trackModel->trackWidth < endPosX) {
+                        _app.trackModel->trackWidth = endPosX;
                         Evt_dis(TrackModelEvent::MOVE_TRACK, nullptr);
                     }
                     _app.trackModel->sequencePlayback->update();

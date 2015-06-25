@@ -25,7 +25,7 @@ public:
         int fw = App()._().trackModel->frameWidth;
         int px = (*frameIdx) * fw;
         if (px != x())
-            _setX(this, px);
+            UI::setX(this, px);
     }
 
 private:

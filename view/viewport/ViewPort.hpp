@@ -28,7 +28,7 @@ private:
 
 protected:
     virtual void resizeEvent(QResizeEvent *qResizeEvent) override {
-        _setY(_transport, height() - _transport->height());
+        UI::setY(_transport, height() - _transport->height());
     }
 
     void onRenderFrame(SequencePlaybackEvent *e) {

@@ -19,7 +19,7 @@ public:
         Evt_add(ActionEvent::POPUP_MENU, onPopup)
 
         QWidget *m = new QWidget(this);
-        _setY(m, 25);
+        UI::setY(m, 25);
         vbox = new QVBoxLayout(m);
         vbox->setSpacing(0);
         items = new vector<QLabel *>();

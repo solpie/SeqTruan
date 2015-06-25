@@ -17,8 +17,9 @@ public:
     QWidget *trackStack;
 
     TrackArea(QWidget *parent) : QWidget(parent) {
+        int trackWidth = _app.trackModel->trackWidth;
         timestampBar = new TimestampBar(this);
-        timestampBar->resize(1280, 25);
+        timestampBar->resize(trackWidth, 25);
 
 
         trackStack = new QWidget(this);
@@ -29,48 +30,42 @@ public:
         vbox = new QVBoxLayout(trackStack);
         vbox->setSpacing(0);
         vbox->setContentsMargins(0, 0, 0, 0);
-        _setY(trackStack, timestampBar->height());
-        _setWidth(trackStack, _app.trackModel->trackWidth);
+        UI::setY(trackStack, timestampBar->height());
+        UI::setWidth(trackStack, trackWidth);
 
         trackCursor = new FrameCursor(this);
-        trackCursor->move(40, 0);
+        UI::setX(trackCursor,40);
+
         Evt_add(SequencePlaybackEvent::RENDER_FRAME, onRenderFrame)
-        Evt_add(TrackModelEvent::MOVE_TRACK, onMoveTrack)
-
     }
 
-    void onMoveTrack(void *e) {
-        if (trackStack->width() < _app.trackModel->trackWidth) {
-            _setWidth(trackStack, _app.trackModel->trackWidth);
-            qDebug() << this << "trackWidth:" << trackStack->width()<<"x():"<<trackStack->x();
-        }
-
-    }
 
     void add(TrackInfo *trackInfo) {
         Track *track = new Track();
         track->load(trackInfo);
-        _setHeight(trackStack, trackStack->height() + track->height());
+        UI::setHeight(trackStack, trackStack->height() + track->height());
+        qDebug() << this << "track Width:" << track->width();
         vbox->addWidget(track);
-        qDebug() << trackStack->height();
+        qDebug() << this << "track Width:" << track->width() << "trackStack height:" << trackStack->height();
     }
 
 
     void onRenderFrame(SequencePlaybackEvent *e) {
         int frameIdx = e->frameIdx;
-        _setX(trackCursor, frameIdx * App()._().trackModel->frameWidth);
+        UI::setX(trackCursor, frameIdx * _app.trackModel->frameWidth);
     }
+
+    TimestampBar *timestampBar;
 
 protected:
     virtual void resizeEvent(QResizeEvent *qResizeEvent) override {
-        _setHeight(trackCursor, height());
-        _setWidth(timestampBar, width());
+        UI::setHeight(trackCursor, height());
+        UI::setWidth(timestampBar, width());
 //        _setWidth(trackStack, width());
         qDebug() << this << "timestampBar:" << timestampBar->width();
     }
 
 
-    TimestampBar *timestampBar;
     FrameCursor *trackCursor;
     QVBoxLayout *vbox;
 };

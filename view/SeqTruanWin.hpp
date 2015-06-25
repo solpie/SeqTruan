@@ -39,8 +39,8 @@ protected:
     virtual void resizeEvent(QResizeEvent *qResizeEvent) override {
         qDebug() << this << "resize window";
         vSplitter->resize(width(), height());
-        _setY(_timeline,height()-_timeline->height());
-        _setWidth(_timeline, width());
+        UI::setY(_timeline,height()-_timeline->height());
+        UI::setWidth(_timeline, width());
     }
     QSplitter *vSplitter;
     Popup *popup;

@@ -13,6 +13,6 @@
 #define TIMELINE_TRACK_DEF_HEIGHT 80
 #define TIMELINE_COL_BG 0x484848
 const int TIMELINE_DRAG_WIDTH = 5;
-
+#define TIMELINE_HANDLE_BUTTON_WIDTH  80;//头按钮加上为按钮的宽度
 ///////////////////////////qss path
 #define QSS_SCROLLBAR ":/qss_scrollbar"

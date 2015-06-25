@@ -21,6 +21,16 @@ public:
     vector<TrackFrameInfo *> *trackFrameInfos;
     int idx;
 
+    int getEndFrame() {
+        TrackFrameInfo *trackFrameInfo = trackFrameInfos->at(trackFrameInfos->size() - 1);
+        return trackFrameInfo->getEndFrame();
+//        __test =1;
+    }
+//    propGet(int,test);
+    
+//    void test(){
+//        __Test13 = 1;
+//    }
     int getCurTrackFrameIdx() { return _trackFrameIdx; };
 
     int getStartFrame() { return _startFrame; }

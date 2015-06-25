@@ -83,7 +83,7 @@ public:
                 continue;
             int trackFrameIdx = frameIdx - trackInfo->getStartFrame() + 1;
             for (TrackFrameInfo *trackFrameInfo:*trackInfo->trackFrameInfos) {
-                qDebug() << this << "getRenderFrame" << trackFrameInfo->getIdx();
+//                qDebug() << this << "getRenderFrame" << trackFrameInfo->getIdx();
                 if (trackFrameIdx >= trackFrameInfo->getStartFrame() &&
                     trackFrameIdx <= trackFrameInfo->getEndFrame()) {
                     //todo 实现链表查找
