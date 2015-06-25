@@ -62,6 +62,9 @@ public:
     bool isPressLeftButton = false;
     bool isPressRightButton = false;
     int changeWidth = 0;
+    int changeDir = 0;
+    //拖拽方向
+    TrackFrameInfo *trackFrameInfo;
 
     void setIdx(int trackFrameIdx) {
         idx = trackFrameIdx;
@@ -71,8 +74,8 @@ public:
 
     void setHoldFrameCount(int count, int dx = 1) {
         int frameWidth = _app.trackModel->frameWidth;
-        changeWidth = (count - _trackFrameInfo->getHoldFrame()) * frameWidth * dx;
-        _trackFrameInfo->setHoldFrame(count);
+        changeWidth = (count - trackFrameInfo->getHoldFrame()) * frameWidth * dx;
+        trackFrameInfo->setHoldFrame(count);
         UI::setWidth(this, count * frameWidth);
         UI::setWidth(thumb, width());
         UI::setX(rightButton, width() - rightButton->width() + 1);
@@ -95,12 +98,12 @@ public:
         UI::setWidth(this, endPosX - this->x());
         UI::setWidth(thumb, width());
         UI::setX(rightButton, width() - rightButton->width() + 1);
-        _trackFrameInfo->setHoldFrame(width() / _app.trackModel->frameWidth);
+        trackFrameInfo->setHoldFrame(width() / _app.trackModel->frameWidth);
     }
 
     void setTrackFrameInfo(TrackFrameInfo *tfi) {
-        _trackFrameInfo = tfi;
-        connect(_trackFrameInfo->imageLoader, tfi->imageLoader->imageLoaded, [this](QImage *q) { this->onLoaded(q); });
+        trackFrameInfo = tfi;
+        connect(trackFrameInfo->imageLoader, tfi->imageLoader->imageLoaded, [this](QImage *q) { this->onLoaded(q); });
         tfi->imageLoader->start();
     }
 
@@ -111,12 +114,6 @@ public:
     }
 
 
-    void updateTrackFrameInfo() {
-        int frameWidth = _app.trackModel->frameWidth;
-        _trackFrameInfo->setStartFrame(this->x() / frameWidth + 1);
-        _trackFrameInfo->setHoldFrame((this->x() + this->width()) / frameWidth);
-    }
-
 signals:
 
     void resizeTail();
@@ -124,28 +121,61 @@ signals:
 protected:
     ImageLoader *loader = nullptr;
     OverWidget<QWidget> *thumb;
-    TrackFrameInfo *_trackFrameInfo;
 
     void onRelLeftButton(TrackFrame *relTrackFrame) {
-        if (relTrackFrame->pre) {
-            if (relTrackFrame->pre->x() <= relTrackFrame->x()) {
-                qDebug() << this << "onRelLeftButton" << relTrackFrame->pre->idx;
-                //fixme idx bug
-                TrackFrame *deleteMe = relTrackFrame->pre->remove();//todo 释放资源 保存历史操作
-                TrackFrameInfo *deleteMeInfo = _trackFrameInfo->pre->remove();//todo 释放资源 保存历史操作
-
-                renameBackward(this);
-//                relTrackFrame->updateTrackFrameInfo();
-                qDebug() << this << "onRelLeftButton remove():" << relTrackFrame->pre->idx;
-//                onRelLeftButton(relTrackFrame);
-            }
+        qDebug() << this << "onRelLeftButton() idx:" << relTrackFrame->pre->idx << "changeDir:" <<
+        relTrackFrame->changeDir;
+        if (relTrackFrame->changeDir < 0) {
+            //fixme 删除两个
+            removePre(-relTrackFrame->changeDir, relTrackFrame);
+//            if (relTrackFrame->pre) {
+//                if (relTrackFrame->pre->x() >= relTrackFrame->x()) {
+//                    qDebug() << this << "onRelLeftButton" << relTrackFrame->pre->idx;
+//                    //fixme idx bug
+//                    TrackFrame *deleteMe = relTrackFrame->pre->remove();//todo 释放资源 保存历史操作
+//                    TrackFrameInfo *deleteMeInfo = trackFrameInfo->pre->remove();//todo 释放资源 保存历史操作
+//                    renameBackward(relTrackFrame);
+////                relTrackFrame->updateTrackFrameInfo();
+//                    qDebug() << this << "onRelLeftButton remove():" << relTrackFrame->pre->idx;
+//                    if (relTrackFrame->pre) {
+//                        qDebug() << this << "findPre:" << relTrackFrame->pre->idx;
+//                        relTrackFrame->pre->changeDir = relTrackFrame->changeDir;
+//                        onRelLeftButton(relTrackFrame);
+//                    }
+////                onRelLeftButton(relTrackFrame);
+//                }
+//            }
         }
+        relTrackFrame->changeDir = 0;
     }
 
-    void renameBackward(TrackFrame *cur) {
-        cur->setIdx(cur->idx - 1);
+    void removePre(int count, TrackFrame *tf,int rCount=0) {
+        if (count > 0) {
+            if (tf->pre) {
+                qDebug() << this << "removePre():" << tf->pre->idx;
+                TrackFrame *deleteMe = tf->pre->remove();//todo 释放资源 保存历史操作
+                TrackFrameInfo *deleteMeInfo = tf->pre->trackFrameInfo->remove();//todo 释放资源 保存历史操作
+                qDebug() << this << "removePre(): done idx:" << tf->pre->idx;
+                count--;
+                rCount++;
+                removePre(count, tf,rCount);
+            }
+        }
+        else {
+            renameBackward(tf,rCount);
+        }
+//        else {
+//            count--;
+//            if (tf->pre)
+//                removePre(count, tf->pre);
+//        }
+
+    }
+
+    void renameBackward(TrackFrame *cur,int count) {
+        cur->setIdx(cur->idx - count);
         if (cur->next) {
-            renameBackward(cur->next);
+            renameBackward(cur->next,count);
         }
     }
 
@@ -176,21 +206,25 @@ protected:
             int posX = mapFromGlobal(QCursor::pos()).x();
             if (isPressRightButton) {
                 if (posX > width() + drag) {
-                    setHoldFrameCount(_trackFrameInfo->getHoldFrame() + 1, 1);
+                    this->changeDir += 1;
+                    setHoldFrameCount(trackFrameInfo->getHoldFrame() + 1, 1);
                     handleR(this);
                 }
-                else if (posX < width() - drag and _trackFrameInfo->getHoldFrame() > 1) {
-                    setHoldFrameCount(_trackFrameInfo->getHoldFrame() - 1, 1);
+                else if (posX < width() - drag and trackFrameInfo->getHoldFrame() > 1) {
+                    this->changeDir -= 1;
+                    setHoldFrameCount(trackFrameInfo->getHoldFrame() - 1, 1);
                     handleR(this);
                 }
             }
             else if (isPressLeftButton) {
-                if (posX < -drag) {
-                    setHoldFrameCount(_trackFrameInfo->getHoldFrame() + 1, -1);
+                if (posX < -drag) {//向左拖拽
+                    this->changeDir -= 1;
+                    setHoldFrameCount(trackFrameInfo->getHoldFrame() + 1, -1);
                     handleL(this);
                 }
-                else if (posX > drag && _trackFrameInfo->getHoldFrame() > 1) {
-                    setHoldFrameCount(_trackFrameInfo->getHoldFrame() - 1, -1);
+                else if (posX > drag && trackFrameInfo->getHoldFrame() > 1) {
+                    this->changeDir += 1;
+                    setHoldFrameCount(trackFrameInfo->getHoldFrame() - 1, -1);
                     handleL(this);
                 }
             }
@@ -227,7 +261,7 @@ protected:
                           *this->thumbPixmap);
         }
         else {
-//            setPixmap(_trackFrameInfo->getPayLoad());
+//            setPixmap(trackFrameInfo->getPayLoad());
 //            update();
         }
     }

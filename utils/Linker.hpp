@@ -35,7 +35,8 @@ public:
                 this->pre->next = nullptr;
             }
         }
-        this->next = this->pre = nullptr;
+        this->next = nullptr;
+        this->pre = nullptr;
         return this;
     }
 
