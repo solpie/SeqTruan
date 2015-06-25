@@ -11,7 +11,7 @@
 #endif //SEQTRUAN_TRACKINFO_HPP
 using namespace std;
 
-class TrackInfo {
+class TrackInfo  {
 public:
     TrackInfo(QString name) {
         this->name = name;
@@ -27,13 +27,13 @@ public:
 
 
     int getFrameCount() {
-        return _frameCount;
+        int count = 0;
+        for (TrackFrameInfo *trackFrameInfo:*trackFrameInfos) {
+            count += trackFrameInfo->getHoldFrame();
+        }
+        return count;
     }
 
-    void setFrameCount(int v) {
-        _frameCount = v;
-        _endFrame = _startFrame + v;
-    }
 
     int getCurTrackFrameIdx() { return _trackFrameIdx; };
 
@@ -41,7 +41,7 @@ public:
 
     void setStartFrame(int v) {
         _startFrame = v;
-        _endFrame = v + _frameCount;
+        _endFrame = v + getFrameCount();
     }
 
     double getOpacity() { return _opacity; }
@@ -49,8 +49,12 @@ public:
     void setOpacity(double v) { _opacity = v; }
 
     bool visible = true;
+
+    void append(TrackFrameInfo *a) {
+        trackFrameInfos->push_back(a);
+    }
+
 protected:
-    int _frameCount = 1;
     int _endFrame = 1;
     int _startFrame = 1;
 

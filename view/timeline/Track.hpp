@@ -60,11 +60,9 @@ public:
 //            trackFrame->setPixmap(trackFrameInfo->payLoad);
             trackFrame->setIdx(i);
             trackFrame->move(i * fw, 0);
-            connect(trackFrame, trackFrame->resizeTail, [=]{this->onResizeTrackFrameTail();});
+            connect(trackFrame, trackFrame->resizeTail, [=]{ this->resizeTrackByFrameCount();});
         }
-        UI::setWidth(trackFrameArea, (len) * fw);
-        UI::setWidth(this, (len + 1) * fw);
-        UI::setX(tailButton, trackFrameArea->x() + trackFrameArea->width());
+        resizeTrackByFrameCount();
     }
 
 protected:
@@ -74,14 +72,12 @@ protected:
 private:
     QWidget *trackFrameArea;
 
-    void onResizeTrackFrameTail() {
-//        int newX = trackFrameArea->x() + trackFrameArea->width();
-//        UI::setX(tailButton, trackFrameArea->x() + trackFrameArea->width());
+    void resizeTrackByFrameCount() {
         int fw = _app.trackModel->frameWidth;
-        int endFrame = _trackInfo->getEndFrame();
-        UI::setWidth(trackFrameArea, (endFrame) * fw);
-        UI::setWidth(this, (endFrame + 1) * fw);
+        int len = _trackInfo->getFrameCount();
+        UI::setWidth(trackFrameArea, (len) * fw);
         UI::setX(tailButton, trackFrameArea->x() + trackFrameArea->width());
+        UI::setWidth(this,tailButton->x()+tailButton->width());
     }
 
     void paintHead(void *e) {
@@ -142,7 +138,7 @@ private:
                     //todo track width() too long
                     qDebug() << this << "setStartFrame" << _trackInfo->getStartFrame()\
  << "x()" << x() << "width()" << width();
-                    int endWidth = _trackInfo->getEndFrame() * fw + TIMELINE_HANDLE_BUTTON_WIDTH;
+                    int endWidth = _trackInfo->getFrameCount() * fw + TIMELINE_HANDLE_BUTTON_WIDTH;
                     UI::setWidth(this, endWidth);
                     qDebug() << this << "track width:" << width();
                     int endPosX = x() + endWidth;

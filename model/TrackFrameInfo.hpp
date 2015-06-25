@@ -56,6 +56,7 @@ public:
     }
 
     void setHoldFrame(int v) {
+        int dCount = v - _holdFrame;
         _holdFrame = v;
         _endFrame = _startFrame + _holdFrame - 1;
     }
@@ -68,7 +69,6 @@ public:
     void setTrackInfoIdx(int v) {
         _trackInfoIdx = v;
     }
-
 
 
     QImage *getPayLoad() {
@@ -95,7 +95,7 @@ public:
 protected:
     int _trackInfoIdx;
 
-    int _holdFrame = 1;
+    int _holdFrame = 0;
     int _endFrame = 1;
     int _startFrame = 1;
 

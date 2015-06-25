@@ -60,10 +60,11 @@ public:
                         trackFrameInfo->setIdx(trackInfo->trackFrameInfos->size());
                         trackFrameInfo->setStartFrame(trackFrameInfo->getIdx() + 1);
                         trackFrameInfo->setHoldFrame(1);
-                        trackInfo->trackFrameInfos->push_back(trackFrameInfo);
+                        trackInfo->append(trackFrameInfo);
                     }
                 }
         }
+        qDebug()<<this<<"trackInfo frame count:"<<trackInfo->getFrameCount();
         if (sizeof(trackInfo->trackFrameInfos) > sequencePlayback->endFrameIdx) {
             sequencePlayback->endFrameIdx = sizeof(trackInfo->trackFrameInfos);
         }
