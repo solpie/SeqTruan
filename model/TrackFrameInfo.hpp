@@ -70,7 +70,6 @@ public:
     }
 
 
-    QImage *payLoad;
 
     QImage *getPayLoad() {
         if (imageLoader->payLoad)

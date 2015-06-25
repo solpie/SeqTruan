@@ -14,6 +14,8 @@ class TrackModelEvent {
 public:
     static constexpr const char *NEW_TRACK = "NEW_TRACK";
     static constexpr const char *LOAD_COMPLETE = "LOAD_COMPLETE";
+
     static constexpr const char *MOVE_TRACK = "MOVE_TRACK";
+    static constexpr const char *RESIZ_TRACK_FRAME = "RESIZ_TRACK_FRAME";
 
 };

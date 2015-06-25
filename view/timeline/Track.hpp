@@ -12,26 +12,27 @@
 #include "TrackFrame.hpp"
 
 class Track : public QWidget {
+Q_OBJECT
 public:
     Track(TrackInfo *trackInfo = nullptr) {
 //        _trackInfo = trackInfo;
         resize(100, TIMELINE_TRACK_DEF_HEIGHT);
 //    this->setStyleSheet("background:#343434");
         trackFrameArea = new QWidget(this);
-        UI::setX(trackFrameArea, _app.trackModel->frameWidth);
         trackFrameArea->resize(80, 75);
 
         headButton = new OverWidget<QWidget>(this);
         headButton->resize(10, 40);
-        UI::setX(headButton, 31);
+        UI::setX(headButton, 30);
         headButton->setStyleSheet("border:none");
         over(headButton, paintEvent_, paintHead);
+        UI::setX(trackFrameArea, headButton->x()+headButton->width());
 
         tailButton = new OverWidget<QWidget>(this);
         tailButton->resize(10, 40);
-        tailButton->move(80, 0);
+        UI::setX(tailButton, 80);
         over(tailButton, paintEvent_, paintTail);
-//
+
 //        setObjectName("track");
 //        setStyleSheet("QWidget#track{border-width: 1px;border-style: solid;border-bottom-color: #343434;}");
         QPalette bgpal = palette();
@@ -39,7 +40,6 @@ public:
         bgpal.setColor(QPalette::Background, Qt::transparent);
 //        bgpal.setColor(QPalette::Foreground, QColor(255, 255, 255, 255));
         setPalette(bgpal);
-        setWindowOpacity(.5);
     }
 
     Track(QWidget *parent) : QWidget(parent) {
@@ -60,6 +60,7 @@ public:
 //            trackFrame->setPixmap(trackFrameInfo->payLoad);
             trackFrame->setIdx(i);
             trackFrame->move(i * fw, 0);
+            connect(trackFrame, trackFrame->resizeTail, [=]{this->onResizeTrackFrameTail();});
         }
         UI::setWidth(trackFrameArea, (len) * fw);
         UI::setWidth(this, (len + 1) * fw);
@@ -67,11 +68,22 @@ public:
     }
 
 protected:
-    QWidget *trackFrameArea;
     OverWidget<QWidget> *headButton;
     TrackInfo *_trackInfo;
     OverWidget<QWidget> *tailButton;
 private:
+    QWidget *trackFrameArea;
+
+    void onResizeTrackFrameTail() {
+//        int newX = trackFrameArea->x() + trackFrameArea->width();
+//        UI::setX(tailButton, trackFrameArea->x() + trackFrameArea->width());
+        int fw = _app.trackModel->frameWidth;
+        int endFrame = _trackInfo->getEndFrame();
+        UI::setWidth(trackFrameArea, (endFrame) * fw);
+        UI::setWidth(this, (endFrame + 1) * fw);
+        UI::setX(tailButton, trackFrameArea->x() + trackFrameArea->width());
+    }
+
     void paintHead(void *e) {
         QPainterPath path;
         int y = 17;

@@ -22,20 +22,27 @@ public:
     int idx;
 
     int getEndFrame() {
-        TrackFrameInfo *trackFrameInfo = trackFrameInfos->at(trackFrameInfos->size() - 1);
-        return trackFrameInfo->getEndFrame();
-//        __test =1;
+        return _endFrame;
     }
-//    propGet(int,test);
-    
-//    void test(){
-//        __Test13 = 1;
-//    }
+
+
+    int getFrameCount() {
+        return _frameCount;
+    }
+
+    void setFrameCount(int v) {
+        _frameCount = v;
+        _endFrame = _startFrame + v;
+    }
+
     int getCurTrackFrameIdx() { return _trackFrameIdx; };
 
     int getStartFrame() { return _startFrame; }
 
-    void setStartFrame(int v) { _startFrame = v; }
+    void setStartFrame(int v) {
+        _startFrame = v;
+        _endFrame = v + _frameCount;
+    }
 
     double getOpacity() { return _opacity; }
 
@@ -43,6 +50,8 @@ public:
 
     bool visible = true;
 protected:
+    int _frameCount = 1;
+    int _endFrame = 1;
     int _startFrame = 1;
 
     double _opacity = 1.0;

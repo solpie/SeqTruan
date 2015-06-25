@@ -54,15 +54,19 @@ public:
         Evt_add(TrackModelEvent::MOVE_TRACK, onMoveTrack)
 
     }
+
     void onMoveTrack(void *e) {
-        if (trackArea->trackStack->width() < _app.trackModel->trackWidth) {
-            int trackWidth = _app.trackModel->trackWidth;
+        int trackWidth = _app.trackModel->trackWidth;
+        if (trackArea->trackStack->width() < trackWidth) {
             UI::setWidth(trackArea->trackStack, trackWidth);
             hScrollBar->setRange(0, trackWidth - hScrollBar->width());
-            UI::setWidth(trackArea->timestampBar,trackWidth);
-            qDebug() << this << "resize trackStack "<<"trackWidth:" << trackArea->trackStack->width()<<"x():"<<trackArea->trackStack->x();
+            qDebug() << this << "resize trackStack " << "trackWidth:" << trackArea->trackStack->width();
+        }
+        if (trackWidth > trackArea->timestampBar->width()) {
+            UI::setWidth(trackArea->timestampBar, trackWidth);
         }
     }
+
 private:
     void onLoadTrackImage(int idx = 0) {
         trackArea->update();

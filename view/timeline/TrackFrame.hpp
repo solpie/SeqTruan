@@ -10,7 +10,9 @@
 #include "utils/Linker.hpp"
 #include "model/ImageLoader.hpp"
 
-class TrackFrame : public OneLinker<TrackFrame>, public QWidget {
+class TrackFrame :public QWidget, public OneLinker<TrackFrame> {
+Q_OBJECT
+
 public:
     TrackFrame(QWidget *parent) : QWidget(parent) {
         resize(40, 60);
@@ -115,6 +117,10 @@ public:
         _trackFrameInfo->setHoldFrame((this->x() + this->width()) / frameWidth);
     }
 
+signals:
+
+    void resizeTail();
+
 protected:
     ImageLoader *loader = nullptr;
     OverWidget<QWidget> *thumb;
@@ -150,7 +156,8 @@ protected:
             handleR(cur->next);
         }
         else {
-            UI::setWidth(cur->parentWidget(), cur->x() + cur->width() + _app.trackModel->frameWidth);
+            UI::setWidth(cur->parentWidget(), cur->x() + cur->width());
+            emit resizeTail();
         }
     }
 
@@ -164,24 +171,25 @@ protected:
     }
 
     void pressAndMoveEvent() {
+        int drag = 30;
         if (isPressLeftButton || isPressRightButton) {
             int posX = mapFromGlobal(QCursor::pos()).x();
             if (isPressRightButton) {
-                if (posX > width() + TIMELINE_DRAG_WIDTH) {
+                if (posX > width() + drag) {
                     setHoldFrameCount(_trackFrameInfo->getHoldFrame() + 1, 1);
                     handleR(this);
                 }
-                else if (posX < width() - TIMELINE_DRAG_WIDTH and _trackFrameInfo->getHoldFrame() > 1) {
+                else if (posX < width() - drag and _trackFrameInfo->getHoldFrame() > 1) {
                     setHoldFrameCount(_trackFrameInfo->getHoldFrame() - 1, 1);
                     handleR(this);
                 }
             }
             else if (isPressLeftButton) {
-                if (posX < -TIMELINE_DRAG_WIDTH) {
+                if (posX < -drag) {
                     setHoldFrameCount(_trackFrameInfo->getHoldFrame() + 1, -1);
                     handleL(this);
                 }
-                else if (posX > TIMELINE_DRAG_WIDTH && _trackFrameInfo->getHoldFrame() > 1) {
+                else if (posX > drag && _trackFrameInfo->getHoldFrame() > 1) {
                     setHoldFrameCount(_trackFrameInfo->getHoldFrame() - 1, -1);
                     handleL(this);
                 }
