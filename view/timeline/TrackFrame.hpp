@@ -136,7 +136,9 @@ public:
         setPixmap(q);
         update();
     }
-
+    void updateTrackWidth(){
+        emit resizeTail();
+    }
     OverWidget<QWidget> *thumb;
     OverWidget<QPushButton> *leftButton;
     OverWidget<QPushButton> *rightButton;
@@ -148,48 +150,19 @@ protected:
     ImageLoader *loader = nullptr;
 
     void onRelLeftButton(TrackFrame *relTrackFrame) {
-//        qDebug() << this << "onRelLeftButton() idx:" << relTrackFrame->pre->idx() << "changeDir:" <<
-//        relTrackFrame->changeDir;
-//        if (relTrackFrame->changeDir < 0) {
-//            //fixme 删除两个
-//            relink(relTrackFrame);
-////                    //fixme idx bug
 ////                    TrackFrame *deleteMe = relTrackFrame->pre->remove();//todo 释放资源 保存历史操作
 ////                    TrackFrameInfo *deleteMeInfo = trackFrameInfo->pre->remove();//todo 释放资源 保存历史操作
 //        }
-//        relTrackFrame->changeDir = 0;
         TrackFrame::reLink2(relTrackFrame);
     }
 
 
-    void reIdxBackward(TrackFrame *cur, int idx) {
-        cur->setIdx(idx);
-        if (cur->next) {
-            reIdxBackward(cur->next, ++idx);
-        }
-    }
-
-    //右拉rightbutton
-    void handleR(TrackFrame *cur) {
-        if (cur->next) {
-            UI::setX(cur->next, cur->x() + cur->width());
-            handleR(cur->next);
-        }
-        else {
-            UI::setWidth(cur->parentWidget(), cur->x() + cur->width());
-            emit resizeTail();
-        }
-    }
-
-    void handleL(TrackFrame *cur) {
-        UI::setX(cur, cur->x() + cur->changeWidth);
-        if (cur->pre) {
-            resizeFrame(cur->pre, cur->x() - cur->pre->x());
-        }
-        qDebug() << "handleL" << cur->pre->idx() << cur->pre->frameIdx->text();
-        cur->changeWidth = 0;
-    }
-
+//    void reIdxBackward(TrackFrame *cur, int idx) {
+//        cur->setIdx(idx);
+//        if (cur->next) {
+//            reIdxBackward(cur->next, ++idx);
+//        }
+//    }
 
     void pressAndMoveEvent() {
         int drag = 30;
@@ -198,26 +171,26 @@ protected:
             if (isPressRightButton) {
                 if (posX > width() + drag) {
                     this->changeDir += 1;
-                    setHoldFrameCount(trackFrameInfo->getHoldFrame() + 1, 1);
-                    handleR(this);
+//                    setHoldFrameCount(trackFrameInfo->getHoldFrame() + 1, 1);
+                    TrackFrame::resizeFrame2(this, 0, 1, false);
+//                    handleR(this);
+
                 }
                 else if (posX < width() - drag and trackFrameInfo->getHoldFrame() > 1) {
                     this->changeDir -= 1;
-                    setHoldFrameCount(trackFrameInfo->getHoldFrame() - 1, 1);
-                    handleR(this);
+//                    setHoldFrameCount(trackFrameInfo->getHoldFrame() - 1, 1);
+//                    handleR(this);
+                    TrackFrame::resizeFrame2(this, 0, -1, false);
                 }
             }
             else if (isPressLeftButton) {
                 if (posX < -drag) {//向左拖拽
                     this->changeDir -= 1;
                     TrackFrame::resizeFrame2(this, -1, 1, true);
-//                    setHoldFrameCount(trackFrameInfo->getHoldFrame() + 1, -1);
-//                    handleL(this);
                 }
                 else if (posX > drag && trackFrameInfo->getHoldFrame() > 1) {
                     this->changeDir += 1;
-                    setHoldFrameCount(trackFrameInfo->getHoldFrame() - 1, -1);
-                    handleL(this);
+                    TrackFrame::resizeFrame2(this, 1, -1, true);
                 }
             }
         }
@@ -274,6 +247,9 @@ private:
             }
             cur->changeWidth = 0;
         }
+        else {
+            rippleBackward(cur);
+        }
         cur->updateFrameCountLabel();
     }
 
@@ -317,6 +293,28 @@ private:
         if (tf->next)
             updateBackward(tf->next, ++idx);
     }
+
+    static void rippleBackward(TrackFrame *tf){
+        if (tf->next) {
+            UI::setX(tf->next, tf->x() + tf->width());
+            tf->next->trackFrameInfo->setStartFrame(tf->next->trackFrameInfo->getStartFrame() + 1);
+            rippleBackward(tf->next);
+        }
+        else {
+            UI::setWidth(tf->parentWidget(), tf->x() + tf->width());
+            tf->updateTrackWidth();
+        }
+    }
+    //右拉rightbutton
+//    static void handleR(TrackFrame *cur) {
+//        if (cur->next) {
+//            UI::setX(cur->next, cur->x() + cur->width());
+//            handleR(cur->next);
+//        }
+//        else {
+//            UI::setWidth(cur->parentWidget(), cur->x() + cur->width());
+//        }
+//    }
 };
 
 
