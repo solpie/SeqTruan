@@ -122,11 +122,8 @@ signals:
     void resizeTail();
 
 protected:
-    ImageLoader *loader = nullptr;
-
     void onRelLeftButton(TrackFrame *relTrackFrame) {
-////
-        TrackFrame::reLink2(relTrackFrame);
+        TrackFrame::relink(relTrackFrame);
     }
 
     void pressAndMoveEvent() {
@@ -135,20 +132,20 @@ protected:
             int posX = mapFromGlobal(QCursor::pos()).x();
             if (isPressRightButton) {
                 if (posX > width() + drag) {
-                    TrackFrame::resizeFrame2(this, 0, 1, false);
+                    TrackFrame::resizeFrame(this, 0, 1, false);
 //                    handleR(this);
 
                 }
                 else if (posX < width() - drag and trackFrameInfo->getHoldFrame() > 1) {
-                    TrackFrame::resizeFrame2(this, 0, -1, false);
+                    TrackFrame::resizeFrame(this, 0, -1, false);
                 }
             }
             else if (isPressLeftButton) {
                 if (posX < -drag) {//向左拖拽
-                    TrackFrame::resizeFrame2(this, -1, 1, true);
+                    TrackFrame::resizeFrame(this, -1, 1, true);
                 }
                 else if (posX > drag && trackFrameInfo->getHoldFrame() > 1) {
-                    TrackFrame::resizeFrame2(this, 1, -1, true);
+                    TrackFrame::resizeFrame(this, 1, -1, true);
                 }
             }
         }
@@ -189,9 +186,7 @@ protected:
     QLabel *frameIdx;
     ////////////////////////////////////      VM           //////////////////////////////
 private:
-    static void resizeFrame2(TrackFrame *cur, int dtStartFrame, int dtCount, bool isLeftButton) {
-
-
+    static void resizeFrame(TrackFrame *cur, int dtStartFrame, int dtCount, bool isLeftButton) {
         int frameWidth = _app.trackModel->frameWidth;
         int startFrame = cur->trackFrameInfo->getStartFrame();
         cur->trackFrameInfo->setStartFrame(startFrame + dtStartFrame);
@@ -201,11 +196,11 @@ private:
         cur->updateFrameWidth();
         if (isLeftButton) {
 //            //todo 释放资源 保存历史操作
-//
             UI::setX(cur, cur->x() + dtStartFrame * frameWidth);
-
             if (cur->pre) {
+                cur->pre->trackFrameInfo->setHoldFrame(cur->pre->trackFrameInfo->getHoldFrame()- dtCount);
                 resizeFrameByWidth(cur->pre, cur->x() - cur->pre->x());
+                cur->pre->updateFrameCountLabel();
             }
         }
         else {
@@ -222,17 +217,13 @@ private:
         tf->updateFrameCountLabel();
     }
 
-    static void reLink2(TrackFrame *tf) {
-        relink(tf);
-    }
-
 
     static void relink(TrackFrame *cur) {
         TrackFrame *preFrame = cur->pre;
         if (preFrame) {
             vector<TrackFrame *> toRemoves;
             while (preFrame->x() >= cur->x()) {
-                toRemoves.push_back(preFrame);
+                toRemoves.push_back(preFrame);//todo delete
                 preFrame->hide();
                 preFrame = preFrame->pre;
             }

@@ -88,15 +88,18 @@ public:
             TrackFrameInfo *trackFrameInfo = trackInfo->getHead();
             int trackFrameIdx = frameIdx - trackInfo->getStartFrame() + 1;
             while (trackFrameInfo) {
-                if (trackFrameIdx >= trackFrameInfo->getStartFrame() &&
-                    trackFrameIdx <= trackFrameInfo->getEndFrame()) {
-                    trackFrameInfo->opacity = trackInfo->getOpacity();
-                    images->push_back(trackFrameInfo);
-                    qDebug() << this << "idx:" << trackFrameInfo->getIdx() << "start:" <<
-                    trackFrameInfo->getStartFrame() <<
-                    "end:" << trackFrameInfo->getEndFrame();
+                qDebug() << this << "idx:" << trackFrameInfo->getIdx()
+                << "start:" << trackFrameInfo->getStartFrame()
+                << "end:" << trackFrameInfo->getEndFrame();
+                //todo ²éÕÒÓÅ»¯ trackEndFrame ÅÐ¶Ï
+                if (trackFrameIdx >= trackFrameInfo->getStartFrame()) {
+                    if (trackFrameIdx <= trackFrameInfo->getEndFrame()) {
+                        trackFrameInfo->opacity = trackInfo->getOpacity();
+                        images->push_back(trackFrameInfo);
 //                    trackFrameInfo->next
-                    break;
+                        break;
+                    }
+
                 }
                 trackFrameInfo = trackFrameInfo->next;
             }
