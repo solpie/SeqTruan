@@ -12,10 +12,15 @@ class TimestampBar : public QWidget {
 public:
     TimestampBar(QWidget *parent) : QWidget(parent) {
         setStyleSheet("background:#3e3e3e");
+
+
     }
 
 
 protected:
+
+
+
     virtual void paintEvent(QPaintEvent *qPaintEvent) override {
         QPainter p(this);
         QPen pen(QColor(0x343434));
@@ -39,6 +44,7 @@ protected:
 
     void updateCursor() {
         int posX = mapFromGlobal(QCursor::pos()).x();
+        qDebug() << this << "posX in TimestampBar:" << posX;
         int fw = _app.trackModel->frameWidth;
         int frameIdx = (posX / fw);
         Evt_dis(ActionEvent::UPDATE_CURSOR, &frameIdx);

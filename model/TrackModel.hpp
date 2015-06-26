@@ -88,9 +88,9 @@ public:
             TrackFrameInfo *trackFrameInfo = trackInfo->getHead();
             int trackFrameIdx = frameIdx - trackInfo->getStartFrame() + 1;
             while (trackFrameInfo) {
-                qDebug() << this << "idx:" << trackFrameInfo->getIdx()
-                << "start:" << trackFrameInfo->getStartFrame()
-                << "end:" << trackFrameInfo->getEndFrame();
+//                qDebug() << this << "idx:" << trackFrameInfo->getIdx()
+//                << "start:" << trackFrameInfo->getStartFrame()
+//                << "end:" << trackFrameInfo->getEndFrame();
                 //todo ²éÕÒÓÅ»¯ trackEndFrame ÅÐ¶Ï
                 if (trackFrameIdx >= trackFrameInfo->getStartFrame()) {
                     if (trackFrameIdx <= trackFrameInfo->getEndFrame()) {

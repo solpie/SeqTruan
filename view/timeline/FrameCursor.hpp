@@ -19,19 +19,35 @@ public:
         timeLabel->resize(60, 20);
         _setMouseTransparent(this);
         Evt_add(ActionEvent::UPDATE_CURSOR, onUpdateCursor);
+        Evt_add(ActionEvent::SCROLL_TIMELINE_HBAR, onScrollHBar);
+
     }
 
     void onUpdateCursor(int *frameIdx) {
-        int fw = App()._().trackModel->frameWidth;
-        int px = (*frameIdx) * fw;
+        setPosXbyIdx(*frameIdx);
+    }
+
+    void setPosXbyIdx(int idx) {
+        int fw = _app.trackModel->frameWidth;
+        int px = idx * fw-_hBarValue;
         if (px != x())
             UI::setX(this, px);
+//        qDebug() << this << "setPosXbyIdx" << idx
+//        << "posx" << x()
+//        << "hBarValue" << _hBarValue;
     }
 
 private:
     QLabel *timeLabel;
     int i;
 protected:
+
+    int _hBarValue = 0;
+
+    void onScrollHBar(int *i) {
+        _hBarValue = *i;
+    }
+
     virtual void paintEvent(QPaintEvent *qPaintEvent) override {
         QPainter p(this);
         QPen pen;
@@ -41,7 +57,6 @@ protected:
         p.drawLine(0, 0, 0, this->height());
         int frameWidth = _app.trackModel->frameWidth;
         p.drawLine(frameWidth, 0, frameWidth, this->height());
-//    QWidget::paintEvent( < unnamed >);
     }
 
     virtual void resizeEvent(QResizeEvent *e) override {

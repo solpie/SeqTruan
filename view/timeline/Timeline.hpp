@@ -95,6 +95,7 @@ private:
         int dx = lastHScrollValue - hScrollBar->value();
         lastHScrollValue = hScrollBar->value();
         trackArea->scroll(dx, 0);
+        Evt_dis(ActionEvent::SCROLL_TIMELINE_HBAR, &lastHScrollValue);
     }
 
 

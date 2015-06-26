@@ -11,6 +11,7 @@
 #include "view/timeline/FrameCursor.hpp"
 #include "TimestampBar.hpp"
 #include "Track.hpp"
+#include "events/ActionEvent.hpp"
 
 class TrackArea : public QWidget {
 public:
@@ -34,9 +35,9 @@ public:
         UI::setWidth(trackStack, trackWidth);
 
         trackCursor = new FrameCursor(this);
-        UI::setX(trackCursor,40);
+        trackCursor->setPosXbyIdx(1);
 
-        Evt_add(SequencePlaybackEvent::RENDER_FRAME, onRenderFrame)
+        Evt_add(SequencePlaybackEvent::RENDER_FRAME, onRenderFrame);
     }
 
 
@@ -52,12 +53,14 @@ public:
 
     void onRenderFrame(SequencePlaybackEvent *e) {
         int frameIdx = e->frameIdx;
-        UI::setX(trackCursor, frameIdx * _app.trackModel->frameWidth);
+//        UI::setX(trackCursor, frameIdx * _app.trackModel->frameWidth);
+        trackCursor->setPosXbyIdx(frameIdx);
     }
 
     TimestampBar *timestampBar;
 
 protected:
+
     virtual void resizeEvent(QResizeEvent *qResizeEvent) override {
         UI::setHeight(trackCursor, height());
         UI::setWidth(timestampBar, width());

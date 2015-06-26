@@ -26,7 +26,7 @@ public:
         UI::setX(headButton, 30);
         headButton->setStyleSheet("border:none");
         over(headButton, paintEvent_, paintHead);
-        UI::setX(trackFrameArea, headButton->x()+headButton->width());
+        UI::setX(trackFrameArea, headButton->x() + headButton->width());
 
         tailButton = new OverWidget<QWidget>(this);
         tailButton->resize(10, 40);
@@ -60,7 +60,7 @@ public:
 //            trackFrame->setPixmap(trackFrameInfo->payLoad);
             trackFrame->setIdx(i);
             trackFrame->move(i * fw, 0);
-            connect(trackFrame, trackFrame->resizeTail, [=]{ this->resizeTrackByFrameCount();});
+            connect(trackFrame, trackFrame->resizeTail, [=] { this->resizeTrackByFrameCount(); });
         }
         resizeTrackByFrameCount();
     }
@@ -77,7 +77,7 @@ private:
         int len = _trackInfo->getFrameCount();
         UI::setWidth(trackFrameArea, (len) * fw);
         UI::setX(tailButton, trackFrameArea->x() + trackFrameArea->width());
-        UI::setWidth(this,tailButton->x()+tailButton->width());
+        UI::setWidth(this, tailButton->x() + tailButton->width());
     }
 
     void paintHead(void *e) {
@@ -121,32 +121,37 @@ private:
 
     virtual void mousePressEvent(QMouseEvent *mouseEvent) override {
         isPress = true;
-        _lastX = _localPos.x();
+        _lastX = mouseEvent->pos().x();
     };
 
     virtual void mouseMoveEvent(QMouseEvent *mouseEvent) override {
         if (isPress) {
             int dx;
-            dx = _localPos.x() - _lastX;
-            if (abs(dx) > TIMELINE_DRAG_WIDTH) {
+            dx = mouseEvent->pos().x() - _lastX;
+            int drag = 20;
+            if (abs(dx) > drag) {
                 int fw = _app.trackModel->frameWidth;
 //            dx = _localPos.x() - _lastX + (fw - TIMELINE_DRAG_WIDTH);
                 int newX = x() + ceil(dx / fw) * fw;
+//                qDebug() << this << "setStartFrame" << _trackInfo->getStartFrame()
+//                << "x()" << x() << "width()" << width();
+                int dtWidth = newX - x();
+
                 if (newX >= 0 && newX != x()) {
                     _trackInfo->setStartFrame((newX / fw) + 1);
                     UI::setX(this, newX);
-                    //todo track width() too long
-                    qDebug() << this << "setStartFrame" << _trackInfo->getStartFrame()\
- << "x()" << x() << "width()" << width();
+//                    qDebug() << this << "setStartFrame" << _trackInfo->getStartFrame()
+//                    << "x()" << x() << "width()" << width();
+
                     int endWidth = _trackInfo->getFrameCount() * fw + TIMELINE_HANDLE_BUTTON_WIDTH;
                     UI::setWidth(this, endWidth);
-                    qDebug() << this << "track width:" << width();
                     int endPosX = x() + endWidth;
                     if (_app.trackModel->trackWidth < endPosX) {
                         _app.trackModel->trackWidth = endPosX;
                         Evt_dis(TrackModelEvent::MOVE_TRACK, nullptr);
                     }
                     _app.trackModel->sequencePlayback->update();
+                    _lastX = mouseEvent->pos().x();
                 }
             }
         }
