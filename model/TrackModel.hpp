@@ -11,7 +11,6 @@
 #include <functional>
 #include <vector>
 #include "events/Event.hpp"
-#include <QtCore/qstring.h>
 #include "model/playback/SequencePlayback.hpp"
 #include "model/playback/AudioPlayback.hpp"
 
@@ -62,9 +61,9 @@ public:
                         trackFrameInfo->setStartFrame(trackFrameInfo->getIdx() + 1);
                         trackFrameInfo->setHoldFrame(1);
                         trackInfo->append(trackFrameInfo);
-//                        if (!trackInfo->getHead()) {
-//                            trackInfo->setHead(trackFrameInfo);
-//                        }
+                        if (!trackInfo->getHead()) {
+                            trackInfo->setHead(trackFrameInfo);
+                        }
                     }
                 }
         }
@@ -81,50 +80,25 @@ public:
 //    Evt_dis(TrackModelEvent::SET_ZOOM_LEVEL);
     }
 
-    vector<TrackFrameInfo *> *getRenderFrame(int frameIdx) {
+    vector<TrackFrameInfo *> *getRenderFrame2(int frameIdx) {
         vector<TrackFrameInfo *> *images = new vector<TrackFrameInfo *>;
         for (TrackInfo *trackInfo:*_trackInfos) {
             if (!trackInfo->visible)
                 continue;
             int trackFrameIdx = frameIdx - trackInfo->getStartFrame() + 1;
-            for (TrackFrameInfo *trackFrameInfo:*trackInfo->trackFrameInfos) {
-//                qDebug() << this << "getRenderFrame" << trackFrameInfo->getIdx();
+            TrackFrameInfo *trackFrameInfo = trackInfo->getHead();
+            while (trackFrameInfo) {
                 if (trackFrameIdx >= trackFrameInfo->getStartFrame() &&
                     trackFrameIdx <= trackFrameInfo->getEndFrame()) {
-                    //todo 实现链表查找
-//                    return new QPixmap(QPixmap::fromImage(trackFrameInfo->payLoad));
                     trackFrameInfo->opacity = trackInfo->getOpacity();
                     images->push_back(trackFrameInfo);
                     break;
                 }
+                trackFrameInfo = trackFrameInfo->next;
             }
         }
         return images;
-//        return nullptr;
     }
-
-//    vector<TrackFrameInfo *> *getRenderFrame2(int frameIdx) {
-//        vector<TrackFrameInfo *> *images = new vector<TrackFrameInfo *>;
-//        for (TrackInfo *trackInfo:*_trackInfos) {
-//            if (!trackInfo->visible)
-//                continue;
-//            int trackFrameIdx = frameIdx - trackInfo->getStartFrame() + 1;
-//            TrackFrameInfo *head = trackInfo->getHead();
-//            TrackFrameInfo *trackFrameInfo = nullptr;
-//            trackFrameInfo = head->next;
-//            while (trackFrameInfo) {
-//                if (trackFrameIdx >= trackFrameInfo->getStartFrame() &&
-//                    trackFrameIdx <= trackFrameInfo->getEndFrame()) {
-//                    //todo 实现链表查找
-////                    return new QPixmap(QPixmap::fromImage(trackFrameInfo->payLoad));
-//                    trackFrameInfo->opacity = trackInfo->getOpacity();
-//                    images->push_back(trackFrameInfo);
-//                    break;
-//                }
-//            }
-//        }
-//        return images;
-//    }
 
     TrackInfo *getTrackInfo(int tIdx) { return _trackInfos->at(tIdx); }
 

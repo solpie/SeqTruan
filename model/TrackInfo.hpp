@@ -11,7 +11,7 @@
 #endif //SEQTRUAN_TRACKINFO_HPP
 using namespace std;
 
-class TrackInfo  {
+class TrackInfo {
 public:
     TrackInfo(QString name) {
         this->name = name;
@@ -54,7 +54,17 @@ public:
         trackFrameInfos->push_back(a);
     }
 
+    TrackFrameInfo *getHead() {
+        return _head;
+    }
+
+    void setHead(TrackFrameInfo *tf) {
+        _head = tf;
+    }
+
 protected:
+    TrackFrameInfo *_head = nullptr;
+
     int _endFrame = 1;
     int _startFrame = 1;
 
