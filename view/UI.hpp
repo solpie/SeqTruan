@@ -64,12 +64,6 @@ public:
         f.open(QIODevice::ReadOnly);
         QByteArray ba = f.readAll();
         if (objName != "") {
-//            (OverWidget<void>*)&w.isC
-//            OverWidget<QWidget> *ow = (OverWidget<QWidget>*)&w;
-//            auto ow = &w;
-//            ow->isCustomQss=true;
-//            ow.isCustomQss=true;
-//            if(w->objectName()== "OverWidget")
             w->setObjectName(objName);
         }
         w->setStyleSheet(ba.data());
@@ -77,11 +71,6 @@ public:
     }
 };
 
-//def fillColor(qwidget, color):
-//qwidget.setAutoFillBackground(True)
-//p = qwidget.palette()
-//p.setColor(qwidget.backgroundRole(), QColor(color))
-//qwidget.setPalette(p)
 ///////////////////////////////////////////////////////////////////////
 class DragWidget : public QWidget {
 public:

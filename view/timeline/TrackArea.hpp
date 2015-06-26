@@ -12,10 +12,11 @@
 #include "TimestampBar.hpp"
 #include "Track.hpp"
 #include "events/ActionEvent.hpp"
+#include "view/layout/VBox.hpp"
 
 class TrackArea : public QWidget {
 public:
-    QWidget *trackStack;
+    VBox *trackStack;
 
     TrackArea(QWidget *parent) : QWidget(parent) {
         int trackWidth = _app.trackModel->trackWidth;
@@ -23,14 +24,16 @@ public:
         timestampBar->resize(trackWidth, 25);
 
 
-        trackStack = new QWidget(this);
-        trackStack->setObjectName("track");
-        trackStack->setStyleSheet("QWidget#track{background:#343434;}");
+        trackStack = new VBox(this);
+//        trackStack->setObjectName("track");
+//        trackStack->setStyleSheet("QWidget#track{background:#343434;}");
+        UI::setWidth(trackStack, 1280);
         //todo make local
-//    QVBoxLayout *vbox = new QVBoxLayout(trackStack);
-        vbox = new QVBoxLayout(trackStack);
-        vbox->setSpacing(0);
-        vbox->setContentsMargins(0, 0, 0, 0);
+//        QVBoxLayout *vbox = new QVBoxLayout(trackStack);
+//        vbox = new QVBoxLayout(trackStack);
+//        vbox->setSpacing(0);
+//        vbox->setContentsMargins(0, 0, 0, 0);
+//        vbox->setSizeConstraint(QLayout::SetNoConstraint);
         UI::setY(trackStack, timestampBar->height());
         UI::setWidth(trackStack, trackWidth);
 
@@ -44,9 +47,9 @@ public:
     void add(TrackInfo *trackInfo) {
         Track *track = new Track();
         track->load(trackInfo);
-        UI::setHeight(trackStack, trackStack->height() + track->height());
+//        UI::setHeight(trackStack, trackStack->height() + track->height());
         qDebug() << this << "track Width:" << track->width();
-        vbox->addWidget(track);
+        trackStack->addWidget(track);
         qDebug() << this << "track Width:" << track->width() << "trackStack height:" << trackStack->height();
     }
 
@@ -70,7 +73,7 @@ protected:
 
 
     FrameCursor *trackCursor;
-    QVBoxLayout *vbox;
+//    QVBoxLayout *vbox;
 };
 
 

@@ -24,8 +24,8 @@ project(SeqTruan)
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 # Instruct CMake to run moc automatically when needed.
 set(CMAKE_AUTOMOC ON)
-#set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -w -std=c++11 -fpermissive")
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -w -s -std=c++11 -fpermissive")#-s for release
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -w -std=c++11 -fpermissive")
+#set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -w -s -std=c++11 -fpermissive")#-s for release
 #add_definitions(-QT_NO_DEBUG_OUTPUT)
 # Find the QtWidgets library
 find_package(Qt5Widgets)
@@ -71,7 +71,7 @@ view/timeline/trackPanel/OpacitySlider.hpp
 view/Popup.hpp
 events/PopupEvent.hpp
 model/ImageLoader.hpp utils/Observer.hpp
-)
+view/layout/VBox.hpp)
 
 # Use the Widgets module from Qt 5.
 target_link_libraries(SeqTruan Qt5::Widgets Qt5::Core Qt5::OpenGL Qt5::Multimedia ${OPENGL_LIBRARIES})

@@ -65,6 +65,10 @@ public:
         resizeTrackByFrameCount();
     }
 
+signals:
+
+    void resizeTrack(int width);
+
 protected:
     OverWidget<QWidget> *headButton;
     TrackInfo *_trackInfo;
@@ -78,6 +82,7 @@ private:
         UI::setWidth(trackFrameArea, (len) * fw);
         UI::setX(tailButton, trackFrameArea->x() + trackFrameArea->width());
         UI::setWidth(this, tailButton->x() + tailButton->width());
+        emit resizeTrack(width());
     }
 
     void paintHead(void *e) {
@@ -127,7 +132,11 @@ private:
     virtual void mouseMoveEvent(QMouseEvent *mouseEvent) override {
         if (isPress) {
             int dx;
+//            int px = mapToParent(QCursor::pos()).x();
+            int px = mapToParent(mouseEvent->pos()).x();
+            qDebug() << this << "posx" << mouseEvent->pos().x() << "mapToParent" << px;
             dx = mouseEvent->pos().x() - _lastX;
+//            _lastX = mouseEvent->pos().x();
             int drag = 20;
             if (abs(dx) > drag) {
                 int fw = _app.trackModel->frameWidth;
@@ -139,7 +148,6 @@ private:
 
                 if (newX >= 0 && newX != x()) {
                     _trackInfo->setStartFrame((newX / fw) + 1);
-                    UI::setX(this, newX);
 //                    qDebug() << this << "setStartFrame" << _trackInfo->getStartFrame()
 //                    << "x()" << x() << "width()" << width();
 
@@ -150,8 +158,8 @@ private:
                         _app.trackModel->trackWidth = endPosX;
                         Evt_dis(TrackModelEvent::MOVE_TRACK, nullptr);
                     }
+                    UI::setX(this, newX);
                     _app.trackModel->sequencePlayback->update();
-                    _lastX = mouseEvent->pos().x();
                 }
             }
         }
