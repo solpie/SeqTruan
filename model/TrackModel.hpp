@@ -53,6 +53,7 @@ public:
 //                        qDebug() << "Image file: " << fi.absoluteFilePath();
 //                        QImage *img = new QImage(fi.absoluteFilePath());
                         TrackFrameInfo *trackFrameInfo = new TrackFrameInfo();
+
                         trackFrameInfo->load(fi.absoluteFilePath());
                         pre = trackFrameInfo->setPre(pre);
                         trackFrameInfo->setTrackInfoIdx(trackInfo->idx);
@@ -61,10 +62,13 @@ public:
                         trackFrameInfo->setStartFrame(trackFrameInfo->getIdx() + 1);
                         trackFrameInfo->setHoldFrame(1);
                         trackInfo->append(trackFrameInfo);
+//                        if (!trackInfo->getHead()) {
+//                            trackInfo->setHead(trackFrameInfo);
+//                        }
                     }
                 }
         }
-        qDebug()<<this<<"trackInfo frame count:"<<trackInfo->getFrameCount();
+        qDebug() << this << "trackInfo frame count:" << trackInfo->getFrameCount();
         if (sizeof(trackInfo->trackFrameInfos) > sequencePlayback->endFrameIdx) {
             sequencePlayback->endFrameIdx = sizeof(trackInfo->trackFrameInfos);
         }
@@ -98,6 +102,29 @@ public:
         return images;
 //        return nullptr;
     }
+
+//    vector<TrackFrameInfo *> *getRenderFrame2(int frameIdx) {
+//        vector<TrackFrameInfo *> *images = new vector<TrackFrameInfo *>;
+//        for (TrackInfo *trackInfo:*_trackInfos) {
+//            if (!trackInfo->visible)
+//                continue;
+//            int trackFrameIdx = frameIdx - trackInfo->getStartFrame() + 1;
+//            TrackFrameInfo *head = trackInfo->getHead();
+//            TrackFrameInfo *trackFrameInfo = nullptr;
+//            trackFrameInfo = head->next;
+//            while (trackFrameInfo) {
+//                if (trackFrameIdx >= trackFrameInfo->getStartFrame() &&
+//                    trackFrameIdx <= trackFrameInfo->getEndFrame()) {
+//                    //todo 实现链表查找
+////                    return new QPixmap(QPixmap::fromImage(trackFrameInfo->payLoad));
+//                    trackFrameInfo->opacity = trackInfo->getOpacity();
+//                    images->push_back(trackFrameInfo);
+//                    break;
+//                }
+//            }
+//        }
+//        return images;
+//    }
 
     TrackInfo *getTrackInfo(int tIdx) { return _trackInfos->at(tIdx); }
 

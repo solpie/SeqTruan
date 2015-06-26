@@ -12,7 +12,18 @@
 
 class TrackFrame : public QWidget, public OneLinker<TrackFrame> {
 Q_OBJECT
+public:
+    int idx() {
+        return trackFrameInfo->getIdx();
+    }
 
+    QLabel *holdFrameCountLabel = nullptr;
+    bool isPressLeftButton = false;
+    bool isPressRightButton = false;
+    int changeWidth = 0;
+    int changeDir = 0;
+    //拖拽方向
+    TrackFrameInfo *trackFrameInfo;
 public:
     TrackFrame(QWidget *parent) : QWidget(parent) {
         resize(40, 60);
@@ -57,29 +68,34 @@ public:
         }
     }
 
-    int idx = 0;
-    QLabel *holdFrameCountLabel = nullptr;
-    bool isPressLeftButton = false;
-    bool isPressRightButton = false;
-    int changeWidth = 0;
-    int changeDir = 0;
-    //拖拽方向
-    TrackFrameInfo *trackFrameInfo;
 
     void setIdx(int trackFrameIdx) {
-        idx = trackFrameIdx;
-        QString s = QString::number(idx + 1);
+        trackFrameInfo->setIdx(trackFrameIdx);
+        QString s = QString::number(trackFrameIdx + 1);
         frameIdx->setText(s);
     }
 
-    void setHoldFrameCount(int count, int dx = 1) {
+    //dir 方向 -1 向左
+    void setHoldFrameCount(int count, int dir = 1) {
         int frameWidth = _app.trackModel->frameWidth;
-        changeWidth = (count - trackFrameInfo->getHoldFrame()) * frameWidth * dx;
+        changeWidth = (count - trackFrameInfo->getHoldFrame()) * frameWidth * dir;
         trackFrameInfo->setHoldFrame(count);
+
+        if (dir < 0) {
+            trackFrameInfo->setStartFrame(trackFrameInfo->getStartFrame() + count);
+        }
         UI::setWidth(this, count * frameWidth);
         UI::setWidth(thumb, width());
         UI::setX(rightButton, width() - rightButton->width() + 1);
         qDebug() << this << "setHoldFrameCount" << this->frameIdx->text() << "width" << width();
+        updateFrameCountLabel();
+    }
+
+    void updateFrameCountLabel() {
+        int idx = trackFrameInfo->getIdx();
+        setIdx(idx);
+
+        int count = trackFrameInfo->getHoldFrame();
         if (count > 1) {
             if (!holdFrameCountLabel) {
                 holdFrameCountLabel = new QLabel(this);
@@ -94,11 +110,19 @@ public:
         }
     }
 
-    void resizeFrame(int endPosX) {
-        UI::setWidth(this, endPosX - this->x());
-        UI::setWidth(thumb, width());
-        UI::setX(rightButton, width() - rightButton->width() + 1);
-        trackFrameInfo->setHoldFrame(width() / _app.trackModel->frameWidth);
+    void resizeFrame(TrackFrame *tf, int w) {
+        UI::setWidth(tf, w);
+        UI::setWidth(tf->thumb, tf->width());
+        UI::setX(tf->rightButton, tf->width() - tf->rightButton->width() + 1);
+        int fCount = tf->width() / _app.trackModel->frameWidth;
+        tf->setHoldFrameCount(fCount, 0);
+    }
+
+    void updateFrameWidth() {
+        int w = trackFrameInfo->getHoldFrame() * _app.trackModel->frameWidth;
+        UI::setWidth(this, w);
+        UI::setWidth(this->thumb, w);
+        UI::setX(this->rightButton, w - this->rightButton->width() + 1);
     }
 
     void setTrackFrameInfo(TrackFrameInfo *tfi) {
@@ -113,69 +137,35 @@ public:
         update();
     }
 
-
+    OverWidget<QWidget> *thumb;
+    OverWidget<QPushButton> *leftButton;
+    OverWidget<QPushButton> *rightButton;
 signals:
 
     void resizeTail();
 
 protected:
     ImageLoader *loader = nullptr;
-    OverWidget<QWidget> *thumb;
 
     void onRelLeftButton(TrackFrame *relTrackFrame) {
-        qDebug() << this << "onRelLeftButton() idx:" << relTrackFrame->pre->idx << "changeDir:" <<
-        relTrackFrame->changeDir;
-        if (relTrackFrame->changeDir < 0) {
-            //fixme 删除两个
-            removePre(-relTrackFrame->changeDir, relTrackFrame);
-//            if (relTrackFrame->pre) {
-//                if (relTrackFrame->pre->x() >= relTrackFrame->x()) {
-//                    qDebug() << this << "onRelLeftButton" << relTrackFrame->pre->idx;
-//                    //fixme idx bug
-//                    TrackFrame *deleteMe = relTrackFrame->pre->remove();//todo 释放资源 保存历史操作
-//                    TrackFrameInfo *deleteMeInfo = trackFrameInfo->pre->remove();//todo 释放资源 保存历史操作
-//                    renameBackward(relTrackFrame);
-////                relTrackFrame->updateTrackFrameInfo();
-//                    qDebug() << this << "onRelLeftButton remove():" << relTrackFrame->pre->idx;
-//                    if (relTrackFrame->pre) {
-//                        qDebug() << this << "findPre:" << relTrackFrame->pre->idx;
-//                        relTrackFrame->pre->changeDir = relTrackFrame->changeDir;
-//                        onRelLeftButton(relTrackFrame);
-//                    }
-////                onRelLeftButton(relTrackFrame);
-//                }
-//            }
-        }
-        relTrackFrame->changeDir = 0;
-    }
-
-    void removePre(int count, TrackFrame *tf,int rCount=0) {
-        if (count > 0) {
-            if (tf->pre) {
-                qDebug() << this << "removePre():" << tf->pre->idx;
-                TrackFrame *deleteMe = tf->pre->remove();//todo 释放资源 保存历史操作
-                TrackFrameInfo *deleteMeInfo = tf->pre->trackFrameInfo->remove();//todo 释放资源 保存历史操作
-                qDebug() << this << "removePre(): done idx:" << tf->pre->idx;
-                count--;
-                rCount++;
-                removePre(count, tf,rCount);
-            }
-        }
-        else {
-            renameBackward(tf,rCount);
-        }
-//        else {
-//            count--;
-//            if (tf->pre)
-//                removePre(count, tf->pre);
+//        qDebug() << this << "onRelLeftButton() idx:" << relTrackFrame->pre->idx() << "changeDir:" <<
+//        relTrackFrame->changeDir;
+//        if (relTrackFrame->changeDir < 0) {
+//            //fixme 删除两个
+//            relink(relTrackFrame);
+////                    //fixme idx bug
+////                    TrackFrame *deleteMe = relTrackFrame->pre->remove();//todo 释放资源 保存历史操作
+////                    TrackFrameInfo *deleteMeInfo = trackFrameInfo->pre->remove();//todo 释放资源 保存历史操作
 //        }
-
+//        relTrackFrame->changeDir = 0;
+        TrackFrame::reLink2(relTrackFrame);
     }
 
-    void renameBackward(TrackFrame *cur,int count) {
-        cur->setIdx(cur->idx - count);
+
+    void reIdxBackward(TrackFrame *cur, int idx) {
+        cur->setIdx(idx);
         if (cur->next) {
-            renameBackward(cur->next,count);
+            reIdxBackward(cur->next, ++idx);
         }
     }
 
@@ -193,12 +183,13 @@ protected:
 
     void handleL(TrackFrame *cur) {
         UI::setX(cur, cur->x() + cur->changeWidth);
-        cur->changeWidth = 0;
         if (cur->pre) {
-            qDebug() << "handleL" << cur->pre->idx << cur->pre->frameIdx->text();
-            cur->pre->resizeFrame(cur->x());
+            resizeFrame(cur->pre, cur->x() - cur->pre->x());
         }
+        qDebug() << "handleL" << cur->pre->idx() << cur->pre->frameIdx->text();
+        cur->changeWidth = 0;
     }
+
 
     void pressAndMoveEvent() {
         int drag = 30;
@@ -219,8 +210,9 @@ protected:
             else if (isPressLeftButton) {
                 if (posX < -drag) {//向左拖拽
                     this->changeDir -= 1;
-                    setHoldFrameCount(trackFrameInfo->getHoldFrame() + 1, -1);
-                    handleL(this);
+                    TrackFrame::resizeFrame2(this, -1, 1, true);
+//                    setHoldFrameCount(trackFrameInfo->getHoldFrame() + 1, -1);
+//                    handleL(this);
                 }
                 else if (posX > drag && trackFrameInfo->getHoldFrame() > 1) {
                     this->changeDir += 1;
@@ -260,16 +252,71 @@ protected:
                           int((22 - this->thumbPixmap->height()) * .5 + 9),
                           *this->thumbPixmap);
         }
-        else {
-//            setPixmap(trackFrameInfo->getPayLoad());
-//            update();
-        }
     }
 
     QPixmap *thumbPixmap = nullptr;
     QLabel *frameIdx;
-    OverWidget<QPushButton> *leftButton;
-    OverWidget<QPushButton> *rightButton;
+    ////////////////////////////////////      VM           //////////////////////////////
+private:
+    static void resizeFrame2(TrackFrame *cur, int dtStartFrame, int dtCount, bool isLeftButton) {
+        int frameWidth = _app.trackModel->frameWidth;
+        int startFrame = cur->trackFrameInfo->getStartFrame();
+        cur->trackFrameInfo->setStartFrame(startFrame + dtStartFrame);
+
+
+        cur->trackFrameInfo->setHoldFrame(cur->trackFrameInfo->getHoldFrame() + dtCount);
+        cur->updateFrameWidth();
+        if (isLeftButton) {
+            UI::setX(cur, cur->x() + dtStartFrame * frameWidth);
+
+            if (cur->pre) {
+                resizeFrameByWidth(cur->pre, cur->x() - cur->pre->x());
+            }
+            cur->changeWidth = 0;
+        }
+        cur->updateFrameCountLabel();
+    }
+
+    static void resizeFrameByWidth(TrackFrame *tf, int w) {
+        UI::setWidth(tf, w);
+        UI::setWidth(tf->thumb, tf->width());
+        UI::setX(tf->rightButton, tf->width() - tf->rightButton->width() + 1);
+        int fCount = tf->width() / _app.trackModel->frameWidth;
+        tf->setHoldFrameCount(fCount, 0);
+        tf->updateFrameCountLabel();
+    }
+
+    static void reLink2(TrackFrame *tf) {
+        relink(tf);
+    }
+
+
+    static void relink(TrackFrame *cur) {
+        TrackFrame *preFrame = cur->pre;
+        if (preFrame) {
+            vector<TrackFrame *> toRemoves;
+            while (preFrame->x() >= cur->x()) {
+                toRemoves.push_back(preFrame);
+                preFrame->hide();
+                preFrame = preFrame->pre;
+            }
+            if (preFrame != cur->pre) {
+                cur->setPre(preFrame);
+                updateBackward(cur, cur->pre->idx() + 1);
+            }
+        }
+        else {
+            updateBackward(cur, 1);
+        }
+        qDebug() << "relink pre idx:" << cur->pre->idx();
+    }
+
+    static void updateBackward(TrackFrame *tf, int idx) {
+        tf->trackFrameInfo->setIdx(idx);
+        tf->updateFrameCountLabel();
+        if (tf->next)
+            updateBackward(tf->next, ++idx);
+    }
 };
 
 
