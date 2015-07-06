@@ -16,6 +16,7 @@ public:
     static constexpr const char *LOAD_COMPLETE = "LOAD_COMPLETE";
 
     static constexpr const char *MOVE_TRACK = "MOVE_TRACK";
+    static constexpr const char *SET_ZOOM_LEVEL = "SET_ZOOM_LEVEL";
     static constexpr const char *TRACK_FRAME_COUNT_CHANGED = "TRACK_FRAME_COUNT_CHANGED";
 
 };

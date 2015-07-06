@@ -69,9 +69,9 @@ private:
         bool isPressLMB = (QApplication::mouseButtons() == Qt::LeftButton);
         if (!isPressLMB) {
             isPressZoomButton = false;
+            _app.trackModel->setZoomLevel(2);
             qDebug() << this << "onReleaseZoomButton" << isPressZoomButton;
         }
-
     }
 
     QPushButton *newTrackButton;

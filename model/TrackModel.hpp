@@ -75,9 +75,11 @@ public:
     };
 
 
+    //max 40
     void setZoomLevel(int lv) {
         //todo
-//    Evt_dis(TrackModelEvent::SET_ZOOM_LEVEL);
+        frameWidth = MAX_FRAME_WIDTH / lv;
+        Evt_dis(TrackModelEvent::SET_ZOOM_LEVEL, nullptr);
     }
 
     vector<TrackFrameInfo *> *getRenderFrame2(int frameIdx) {
@@ -116,6 +118,7 @@ public:
     SequencePlayback *sequencePlayback;
     AudioPlayback *audioPlayback;
 private:
+    int MAX_FRAME_WIDTH = 40;
     vector<TrackInfo *> *_trackInfos;
 
 };

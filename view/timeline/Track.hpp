@@ -40,6 +40,10 @@ public:
         bgpal.setColor(QPalette::Background, Qt::transparent);
 //        bgpal.setColor(QPalette::Foreground, QColor(255, 255, 255, 255));
         setPalette(bgpal);
+
+
+        Evt_add(TrackModelEvent::SET_ZOOM_LEVEL, onUpdateZoom);
+
     }
 
     Track(QWidget *parent) : QWidget(parent) {
@@ -75,6 +79,10 @@ protected:
     OverWidget<QWidget> *tailButton;
 private:
     QWidget *trackFrameArea;
+
+    void onUpdateZoom(void *e) {
+        resizeTrackByFrameCount();
+    }
 
     void resizeTrackByFrameCount() {
         int fw = _app.trackModel->frameWidth;
