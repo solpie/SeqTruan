@@ -43,7 +43,6 @@ public:
 
 
         Evt_add(TrackModelEvent::SET_ZOOM_LEVEL, onUpdateZoom);
-
     }
 
     Track(QWidget *parent) : QWidget(parent) {
@@ -58,6 +57,10 @@ public:
         for (int i = 0; i < len; i++) {
             TrackFrameInfo *trackFrameInfo = trackInfo->trackFrameInfos->at(i);
             TrackFrame *trackFrame = new TrackFrame(trackFrameArea);
+            if (headTrackFrame == nullptr) {
+                //todo 第一帧修改
+                headTrackFrame = trackFrame;
+            }
             trackFrame->setTrackFrameInfo(trackFrameInfo);
 
             pre = trackFrame->setPre(pre);
@@ -78,10 +81,20 @@ protected:
     TrackInfo *_trackInfo;
     OverWidget<QWidget> *tailButton;
 private:
+    TrackFrame *headTrackFrame = nullptr;
     QWidget *trackFrameArea;
 
     void onUpdateZoom(void *e) {
+        resizeTrackFrame(headTrackFrame,0);
         resizeTrackByFrameCount();
+    }
+
+    void resizeTrackFrame(TrackFrame *tf,int px) {
+        tf->updateFrameWidth();
+        UI::setX(tf, px);
+        if (tf->next)
+            resizeTrackFrame(tf->next,tf->x()+tf->width());
+
     }
 
     void resizeTrackByFrameCount() {

@@ -16,6 +16,7 @@ public:
     int idx() {
         return trackFrameInfo->getIdx();
     }
+
     QLabel *holdFrameCountLabel = nullptr;
     bool isPressLeftButton = false;
     bool isPressRightButton = false;
@@ -75,7 +76,6 @@ public:
     void updateFrameCountLabel() {
         int idx = trackFrameInfo->getIdx();
         setIdx(idx);
-
         int count = trackFrameInfo->getHoldFrame();
         if (count > 1) {
             if (!holdFrameCountLabel) {
@@ -195,10 +195,10 @@ private:
         cur->trackFrameInfo->setHoldFrame(cur->trackFrameInfo->getHoldFrame() + dtCount);
         cur->updateFrameWidth();
         if (isLeftButton) {
-//            //todo 释放资源 保存历史操作
+            //todo 释放资源 保存历史操作
             UI::setX(cur, cur->x() + dtStartFrame * frameWidth);
             if (cur->pre) {
-                cur->pre->trackFrameInfo->setHoldFrame(cur->pre->trackFrameInfo->getHoldFrame()- dtCount);
+                cur->pre->trackFrameInfo->setHoldFrame(cur->pre->trackFrameInfo->getHoldFrame() - dtCount);
                 resizeFrameByWidth(cur->pre, cur->x() - cur->pre->x());
                 cur->pre->updateFrameCountLabel();
             }

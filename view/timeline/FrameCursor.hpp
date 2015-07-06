@@ -20,6 +20,7 @@ public:
         _setMouseTransparent(this);
         Evt_add(ActionEvent::UPDATE_CURSOR, onUpdateCursor);
         Evt_add(ActionEvent::SCROLL_TIMELINE_HBAR, onScrollHBar);
+        Evt_add(TrackModelEvent::SET_ZOOM_LEVEL, onUpdateZoom);
 
     }
 
@@ -29,7 +30,7 @@ public:
 
     void setPosXbyIdx(int idx) {
         int fw = _app.trackModel->frameWidth;
-        int px = idx * fw-_hBarValue;
+        int px = idx * fw - _hBarValue;
         if (px != x())
             UI::setX(this, px);
 //        qDebug() << this << "setPosXbyIdx" << idx
@@ -40,6 +41,11 @@ public:
 private:
     QLabel *timeLabel;
     int i;
+
+    void onUpdateZoom(void *e) {
+        update();
+    }
+
 protected:
 
     int _hBarValue = 0;
