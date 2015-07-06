@@ -47,8 +47,9 @@ public:
     static void setWidth(QWidget *w, int width) {
         w->resize(width, w->height());
     }
+
     static void setHeight(QWidget *w, int height) {
-        w->resize(w->width(),height);
+        w->resize(w->width(), height);
     }
 
     static void setX(QWidget *w, int x) {
@@ -57,6 +58,11 @@ public:
 
     static void setY(QWidget *w, int y) {
         w->move(w->x(), y);
+    }
+
+    static bool isIn(QWidget *w) {
+        int x = w->mapFromGlobal(QCursor::pos()).x();
+        return x > w->x() && x < w->x()+w->width();
     }
 
     static void setQss(QWidget *w, QString alias, QString objName = "") {

@@ -10,12 +10,29 @@
 #define SEQTRUAN_TRACKTOOLBAR_H
 
 #endif //SEQTRUAN_TRACKTOOLBAR_H
-class TrackToolBar:public QWidget{
+
+class TrackToolBar : public QWidget {
 public:
-    TrackToolBar(QWidget *parent=0):QWidget(parent)
-    {
+    TrackToolBar(QWidget *parent = 0) : QWidget(parent) {
         resize(250, 25);
-        newTrackButton = new QPushButton("new Track",this);
+        newTrackButton = new QPushButton("new Track", this);
+
+//        OverWidget *dragButton = new OverWidget(this);
+//        UI::setWidth(dragButton, 20);
+//        UI::setHeight(dragButton, 20);
+//        UI::setX(dragButton, width() - 20);
+
+        zoomButton = new QPushButton("Z", this);
+        UI::setWidth(zoomButton, 20);
+        UI::setHeight(zoomButton, 20);
+        UI::setX(zoomButton, width() - 20);
+//        zoomButton->setCheckable(true);
+        zoomButton->connect(zoomButton, zoomButton->pressed, [this]() { onPressZoomButton(); });
+        zoomButton->connect(zoomButton, zoomButton->released, [this]() { onReleaseZoomButton(); });
+
+//        zoomButton->setAttribute(Qt::WA_TransparentForMouseEvents, true);
+
+
 //    QObject::connect(newTrackButton, &QPushButton::clicked, someFunction);
 //    newTrackButton->mouseMoveEvent
 //    TrackModel *t = TrackModel::_();
@@ -27,13 +44,51 @@ public:
 //    this.pressed.connect(someFunction);
 //    this->onClkNewTrackBtn();
     }
-    void onClkNewTrackBtn(){};
 
-    void onVScrollBar(){};
+    void onClkNewTrackBtn() { };
+
+    void onVScrollBar() { };
 
 private:
+    QPushButton *zoomButton;
+    bool isPressZoomButton = false;
+    int _lastX = 0;
+
+    void onPressZoomButton() {
+        isPressZoomButton = true;
+        _lastX = _localPos.x();
+    }
+
+    void onReleaseZoomButton() {
+//        bool isInRect = UI::isIn(this);
+//        if (isInRect) {
+//            isPressZoomButton = false;
+//            qDebug() << this << "onReleaseZoomButton" << isPressZoomButton;
+//        }
+//        qDebug() << this << "onReleaseZoomButton Buttons" << QApplication::mouseButtons();
+        bool isPressLMB = (QApplication::mouseButtons() == Qt::LeftButton);
+        if (!isPressLMB) {
+            isPressZoomButton = false;
+            qDebug() << this << "onReleaseZoomButton" << isPressZoomButton;
+        }
+
+    }
+
     QPushButton *newTrackButton;
 
 
+protected:
+    virtual void mouseMoveEvent(QMouseEvent *mouseEvent) override {
+        if (isPressZoomButton) {
+            int dx = _localPos.x() - _lastX;
+            qDebug() << this << "mouseMoveEvent" << isPressZoomButton << dx;
+        }
+    };
 
+    virtual void mouseReleaseEvent(QMouseEvent *mouseEvent) override {
+        if (isPressZoomButton) {
+            isPressZoomButton = false;
+        }
+        qDebug() << this << "mouseReleaseEvent" << isPressZoomButton;
+    };
 };

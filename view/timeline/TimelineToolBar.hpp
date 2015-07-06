@@ -19,6 +19,8 @@ public:
         startFrameButton->setText("startFrame");
 
         resize(TIMELINE_TRACK_PANEL_DEF_WIDTH, 15);
+
+
 //    self.startFrameLabel = QLineEdit()
 //    self.startFrameLabel.setText('1')
 //    hbox.addWidget(self.startFrameLabel)
