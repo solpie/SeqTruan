@@ -61,7 +61,7 @@ public:
                         trackFrameInfo->setStartFrame(trackFrameInfo->getIdx() + 1);
                         trackFrameInfo->setHoldFrame(1);
                         trackInfo->append(trackFrameInfo);
-                        if (!trackInfo->getHead()) {
+                        if (!trackInfo->getHeadTrackFrameInfo()) {
                             trackInfo->setHead(trackFrameInfo);
                         }
                     }
@@ -74,11 +74,14 @@ public:
         Evt_dis(TrackModelEvent::NEW_TRACK, trackInfo);
     };
 
+    float getZoomRaito() {
+        return zoomRaito;
+    }
 
-    //max 40
-    void setZoomLevel(int lv) {
-        //todo
-        frameWidth = MAX_FRAME_WIDTH / lv;
+    //max 1 min 0.025 (1/40)
+    void setZoomLevel(float raito) {
+        zoomRaito = raito;
+        frameWidth = MAX_FRAME_WIDTH * raito;
         Evt_dis(TrackModelEvent::SET_ZOOM_LEVEL, nullptr);
     }
 
@@ -87,7 +90,7 @@ public:
         for (TrackInfo *trackInfo:*_trackInfos) {
             if (!trackInfo->visible)
                 continue;
-            TrackFrameInfo *trackFrameInfo = trackInfo->getHead();
+            TrackFrameInfo *trackFrameInfo = trackInfo->getHeadTrackFrameInfo();
             int trackFrameIdx = frameIdx - trackInfo->getStartFrame() + 1;
             while (trackFrameInfo) {
 //                qDebug() << this << "idx:" << trackFrameInfo->getIdx()
@@ -117,6 +120,8 @@ public:
     int trackWidth = 1280;
     SequencePlayback *sequencePlayback;
     AudioPlayback *audioPlayback;
+protected:
+    float zoomRaito = 1.0;
 private:
     int MAX_FRAME_WIDTH = 40;
     vector<TrackInfo *> *_trackInfos;

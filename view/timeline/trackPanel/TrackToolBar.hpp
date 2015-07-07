@@ -69,7 +69,7 @@ private:
         bool isPressLMB = (QApplication::mouseButtons() == Qt::LeftButton);
         if (!isPressLMB) {
             isPressZoomButton = false;
-            _app.trackModel->setZoomLevel(2);
+//            _app.trackModel->setZoomLevel(2);
             qDebug() << this << "onReleaseZoomButton" << isPressZoomButton;
         }
     }
@@ -80,7 +80,20 @@ private:
 protected:
     virtual void mouseMoveEvent(QMouseEvent *mouseEvent) override {
         if (isPressZoomButton) {
-            int dx = _localPos.x() - _lastX;
+            int mx = _localPos.x();
+            float dx = mx - _lastX;
+            if (dx > -320 && dx < 320) {
+                //320 40
+                float raito = (dx) / 320 + _app.trackModel->getZoomRaito();
+                if (raito < 0.025) {
+                    raito = 0.025;
+                }
+                else if (raito > 1) {
+                    raito = 1;
+                }
+                _app.trackModel->setZoomLevel(raito);
+            }
+            _lastX = mx;
             qDebug() << this << "mouseMoveEvent" << isPressZoomButton << dx;
         }
     };

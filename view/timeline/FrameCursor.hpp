@@ -43,6 +43,7 @@ private:
     int i;
 
     void onUpdateZoom(void *e) {
+        setPosXbyIdx(_app.trackModel->sequencePlayback->frameIdx);
         update();
     }
 

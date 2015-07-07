@@ -13,13 +13,16 @@ public:
     TimestampBar(QWidget *parent) : QWidget(parent) {
         setStyleSheet("background:#3e3e3e");
 
-
+        Evt_add(TrackModelEvent::SET_ZOOM_LEVEL, onUpdateZoom);
     }
 
 
 protected:
 
 
+    void onUpdateZoom(void *e) {
+        update();
+    }
 
     virtual void paintEvent(QPaintEvent *qPaintEvent) override {
         QPainter p(this);

@@ -54,7 +54,7 @@ public:
         trackFrameInfos->push_back(a);
     }
 
-    TrackFrameInfo *getHead() {
+    TrackFrameInfo *getHeadTrackFrameInfo() {
         return _head;
     }
 

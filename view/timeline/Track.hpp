@@ -83,17 +83,21 @@ protected:
 private:
     TrackFrame *headTrackFrame = nullptr;
     QWidget *trackFrameArea;
+    // head button 固定宽度
+    int TRACK_HEAD_WIDTH = 40;
 
     void onUpdateZoom(void *e) {
-        resizeTrackFrame(headTrackFrame,0);
+        int fw = _app.trackModel->frameWidth;
+        UI::setX(this, _trackInfo->getStartFrame() * fw - TRACK_HEAD_WIDTH);
+        resizeTrackFrame(headTrackFrame, 0);
         resizeTrackByFrameCount();
     }
 
-    void resizeTrackFrame(TrackFrame *tf,int px) {
+    void resizeTrackFrame(TrackFrame *tf, int px) {
         tf->updateFrameWidth();
         UI::setX(tf, px);
         if (tf->next)
-            resizeTrackFrame(tf->next,tf->x()+tf->width());
+            resizeTrackFrame(tf->next, tf->x() + tf->width());
 
     }
 
