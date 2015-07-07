@@ -11,6 +11,7 @@
 
 #endif //SEQTRUAN_TRACKTOOLBAR_H
 
+#include "model/AppExternal.hpp"
 class TrackToolBar : public QWidget {
 public:
     TrackToolBar(QWidget *parent = 0) : QWidget(parent) {
@@ -57,6 +58,7 @@ private:
     void onPressZoomButton() {
         isPressZoomButton = true;
         _lastX = _localPos.x();
+        AppExternal::setCursorVisible(false);
     }
 
     void onReleaseZoomButton() {
@@ -68,6 +70,7 @@ private:
 //        qDebug() << this << "onReleaseZoomButton Buttons" << QApplication::mouseButtons();
         bool isPressLMB = (QApplication::mouseButtons() == Qt::LeftButton);
         if (!isPressLMB) {
+            AppExternal::setCursorVisible(true);
             isPressZoomButton = false;
 //            _app.trackModel->setZoomLevel(2);
             qDebug() << this << "onReleaseZoomButton" << isPressZoomButton;
@@ -78,6 +81,7 @@ private:
 
 
 protected:
+
     virtual void mouseMoveEvent(QMouseEvent *mouseEvent) override {
         if (isPressZoomButton) {
             int mx = _localPos.x();
@@ -102,6 +106,7 @@ protected:
         if (isPressZoomButton) {
             isPressZoomButton = false;
         }
+        AppExternal::setCursorVisible(true);
         qDebug() << this << "mouseReleaseEvent" << isPressZoomButton;
     };
 };

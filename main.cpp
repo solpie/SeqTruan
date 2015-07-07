@@ -5,7 +5,7 @@
 
 #include "model/AppExternal.hpp"
 int main(int argc, char *argv[]) {
-    AppExternal::startWatch("f:\\test1");
+//    AppExternal::startWatch("f:\\test1");
 
     QApplication a(argc, argv);
     QSurfaceFormat format;

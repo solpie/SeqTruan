@@ -1,7 +1,7 @@
 //
 // Created by toramisu on 2015/7/7.
 //
-
+#pragma once
 #ifndef SEQTRUAN_APPEXTERNAL_HPP
 #define SEQTRUAN_APPEXTERNAL_HPP
 
@@ -19,7 +19,10 @@ public:
         QString cmd = csp + " " + path;
         system(cmd.toStdString().c_str());
     }
-
+    static void setCursorVisible(bool b) {
+        //todo 记录光标隐藏位置 显示光标时候恢复位置
+        ShowCursor(b);
+    }
     static void startWatch(QString path) {
         //todo move to thread
         HANDLE hDir = CreateFile(
@@ -31,7 +34,6 @@ public:
                 FILE_FLAG_BACKUP_SEMANTICS,
                 NULL
         );
-
 
         int nCounter = 0;
         FILE_NOTIFY_INFORMATION strFileNotifyInfo[1024];
