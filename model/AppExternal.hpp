@@ -10,7 +10,7 @@
 #include "stdlib.h"
 #include "QString"
 #include "windows.h"
-
+#include "FileWatcher.hpp"
 class AppExternal {
 
 public:
@@ -25,31 +25,33 @@ public:
     }
     static void startWatch(QString path) {
         //todo move to thread
-        HANDLE hDir = CreateFile(
-                path.toStdString().c_str(),
-                FILE_LIST_DIRECTORY,
-                FILE_SHARE_WRITE | FILE_SHARE_READ | FILE_SHARE_DELETE,
-                NULL,
-                OPEN_EXISTING,
-                FILE_FLAG_BACKUP_SEMANTICS,
-                NULL
-        );
-
-        int nCounter = 0;
-        FILE_NOTIFY_INFORMATION strFileNotifyInfo[1024];
-        DWORD dwBytesReturned = 0;
-
-        while (TRUE) {
-            if (ReadDirectoryChangesW(hDir, (LPVOID) &strFileNotifyInfo, sizeof(strFileNotifyInfo), FALSE,
-                                      FILE_NOTIFY_CHANGE_LAST_WRITE, &dwBytesReturned, NULL, NULL) == 0) {
-//                ErrorCheck(_T("Reading Directory Change"));
-            }
-            else {
-//                QString::fromStdWString()
-                QString filename = QString::fromStdWString(strFileNotifyInfo[0].FileName);
-                qDebug() << "File Modified: " << filename;
-                qDebug() << "Loop: " << nCounter++;
-            }
-        }
+        FileWatcher *wd = new FileWatcher();
+        wd->start(path);
+//        HANDLE hDir = CreateFile(
+//                path.toStdString().c_str(),
+//                FILE_LIST_DIRECTORY,
+//                FILE_SHARE_WRITE | FILE_SHARE_READ | FILE_SHARE_DELETE,
+//                NULL,
+//                OPEN_EXISTING,
+//                FILE_FLAG_BACKUP_SEMANTICS,
+//                NULL
+//        );
+//
+//        int nCounter = 0;
+//        FILE_NOTIFY_INFORMATION strFileNotifyInfo[1024];
+//        DWORD dwBytesReturned = 0;
+//
+//        while (TRUE) {
+//            if (ReadDirectoryChangesW(hDir, (LPVOID) &strFileNotifyInfo, sizeof(strFileNotifyInfo), FALSE,
+//                                      FILE_NOTIFY_CHANGE_LAST_WRITE, &dwBytesReturned, NULL, NULL) == 0) {
+////                ErrorCheck(_T("Reading Directory Change"));
+//            }
+//            else {
+////                QString::fromStdWString()
+//                QString filename = QString::fromStdWString(strFileNotifyInfo[0].FileName);
+//                qDebug() << "File Modified: " << filename;
+//                qDebug() << "Loop: " << nCounter++;
+//            }
+//        }
     }
 };
